@@ -8,7 +8,8 @@ import android.widget.ProgressBar;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button loginButton;
+    private Button loginButton, signupButton;
+
     ProgressBar loginProgress;
 
 
@@ -16,7 +17,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginButton = findViewById(R.id.login_button);
+
+        loginButton = (Button) findViewById(R.id.login_button);
+        signupButton = (Button) findViewById(R.id.signup_button);
+
         loginProgress = findViewById(R.id.login_progress);
         loginProgress.setVisibility(View.INVISIBLE);
 
