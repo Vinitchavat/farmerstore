@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "761779585740",
+    "firebase_url": "https://fmstoreapp.firebaseio.com",
+    "project_id": "fmstoreapp",
+    "storage_bucket": "fmstoreapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761779585740:android:fb649575e59a35c6",
+        "android_client_info": {
+          "package_name": "com.kongla.storeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761779585740-q7igmt6eu1c215kh8k3bafc85573uvvv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kongla.storeapp",
+            "certificate_hash": "92fa44d47336e4e2fc30ab0550898eff1b160e33"
+          }
+        },
+        {
+          "client_id": "761779585740-h2lckl1agu6pfig73feehbihhdipda4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQng0Ah7zOIN-YSuTtZkSxca_X-qrNS34"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761779585740-h2lckl1agu6pfig73feehbihhdipda4j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
