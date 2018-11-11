@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/profile_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_textName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/profile_textName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_img"
+        app:layout_constraintBottom_toTopOf="@id/profile_btnedit"
+        android:text="แสนดี ใจดี"/>
+
+    <Button
+        android:id="@+id/profile_btnedit"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:text="edit Profile"
+        app:layout_constraintBottom_toTopOf="@+id/profile_btnNoti"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_textName"/>
+
+    <Button
+        android:id="@+id/profile_btnNoti"
+        android:onClick="addData"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:text="Notification"
+        app:layout_constraintBottom_toTopOf="@+id/profile_btnLogout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit" />
+
+    <Button
+        android:id="@+id/profile_btnLogout"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/holo_red_light"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnNoti" />
+
+    <Button
+        android:id="@+id/profile_btnSeller"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:text="Seller Setting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/profile_btnBuyer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnLogout" />
+
+    <Button
+        android:onClick="addData"
+        android:id="@+id/profile_btnBuyer"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="30dp"
+        android:text="Buyer Setting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_btnSeller"
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnLogout" />
+
+</android.support.constraint.ConstraintLayout>

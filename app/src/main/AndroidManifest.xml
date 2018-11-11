@@ -23,7 +23,9 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" />
         <activity android:name=".basketMain" />
-        <activity android:name=".basketMandP"></activity>
+        <activity android:name=".basketMandP"/>
+        <activity android:name=".profileMain"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

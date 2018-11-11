@@ -6,6 +6,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
     <string name="btnP"></string>
     <string name="btnM">Market</string>
+    <string name="logout">Logout</string>
 </resources>
