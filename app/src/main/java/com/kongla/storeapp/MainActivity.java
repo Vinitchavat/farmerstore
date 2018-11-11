@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.main_password);
         loadingBar = new ProgressDialog(this);
 
+        auth = FirebaseAuth.getInstance();
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,15 +71,64 @@ public class MainActivity extends AppCompatActivity {
         String email = inputEmail.getText().toString();
         final String password = inputPassword.getText().toString();
 
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
-        } else if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Enter your password", Toast.LENGTH_SHORT).show();
-        } else {
+        if (TextUtils.isEmpty(email))
+        {
+            Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(password))
+        {
+            Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        else
+        {
             loadingBar.setTitle("Login Account");
             loadingBar.setMessage("Please wait, while we are checking the credentials.");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
+        }
+
+        //authenticate user
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+//                        progressBar.setVisibility(View.GONE);
+                        if (!task.isSuccessful()) {
+                            // there was an error
+                            if (password.length() < 6) {
+                                inputPassword.setError(getString(R.string.minimum_password));
+                            } else {
+                                Toast.makeText(MainActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                });
+
+
+
+//        String email = inputEmail.getText().toString();
+//        final String password = inputPassword.getText().toString();
+//
+//        if (TextUtils.isEmpty(email)) {
+//            Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
+//        } else if (TextUtils.isEmpty(password)) {
+//            Toast.makeText(this, "Enter your password", Toast.LENGTH_SHORT).show();
+//        } else {
+//            loadingBar.setTitle("Login Account");
+//            loadingBar.setMessage("Please wait, while we are checking the credentials.");
+//            loadingBar.setCanceledOnTouchOutside(false);
+//            loadingBar.show();
 
 //            //authenticate user
 //            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(MainActivity.this, new
@@ -102,45 +152,45 @@ public class MainActivity extends AppCompatActivity {
 //                        }
 //                    });
 
-            AllowAccessToAccount(email, password);
+//            AllowAccessToAccount(email, password);
         }
-    }
 
 
-    private void AllowAccessToAccount(final String email, final String password) {
-        final DatabaseReference RootRef;
-        RootRef = FirebaseDatabase.getInstance().getReference();
 
-
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(parentDbName).child(email).exists()) {
-                    Users usersData = dataSnapshot.child(parentDbName).child(email).getValue(Users.class);
-
-                    if (usersData.getEmail().equals(email)) {
-                        if (usersData.getPassword().equals(password)) {
-                            Toast.makeText(MainActivity.this, "logged in Successfully...", Toast.LENGTH_SHORT).show();
-                            loadingBar.dismiss();
-
-                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                        } else {
-                            loadingBar.dismiss();
-                            Toast.makeText(MainActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, "Account with this " + email + " do not exists", Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
+//    private void AllowAccessToAccount(final String email, final String password) {
+//        final DatabaseReference RootRef;
+//        RootRef = FirebaseDatabase.getInstance().getReference();
+//
+//
+//        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.child(parentDbName).child(email).exists()) {
+//                    Users usersData = dataSnapshot.child(parentDbName).child(email).getValue(Users.class);
+//
+//                    if (usersData.getEmail().equals(email)) {
+//                        if (usersData.getPassword().equals(password)) {
+//                            Toast.makeText(MainActivity.this, "logged in Successfully...", Toast.LENGTH_SHORT).show();
+//                            loadingBar.dismiss();
+//
+//                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+//                            startActivity(intent);
+//                        } else {
+//                            loadingBar.dismiss();
+//                            Toast.makeText(MainActivity.this, "Password is incorrect.", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                } else {
+//                    Toast.makeText(MainActivity.this, "Account with this " + email + " do not exists", Toast.LENGTH_SHORT).show();
+//                    loadingBar.dismiss();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 }
