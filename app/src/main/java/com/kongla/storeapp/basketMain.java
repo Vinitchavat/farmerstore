@@ -25,11 +25,11 @@ public class basketMain extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(i);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_preorder:
                     /*i = new Intent(getApplicationContext(), preorderMain.class);
                     startActivity(i);*/
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_order:
                     /* ***Selected Activity NO Intent*** */
                     return true;
                 case R.id.navigation_profile:
@@ -49,7 +49,7 @@ public class basketMain extends AppCompatActivity {
         /* *** Set Selected Menu *** */
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.navigation_notifications);
+        navigation.setSelectedItemId(R.id.navigation_order);
 
         Button Market = (Button)findViewById(R.id.btnMarket);
         Market.setOnClickListener(new View.OnClickListener() {

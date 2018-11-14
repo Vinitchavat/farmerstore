@@ -1,5 +1,6 @@
 package com.kongla.storeapp;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,12 +24,12 @@ public class HomeActivity extends AppCompatActivity {
                     /* ***Selected Activity NO Intent*** */
                     return true;
 
-                case R.id.navigation_dashboard:
+                case R.id.navigation_preorder:
                     /*i = new Intent(getApplicationContext(), preorderMain.class);
                     startActivity(i);*/
                     return true;
 
-                case R.id.navigation_notifications:
+                case R.id.navigation_order:
                     i = new Intent(getApplicationContext(), basketMain.class);
                     startActivity(i);
                     return true;
