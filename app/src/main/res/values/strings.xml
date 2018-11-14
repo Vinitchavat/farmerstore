@@ -9,11 +9,15 @@
     <string name="title_profile">Profile</string>
     <string name="btnP">Pre-Order</string>
     <string name="btnM">Market</string>
-    <string name="logout">Logout</string>
     <string name="register_empty_warning">กรุณากรอกข้อมูลให้ครบถ้วน</string>
     <string name="register_name_warning">กรุณากรอกชื่อให้ถูกต้อง</string>
     <string name="register_phone_warning">กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง</string>
     <string name="register_password_warning">กรุณาตั้งรหัสผ่านมากกว่า 6 ตัวอักษร</string>
+
+    <string name="profile_editProfile">แก้ไขรายละเอียดผู้ใช้</string>
+    <string name="profile_logout">ออกจากระบบ</string>
+    <string name="profile_sellerSetting">ตั้งค่าผู้ขาย</string>
+    <string name="profile_buyerSetting">ตั้งค่าผู้ซื้อ</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

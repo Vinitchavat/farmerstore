@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         if (!IDKey.matches("0")){
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
-            //finish();
         }
 
 //        getActionBar().hide();
@@ -113,12 +112,16 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                             }
                         } else {
+
+                            /* *** SET Login State *** */
                             sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
                             editor = sp.edit();
                             FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
                             String uID = currentFirebaseUser.getUid();
                             editor.putString("IDKey",uID);
                             editor.commit();
+
+                            /* *** GO to Homepage *** */
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();

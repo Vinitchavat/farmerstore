@@ -1,7 +1,6 @@
 package com.kongla.storeapp;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 public class HomeActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    Intent i;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -20,16 +20,22 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    /* ***Selected Activity NO Intent*** */
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-                case R.id.navigation_profile:
 
+                case R.id.navigation_dashboard:
+                    /*i = new Intent(getApplicationContext(), preorderMain.class);
+                    startActivity(i);*/
+                    return true;
+
+                case R.id.navigation_notifications:
+                    i = new Intent(getApplicationContext(), basketMain.class);
+                    startActivity(i);
+                    return true;
+
+                case R.id.navigation_profile:
+                    i = new Intent(getApplicationContext(), profileMain.class);
+                    startActivity(i);
                     return true;
             }
             return false;

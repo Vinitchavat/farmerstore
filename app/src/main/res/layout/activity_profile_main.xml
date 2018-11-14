@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".profileMain">
 
     <ImageView
         android:id="@+id/profile_img"
@@ -22,31 +24,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_img"
-        app:layout_constraintBottom_toTopOf="@id/profile_btnedit"
-        android:text="แสนดี ใจดี"/>
+        app:layout_constraintBottom_toTopOf="@id/profile_btnedit"/>
 
     <Button
         android:id="@+id/profile_btnedit"
         android:layout_width="220dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
-        android:text="edit Profile"
-        app:layout_constraintBottom_toTopOf="@+id/profile_btnNoti"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_textName"/>
-
-    <Button
-        android:id="@+id/profile_btnNoti"
-        android:onClick="addData"
-        android:layout_width="220dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:text="Notification"
+        android:text="@string/profile_editProfile"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/profile_btnLogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit" />
+        app:layout_constraintTop_toBottomOf="@id/profile_textName"/>
 
     <Button
         android:id="@+id/profile_btnLogout"
@@ -54,10 +44,11 @@
         android:layout_height="35dp"
         android:layout_marginTop="30dp"
         android:background="@android:color/holo_red_light"
-        android:text="@string/logout"
+        android:text="@string/profile_logout"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnNoti" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit" />
 
     <Button
         android:id="@+id/profile_btnSeller"
@@ -66,7 +57,8 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="30dp"
-        android:text="Seller Setting"
+        android:text="@string/profile_sellerSetting"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/profile_btnBuyer"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,10 +71,23 @@
         android:layout_height="80dp"
         android:layout_marginRight="50dp"
         android:layout_marginBottom="30dp"
-        android:text="Buyer Setting"
+        android:text="@string/profile_buyerSetting"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_btnSeller"
         app:layout_constraintTop_toBottomOf="@+id/profile_btnLogout" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
 
 </android.support.constraint.ConstraintLayout>
