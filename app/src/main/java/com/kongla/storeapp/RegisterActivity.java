@@ -61,24 +61,15 @@ public class RegisterActivity extends AppCompatActivity {
         String email = inputEmail.getText().toString();
         String password = inputPassword.getText().toString();
 
-        if (TextUtils.isEmpty(name))
-        {
-            Toast.makeText(this, "Enter your name", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(phone))
-        {
-            Toast.makeText(this, "Enter your phone", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(email))
-        {
-            Toast.makeText(this, "Enter your email", Toast.LENGTH_SHORT).show();
-        }
-        else if (TextUtils.isEmpty(password))
-        {
-            Toast.makeText(this, "Enter your password", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, R.string.register_empty_warning, Toast.LENGTH_SHORT).show();
+        } else if (name.length() <= 3) {
+            Toast.makeText(this, R.string.register_name_warning, Toast.LENGTH_SHORT).show();
+        } else if (phone.length() < 10) {
+            Toast.makeText(this, R.string.register_phone_warning, Toast.LENGTH_SHORT).show();
+        } else if (password.length() < 6) {
+            Toast.makeText(this, R.string.register_password_warning, Toast.LENGTH_SHORT).show();
+        } else {
             registerNewUser();
         }
     }
@@ -101,30 +92,17 @@ public class RegisterActivity extends AppCompatActivity {
                             .getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful())
-                            {
+                            if (task.isSuccessful()) {
                                 Toast.makeText(RegisterActivity.this, "Register Success",
                                         Toast.LENGTH_SHORT).show();
 
                                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         startActivity(intent);
                             }
-                            else
-                            {
+                            else {
                                 Toast.makeText(RegisterActivity.this, task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
                             }
-//                            Toast.makeText(RegisterActivity.this, "Register Success",
-//                                    Toast.LENGTH_SHORT).show();
-
-//                            SharedPreferences sp = getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-//                            SharedPreferences.Editor editor = sp.edit();
-//                            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-//                            t = currentFirebaseUser.getUid();
-//                            editor.putString("IDKey",t);
-//                            editor.commit();
-//                            String stringValue = sp.getString("IDKey", "not found!");
-//                            ntextview.setText(stringValue);
                         }
                     });
                 }

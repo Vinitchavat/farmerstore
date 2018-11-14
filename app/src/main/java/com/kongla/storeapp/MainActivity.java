@@ -1,7 +1,9 @@
 package com.kongla.storeapp;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,13 +34,21 @@ public class MainActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private ProgressDialog loadingBar;
     private FirebaseAuth auth;
-
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        editor = sp.edit();
+        String IDKey = sp.getString("IDKey", "0");
+        if (!IDKey.matches("0")){
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            //finish();
+        }
 
 //        getActionBar().hide();
 
@@ -102,6 +113,12 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                             }
                         } else {
+                            sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+                            editor = sp.edit();
+                            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+                            String uID = currentFirebaseUser.getUid();
+                            editor.putString("IDKey",uID);
+                            editor.commit();
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
