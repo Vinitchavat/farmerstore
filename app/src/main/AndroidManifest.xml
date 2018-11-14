@@ -21,12 +21,13 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home" />
-        <activity android:name=".basketMain" />
-        <activity android:name=".basketMandP" />
-        <activity android:name=".profileMain" />
+            android:label="@string/title_home"/>
+        <activity android:name=".basketMain"
+            android:label="@string/title_order"/>
+        <activity android:name=".basketMandP"></activity>
+        <activity android:name=".profileMain"
+            android:label="@string/title_profile"></activity>
         <activity android:name=".chatNew"/>
-
     </application>
 
 </manifest>

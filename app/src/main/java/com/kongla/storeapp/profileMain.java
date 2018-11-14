@@ -1,5 +1,6 @@
 package com.kongla.storeapp;
 
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -32,11 +33,11 @@ public class profileMain extends AppCompatActivity {
                     Intent i = new Intent(getApplicationContext(), HomeActivity.class);
                     startActivity(i);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_preorder:
                     /*i = new Intent(getApplicationContext(), preorderMain.class);
                     startActivity(i);*/
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_order:
                     i = new Intent(getApplicationContext(), basketMain.class);
                     startActivity(i);
                     return true;
