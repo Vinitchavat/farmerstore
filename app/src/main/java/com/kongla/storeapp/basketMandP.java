@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class basketMandP extends AppCompatActivity {
-
+    Intent i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,35 +27,34 @@ public class basketMandP extends AppCompatActivity {
         {
             final String[] Marlist = {"Order1","Order2","Order3"};
             ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>( this,android.R.layout.simple_list_item_1, android.R.id.text1,Marlist);
-            listviewMarket.setAdapter(adapter);
-            listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent next = new Intent(basketMandP.this, chat.class);
-                    String pos = String.valueOf(position+1);
-                    next.putExtra("mytext",Marlist[position]);
-                    startActivity(next);
-                }
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>( this,android.R.layout.simple_list_item_1, android.R.id.text1,Marlist);
+//            listviewMarket.setAdapter(adapter);
+//            listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    Intent next = new Intent(basketMandP.this, chatNew.class);
+//                    //next.putExtra("mytext",Marlist[position]);
+//                    startActivity(next);
+//                }
+//
+//            });
 
-            });
         }
         else if (newString.equals("Pre"))
         {
             final String[] Marlist = {"Pre1","Pre2","Pre3"};
             ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>( this,android.R.layout.simple_list_item_1, android.R.id.text1,Marlist);
-            listviewMarket.setAdapter(adapter);
-            listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent next = new Intent(basketMandP.this, chat.class);
-                    String pos = String.valueOf(position+1);
-                    next.putExtra("mytext",Marlist[position]);
-                    startActivity(next);
-                }
-
-            });
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>( this,android.R.layout.simple_list_item_1, android.R.id.text1,Marlist);
+//            listviewMarket.setAdapter(adapter);
+//            listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    Intent next = new Intent(basketMandP.this, chatNew.class);
+//                    next.putExtra("mytext",Marlist[position]);
+//                    startActivity(next);
+//                }
+//
+//            });
         }
 
     }
