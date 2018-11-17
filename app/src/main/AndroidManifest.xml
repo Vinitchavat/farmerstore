@@ -27,19 +27,27 @@
             android:label="@string/title_order"/>
         <activity android:name=".basketMandP"></activity>
         <activity android:name=".chatNew"/>
+        <activity android:name=".PreMain"
+            android:label="@string/preorder"></activity>
+        <activity android:name=".PreListDay"
+            android:parentActivityName=".PreMain"
+            android:label="@string/pre_daylist"></activity>
 
         <activity android:name=".profileMain"
             android:label="@string/title_profile"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".profileEditImage"
             android:parentActivityName=".profileMain"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/profile_editimg"></activity>
         <activity android:name=".profileEditProfile"
             android:parentActivityName=".profileMain"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/profile_edit"></activity>
         <activity android:name=".profileEditActivity"
             android:parentActivityName=".profileEditProfile"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:label="@string/profile_edit">
         </activity>
     </application>
 

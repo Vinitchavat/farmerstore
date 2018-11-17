@@ -3,7 +3,9 @@ package com.kongla.storeapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,32 +19,50 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class PreMain extends AppCompatActivity {
-    public DatabaseReference callPre, callall;
-    ArrayList<String> fruitID = new ArrayList<String>();
-    ArrayList<String> fruitName = new ArrayList<String>();
-    ArrayList<Integer> price = new ArrayList<Integer>();
-    ArrayList<String> productName = new ArrayList<String>();
-    ArrayList<Integer> quantity = new ArrayList<Integer>();
-    ArrayList<String> unitPro = new ArrayList<String>();
+    public DatabaseReference callPre;
     CustomAdapterForPreorder adapterCus;
-    ArrayList<String> clubkey = new ArrayList<String>();
+    ArrayList<String> clubkey = new ArrayList<>();
     String getK;
-    int countKey, countDurian, countLongan, countOrange, countPineapple, countrambutan, countmangosteen;
-    ArrayList<Integer> countDurianA = new ArrayList<Integer>();
-    ArrayList<Integer> countLonganA = new ArrayList<Integer>();
-    ArrayList<Integer> countOrangeA = new ArrayList<Integer>();
-    ArrayList<Integer> countPineappleA = new ArrayList<Integer>();
-    ArrayList<Integer> countrambutanA = new ArrayList<Integer>();
-    ArrayList<Integer> countmangosteenA = new ArrayList<Integer>();
-    ArrayList<String[]> fruitcount = new ArrayList<String[]>();
-    public int i;
-    String[] day;
+    int countKey;
 
+    BottomNavigationView navigation;
+
+    /* *** Bottom Navigation *** */
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(i);
+                    return true;
+                case R.id.navigation_preorder:
+                    /* ***Selected Activity NO Intent*** */
+                    return true;
+                case R.id.navigation_order:
+                    i = new Intent(getApplicationContext(), basketMain.class);
+                    startActivity(i);
+                    return true;
+                case R.id.navigation_profile:
+                    i = new Intent(getApplicationContext(), profileMain.class);
+                    startActivity(i);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.premain);
+
+        /* *** Set Selected Menu *** */
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.navigation_preorder);
+
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         callPre = database.getReference().child("product").child("preorderProduct");
         callPre.addValueEventListener(new ValueEventListener() {
@@ -59,7 +79,7 @@ public class PreMain extends AppCompatActivity {
                 mStringArray = clubkey.toArray(mStringArray);
                 final String[] finalMStringArray = mStringArray;
                 ListView list = (ListView) findViewById(R.id.list);
-                adapterCus =new CustomAdapterForPreorder(getApplicationContext(),clubkey);
+                adapterCus = new CustomAdapterForPreorder(getApplicationContext(),clubkey);
                 list.setAdapter(adapterCus);
 
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

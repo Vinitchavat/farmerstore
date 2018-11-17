@@ -26,8 +26,8 @@ public class basketMain extends AppCompatActivity {
                     startActivity(i);
                     return true;
                 case R.id.navigation_preorder:
-                    /*i = new Intent(getApplicationContext(), preorderMain.class);
-                    startActivity(i);*/
+                    i = new Intent(getApplicationContext(), PreMain.class);
+                    startActivity(i);
                     return true;
                 case R.id.navigation_order:
                     /* ***Selected Activity NO Intent*** */

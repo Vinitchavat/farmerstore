@@ -24,6 +24,11 @@
     <string name="profile_fullname">ชื่อ-นามสกุล</string>
     <string name="profile_address">ที่อยู่</string>
     <string name="profile_phone">โทรศัพท์</string>
+    <string name="profile_editimg">แก้ไขรูปภาพ</string>
+    <string name="profile_edit">แก้ไขข้อมูล</string>
+
+    <string name="preorder">สินค้าสั่งจอง</string>
+    <string name="pre_daylist">รายการสินค้าสั่งจอง</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

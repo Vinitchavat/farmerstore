@@ -25,8 +25,8 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_preorder:
-                    /*i = new Intent(getApplicationContext(), preorderMain.class);
-                    startActivity(i);*/
+                    i = new Intent(getApplicationContext(), PreMain.class);
+                    startActivity(i);
                     return true;
 
                 case R.id.navigation_order:

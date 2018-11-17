@@ -21,13 +21,7 @@ public class PreListDay extends AppCompatActivity {
     public DatabaseReference callDataPre;
     String order;
     GetData getData;
-    ArrayList<String> fruitID = new ArrayList<String>();
     ArrayList<String> fruitName = new ArrayList<String>();
-    ArrayList<Integer> price = new ArrayList<Integer>();
-    ArrayList<String> productName = new ArrayList<String>();
-    ArrayList<Integer> quantity = new ArrayList<Integer>();
-    ArrayList<String> unitPro = new ArrayList<String>();
-    CustomAdapterForPreorder adapterCus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class CustomAdapterForPreorder extends BaseAdapter {
     Context mContext;
-    ArrayList<String> clubkey = new ArrayList<String>();
+    ArrayList<String> clubkey = new ArrayList<>();
 
-    public DatabaseReference callPre, callall;
+    public DatabaseReference callPre;
     GetData getData;
     ArrayList<String> fruitName = new ArrayList<String>();
 
