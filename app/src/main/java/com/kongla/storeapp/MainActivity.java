@@ -106,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
 //                        progressBar.setVisibility(View.GONE);
                         if (!task.isSuccessful()) {
                             // there was an error
+                            loadingBar.dismiss();
                             if (password.length() < 6) {
                                 inputPassword.setError(getString(R.string.minimum_password));
                             } else {
-                                Toast.makeText(MainActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
                             }
                         } else {
 
