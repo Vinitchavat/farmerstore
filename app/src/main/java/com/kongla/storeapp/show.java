@@ -76,11 +76,25 @@ public class show extends AppCompatActivity {
                 ListView listView =findViewById(R.id.listShowPre);
                 customAdapShowPre = new CustomAdapShowPre(getApplicationContext(),draw,farmID,fruitName,price,productName,quantity,unitPro);
                 listView.setAdapter(customAdapShowPre);
+
+                //send Data here
+
+//                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        Intent next = new Intent(show.this, page.class);
+//                        next.putExtra("DayPre", order);
+//                        next.putExtra("DayPreFruit", fruitName.get(position));
+//                        startActivity(next);
+//                    }
+//                });
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
     }
 }
