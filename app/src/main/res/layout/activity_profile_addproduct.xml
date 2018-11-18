@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/product_image"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:id="@+id/addProductImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:padding="30dp"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/ic_add_circle_black_24dp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:textSize="16dp"
+                android:text="@string/profile_productname"/>
+            <TextView
+                android:id="@+id/textProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="92dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:text="@string/choosefruitname"/>
+            <EditText
+                android:id="@+id/addTextProductName"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:layout_marginTop="40dp"
+                android:textSize="16dp"
+                android:hint="@string/profile_productname"
+                android:includeFontPadding="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/quantity"/>
+
+            <EditText
+                android:id="@+id/editQuantity"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:hint="10"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:textAlignment="textEnd"
+                android:textSize="16dp" />
+            <Spinner
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="145dp"
+                android:id="@+id/dropdownUnit">
+            </Spinner>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/price"/>
+
+            <EditText
+                android:id="@+id/editprice"
+                android:layout_width="45dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="90dp"
+                android:hint="100"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:textAlignment="textEnd"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/editprice"
+                android:layout_marginLeft="60dp"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/baht"/>
+            <TextView
+                android:id="@+id/perunit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/editprice"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="100dp"
+                android:textSize="16dp"
+                android:text="ต่อ"/>
+        </RelativeLayout>
+
+        <Switch
+            android:id="@+id/switchPreorder"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="50dp"
+            android:text="@string/preorder" />
+        <RelativeLayout
+            android:id="@+id/preorderlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
+            android:visibility="invisible">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/datetosend"/>
+
+            <EditText
+                android:id="@+id/editDate"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:hint="@string/date"
+                android:textSize="14dp"
+                android:layout_marginStart="130dp" />
+            <EditText
+                android:id="@+id/editMonth"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:hint="@string/month"
+                android:textSize="14dp"
+                android:layout_marginStart="175dp" />
+            <EditText
+                android:id="@+id/editYear"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:hint="@string/year"
+                android:textSize="14dp"
+                android:layout_marginStart="220dp" />
+
+        </RelativeLayout>
+        <Button
+            android:id="@+id/deleteProduct"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20sp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            android:text="@string/deleteproduct"/>
+
+    </LinearLayout>
+
+</ScrollView>
