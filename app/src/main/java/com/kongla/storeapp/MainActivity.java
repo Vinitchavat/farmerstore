@@ -124,13 +124,11 @@ public class MainActivity extends AppCompatActivity {
                             /* *** GET user status *** */
                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                                     .child("Users").child(uID);
-                            Log.v("17","id"+uID);
                             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String s = dataSnapshot.child("status").getValue(String.class);
                                     editor.putString("Status",s);
-                                    Log.v("17","get"+s);
                                     editor.commit();
                                 }
 
@@ -141,8 +139,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
                             editor.commit();
-                            String t = sp.getString("Status","none");
-                            Log.v("17",t);
                             loadingBar.dismiss();
 
                             /* *** GO to Homepage *** */

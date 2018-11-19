@@ -150,7 +150,7 @@ public class profileMain extends AppCompatActivity {
 
                 /* *** Progess Bar *** */
                 loadingBar = new ProgressDialog(profileMain.this);
-                loadingBar.setTitle("Logging out");
+                loadingBar.setTitle("ออกจากระบบ");
                 loadingBar.setCanceledOnTouchOutside(false);
                 loadingBar.show();
 
