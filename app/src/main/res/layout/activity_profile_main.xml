@@ -63,17 +63,20 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/profile_btnBuyer"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="20sp"
         android:text="@string/profile_buyerSetting"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_btnSeller"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnSeller" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit"
+        android:visibility="invisible"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
