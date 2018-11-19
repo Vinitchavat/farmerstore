@@ -62,6 +62,7 @@
             android:parentActivityName=".profileSellerSetting"
             android:screenOrientation="portrait"
             android:label="@string/editproduct"/>
+        <activity android:name=".ProductActivity"/>
     </application>
 
 </manifest>
