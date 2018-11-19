@@ -1,8 +1,11 @@
 package com.kongla.storeapp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +28,7 @@ public class MarListFruit extends AppCompatActivity {
     ArrayList<String> productName = new ArrayList<String>();
     ArrayList<Integer> quantity = new ArrayList<Integer>();
     ArrayList<String> unitPro = new ArrayList<String>();
+    ArrayList<String> allKey = new ArrayList<>();
     CustomAdapShowMar customAdapShowMar;
 
     @Override
@@ -41,6 +45,8 @@ public class MarListFruit extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    String key = d.getKey();
+                    allKey.add(key);
                     getData = d.getValue(GetData.class);
                     farmID.add(getData.getFarmID());
                     fruitName.add(getData.getFruitName());
@@ -73,15 +79,15 @@ public class MarListFruit extends AppCompatActivity {
 
                 //send Data to next page here
 
-//                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        Intent next = new Intent(show.this, page.class);
-//                        next.putExtra("DayPre", order);
-//                        next.putExtra("DayPreFruit", fruitName.get(position));
-//                        startActivity(next);
-//                    }
-//                });
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent next = new Intent(MarListFruit.this, ProductActivity.class);
+                        next.putExtra("product", "marketProduct");
+                        next.putExtra("key", allKey.get(position));
+                        startActivity(next);
+                    }
+                });
 
             }
             @Override

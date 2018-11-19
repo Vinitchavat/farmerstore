@@ -47,7 +47,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="Product Name"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +65,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="9,999 Bath"
                     android:textColor="@color/common_google_signin_btn_text_dark_focused"
                     android:textSize="30sp"
                     app:layout_constraintStart_toStartOf="@+id/product_name1"
@@ -87,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="Details"
+                    android:text="รายละเอียด"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="@+id/product_price1"
                     app:layout_constraintTop_toBottomOf="@+id/product_price1" />
@@ -98,7 +96,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="8dp"
-                    android:text="\u2022 ใหม่"
                     app:layout_constraintStart_toStartOf="@+id/product_details1"
                     app:layout_constraintTop_toBottomOf="@+id/product_details1" />
 
@@ -108,7 +105,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="8dp"
-                    android:text="\u2022 แพง"
                     app:layout_constraintStart_toStartOf="@+id/product_details1"
                     app:layout_constraintTop_toBottomOf="@+id/product_subdetails1" />
 
@@ -118,7 +114,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="8dp"
-                    android:text="\u2022 ไม่ขาย"
                     app:layout_constraintStart_toStartOf="@+id/product_details1"
                     app:layout_constraintTop_toBottomOf="@+id/product_subdetails2" />
 
@@ -141,7 +136,6 @@
 
         <Button
             android:id="@+id/product_button1"
-            android:background="@drawable/button_style2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -149,7 +143,6 @@
 
         <Button
             android:id="@+id/product_button2"
-            android:background="@drawable/button_style2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
