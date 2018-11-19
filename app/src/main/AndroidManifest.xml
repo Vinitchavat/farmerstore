@@ -25,6 +25,7 @@
 
         <activity android:name=".basketMain"
             android:label="@string/title_order"/>
+        <activity android:name=".MarListFruit"></activity>
         <activity android:name=".basketMandP"/>
         <activity android:name=".chatNew"/>
         <activity android:name=".PreMain"
