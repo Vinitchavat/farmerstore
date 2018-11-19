@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/productImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/productName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/productImage"
+        android:layout_marginLeft="30dp"
+        android:maxLines="1"
+        android:textSize="20sp"
+        tools:text="@tools:sample/date/day_of_week" />
+    <TextView
+        android:id="@+id/productSell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/productImage"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="14sp"
+        android:paddingTop="5dp"
+        tools:text="@tools:sample/date/day_of_week" />
+
+    <Button
+        android:id="@+id/btn_editproduct"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/productImage"
+        android:includeFontPadding="false"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="14sp"
+        android:text="@string/profile_editproduct"/>
+</RelativeLayout>

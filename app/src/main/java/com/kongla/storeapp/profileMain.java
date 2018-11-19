@@ -122,8 +122,8 @@ public class profileMain extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent i2 = new Intent(getApplicationContext(), SellerSetting.class);
-                startActivity(i2);*/
+                Intent i2 = new Intent(getApplicationContext(), profileSellerSetting.class);
+                startActivity(i2);
             }
         });
 
@@ -151,6 +151,7 @@ public class profileMain extends AppCompatActivity {
                 sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
                 editor = sp.edit();
                 editor.remove("IDKey");
+                editor.remove("farmID");
                 editor.commit();
 
                 firebaseAuth = FirebaseAuth.getInstance();

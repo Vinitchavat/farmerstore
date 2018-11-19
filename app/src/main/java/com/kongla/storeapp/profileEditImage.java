@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -35,7 +37,7 @@ public class profileEditImage extends AppCompatActivity {
 
     public static final int PICK_IMAGE = 1;
     Uri uri;
-    private String photoURL;
+    private static String photoURL;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
 
@@ -61,7 +63,7 @@ public class profileEditImage extends AppCompatActivity {
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 String pickTitle = "เลือกรูปภาพ หรือ ถ่ายรูปใหม่";
                 Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{
                         takePhotoIntent
                 });
                 startActivityForResult(chooserIntent, PICK_IMAGE);
@@ -71,9 +73,9 @@ public class profileEditImage extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        if(resultCode == RESULT_OK){
-            try{
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            try {
                 uri = data.getData();
                 Bitmap bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(uri));
                 ImageView img = (ImageView) findViewById(R.id.img);
@@ -83,18 +85,32 @@ public class profileEditImage extends AppCompatActivity {
             }
         }
     }
-    private void uploadImage(){
+
+    private void uploadImage() {
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        String userID = sp.getString("IDKey","0");
+        final String userID = sp.getString("IDKey", "0");
         StorageReference storageRef = FirebaseStorage.getInstance().getReference()
                 .child("Image").child("users/" + userID);
 
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
+        storageReference.child("Image").child("users/" + userID).getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        photoURL = uri.toString();
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                .child("Users").child(userID);
+                        databaseReference.child("imgLink").setValue(photoURL);
+                    }
+                });
         storageRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(getApplicationContext(),
                         "Upload Success", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+
+                Intent i = new Intent(getApplicationContext(), profileMain.class);
                 startActivity(i);
             }
         });
@@ -106,9 +122,10 @@ public class profileEditImage extends AppCompatActivity {
             }
         });
     }
-    private void getImage(){
+
+    private void getImage() {
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        String userID = sp.getString("IDKey","0");
+        String userID = sp.getString("IDKey", "0");
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
         storageReference.child("Image").child("users/" + userID).getDownloadUrl()
@@ -133,11 +150,10 @@ public class profileEditImage extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.actionbarcheck) {
-            if(uri==null){
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            if (uri == null) {
+                Intent i = new Intent(getApplicationContext(), profileMain.class);
                 startActivity(i);
-            }
-            else {
+            } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(profileEditImage.this);
                 builder.setMessage("ยืนยันการแก้ไข");
                 builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
@@ -156,6 +172,7 @@ public class profileEditImage extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
