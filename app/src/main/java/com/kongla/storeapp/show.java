@@ -30,6 +30,7 @@ public class show extends AppCompatActivity {
     ArrayList<String> productName = new ArrayList<String>();
     ArrayList<Integer> quantity = new ArrayList<Integer>();
     ArrayList<String> unitPro = new ArrayList<String>();
+    ArrayList<String> allKey = new ArrayList<String>();
     CustomAdapShowPre customAdapShowPre;
 
     @Override
@@ -48,6 +49,8 @@ public class show extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     getData = d.getValue(GetData.class);
+                    String key = d.getKey();
+                    allKey.add(key);
                     farmID.add(getData.getFarmID());
                     fruitName.add(getData.getFruitName());
                     price.add(getData.getPrice());
@@ -79,15 +82,17 @@ public class show extends AppCompatActivity {
 
                 //send Data to next page here
 
-//                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        Intent next = new Intent(show.this, page.class);
-//                        next.putExtra("DayPre", order);
-//                        next.putExtra("DayPreFruit", fruitName.get(position));
-//                        startActivity(next);
-//                    }
-//                });
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent next = new Intent(show.this, ProductActivity.class);
+                        next.putExtra("product", "preorderProduct");
+                        next.putExtra("farmname", "preorderProduct");
+                        next.putExtra("DayPre", day);
+                        next.putExtra("key", allKey.get(position));
+                        startActivity(next);
+                    }
+                });
 
             }
             @Override
