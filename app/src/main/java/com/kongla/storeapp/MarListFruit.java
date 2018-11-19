@@ -1,27 +1,22 @@
 package com.kongla.storeapp;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
-public class show extends AppCompatActivity {
-    String day,order;
+public class MarListFruit extends AppCompatActivity {
+    String order;
     GetData getData;
     int draw;
     ArrayList<String> farmID = new ArrayList<String>();
@@ -30,19 +25,18 @@ public class show extends AppCompatActivity {
     ArrayList<String> productName = new ArrayList<String>();
     ArrayList<Integer> quantity = new ArrayList<Integer>();
     ArrayList<String> unitPro = new ArrayList<String>();
-    CustomAdapShowPre customAdapShowPre;
+    CustomAdapShowMar customAdapShowMar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show);
+        setContentView(R.layout.activity_mar_list_fruit);
 
         Bundle extras = getIntent().getExtras();
-        day = extras.getString("DayPre");
-        order = extras.getString("DayPreFruit");
+        order = extras.getString("MarFruit");
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query callDataPre = database.getReference().child("product").child("preorderProduct").child(day).orderByChild("fruitName").equalTo(order);
+        Query callDataPre = database.getReference().child("product").child("marketProduct").orderByChild("fruitName").equalTo(order);
         callDataPre.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -73,9 +67,9 @@ public class show extends AppCompatActivity {
                 else{
                     draw = R.drawable.longan;
                 }
-                ListView listView =findViewById(R.id.listShowPre);
-                customAdapShowPre = new CustomAdapShowPre(getApplicationContext(),draw,farmID,fruitName,price,productName,quantity,unitPro);
-                listView.setAdapter(customAdapShowPre);
+                ListView listView =findViewById(R.id.listMar);
+                customAdapShowMar = new CustomAdapShowMar(getApplicationContext(),draw,farmID,fruitName,price,productName,quantity,unitPro);
+                listView.setAdapter(customAdapShowMar);
 
                 //send Data to next page here
 
@@ -95,6 +89,5 @@ public class show extends AppCompatActivity {
 
             }
         });
-
     }
 }

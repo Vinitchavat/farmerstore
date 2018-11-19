@@ -1,16 +1,12 @@
 package com.kongla.storeapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class CustomAdapShowPre extends BaseAdapter {
+public class CustomAdapShowMar extends BaseAdapter {
     Context mContext;
     int draw;
     ArrayList<String> farmID = new ArrayList<String>();
@@ -31,10 +27,10 @@ public class CustomAdapShowPre extends BaseAdapter {
     ArrayList<String> productName = new ArrayList<String>();
     ArrayList<Integer> quantity = new ArrayList<Integer>();
     ArrayList<String> unitPro = new ArrayList<String>();
-    public DatabaseReference calllistPre;
+    public DatabaseReference calllistMar;
 
 
-    public CustomAdapShowPre(Context context,int draw,ArrayList<String> farmID, ArrayList<String> fruitName,ArrayList<Integer> price,ArrayList<String> productName,ArrayList<Integer> quantity,ArrayList<String> unitPro){
+    public CustomAdapShowMar(Context context, int draw, ArrayList<String> farmID, ArrayList<String> fruitName, ArrayList<Integer> price, ArrayList<String> productName, ArrayList<Integer> quantity, ArrayList<String> unitPro){
         this.mContext = context;
         this.draw= draw;
         this.farmID=farmID;
@@ -70,13 +66,13 @@ public class CustomAdapShowPre extends BaseAdapter {
         imageView.setImageResource(draw);
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        calllistPre = database.getReference().child("farmer").child(farmID.get(position));
-        calllistPre.addValueEventListener(new ValueEventListener() {
+        calllistMar = database.getReference().child("farmer").child(farmID.get(position));
+        calllistMar.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Map map = (Map) dataSnapshot.getValue();
-                String farmname = String.valueOf(map.get("farmName"));
 
+                String farmname = String.valueOf(map.get("farmName"));
                 TextView textView3 = view.findViewById(R.id.showFarmName);
                 textView3.setText("ผู้ขาย : "+farmname);
             }

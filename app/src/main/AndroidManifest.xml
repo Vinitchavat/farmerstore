@@ -21,44 +21,55 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_home"/>
-
-        <activity android:name=".basketMain"
-            android:label="@string/title_order"/>
-        <activity android:name=".basketMandP"/>
-        <activity android:name=".chatNew"/>
-        <activity android:name=".PreMain"
-            android:label="@string/preorder"/>
-        <activity android:name=".PreListDay"
-            android:parentActivityName=".PreMain"
-            android:label="@string/pre_daylist"/>
-        <activity android:name=".show"/>
-
-        <activity android:name=".profileMain"
+            android:label="@string/title_home" />
+        <activity
+            android:name=".MarListFruit" />
+        <activity
+            android:name=".basketMain"
+            android:label="@string/title_order" />
+        <activity android:name=".basketMandP" />
+        <activity android:name=".chatNew" />
+        <activity
+            android:name=".PreMain"
+            android:label="@string/preorder" />
+        <activity
+            android:name=".PreListDay"
+            android:label="@string/pre_daylist"
+            android:parentActivityName=".PreMain" />
+        <activity android:name=".show" />
+        <activity
+            android:name=".profileMain"
             android:label="@string/title_profile"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".profileEditImage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profileEditImage"
+            android:label="@string/profile_editimg"
             android:parentActivityName=".profileMain"
-            android:screenOrientation="portrait"
-            android:label="@string/profile_editimg"/>
-        <activity android:name=".profileEditProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profileEditProfile"
+            android:label="@string/profile_edit"
             android:parentActivityName=".profileMain"
-            android:screenOrientation="portrait"
-            android:label="@string/profile_edit"/>
-        <activity android:name=".profileEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profileEditActivity"
+            android:label="@string/profile_edit"
             android:parentActivityName=".profileEditProfile"
-            android:screenOrientation="portrait"
-            android:label="@string/profile_edit"/>
-        <activity android:name=".profileSellerSetting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profileSellerSetting"
+            android:label="@string/profile_sellerSetting"
             android:parentActivityName=".profileMain"
-            android:screenOrientation="portrait"
-            android:label="@string/profile_sellerSetting"/>
-        <activity android:name=".profileEditFarm"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profileEditFarm"
             android:parentActivityName=".profileMain"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".profileAddProduct"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profileAddProduct"
             android:parentActivityName=".profileMain"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".MarListFruit"></activity>
     </application>
 
 </manifest>
