@@ -13,11 +13,44 @@
     <string name="register_name_warning">กรุณากรอกชื่อให้ถูกต้อง</string>
     <string name="register_phone_warning">กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง</string>
     <string name="register_password_warning">กรุณาตั้งรหัสผ่านมากกว่า 6 ตัวอักษร</string>
+    <string name="click_to_add_image">เปลี่ยนรูปภาพ</string>
 
     <string name="profile_editProfile">แก้ไขรายละเอียดผู้ใช้</string>
     <string name="profile_logout">ออกจากระบบ</string>
     <string name="profile_sellerSetting">ตั้งค่าผู้ขาย</string>
     <string name="profile_buyerSetting">ตั้งค่าผู้ซื้อ</string>
+    <string name="profile_email">อีเมล</string>
+    <string name="profile_password">รหัสผ่าน</string>
+    <string name="profile_fullname">ชื่อ-นามสกุล</string>
+    <string name="profile_address">ที่อยู่</string>
+    <string name="profile_phone">โทรศัพท์</string>
+    <string name="profile_editimg">แก้ไขรูปภาพ</string>
+    <string name="profile_edit">แก้ไขข้อมูล</string>
+    <string name="profile_addproduct">เพิ่มสินค้า</string>
+    <string name="edit">แก้ไข</string>
+    <string name="profile_editproduct">แก้ไขสินค้า</string>
+    <string name="date">วัน</string>
+    <string name="month">เดือน</string>
+    <string name="year">ปี</string>
+    <string name="price">ราคา</string>
+    <string name="quantity">จำนวน</string>
+    <string name="product_image">รูปสินค้า</string>
+    <string name="choosefruitname">เลือกชื่อผลไม้</string>
+    <string name="baht">บาท</string>
+    <string name="per">ต่อ</string>
+    <string name="profile_productname">ชื่อเพิ่มเติม</string>
+    <string name="datetosend">วันที่จัดส่งสินค้า</string>
+    <string name="deleteproduct">ลบสินค้า</string>
+    <string name="confirm">ยืนยัน</string>
+    <string name="savedata">บันทึกข้อมูล</string>
+    <string name="farmname">ชื่อฟาร์ม</string>
+    <string name="farmdescription">รายละเอียดฟาร์ม</string>
+    <string name="farmerid">เลขทะเบียนเกษตรกร</string>
+    <string name="editproduct">เพิ่ม/แก้ไขสินค้า</string>
+    <string name="editfarm">แก้ไขรายละเอียดฟาร์ม</string>
+
+    <string name="preorder">สินค้าสั่งจอง</string>
+    <string name="pre_daylist">รายการสินค้าสั่งจอง</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
