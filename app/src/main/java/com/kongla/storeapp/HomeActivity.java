@@ -1,33 +1,36 @@
 package com.kongla.storeapp;
 
+import android.app.ActionBar;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Random;
+import com.kongla.storeapp.Interface.ItemClickListener;
+import com.kongla.storeapp.Model.Category;
+import com.kongla.storeapp.ViewHolder.MenuViewHolder;
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity {
-    public DatabaseReference callMarket;
-    Intent i;
-    GetData getData;
-    ArrayList<String> fruitDraw = new ArrayList<String>();
-    ArrayList<Integer> fruitRec = new ArrayList<Integer>();
 
-    int countxx;
+    FirebaseDatabase database;
+    DatabaseReference category;
+
+    RecyclerView recyler_menu;
+    RecyclerView.LayoutManager layoutManager;
+
+    private TextView mTextMessage;
+    Intent i;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -40,8 +43,8 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_preorder:
-                    i = new Intent(getApplicationContext(), PreMain.class);
-                    startActivity(i);
+                    /*i = new Intent(getApplicationContext(), preorderMain.class);
+                    startActivity(i);*/
                     return true;
 
                 case R.id.navigation_order:
@@ -63,130 +66,43 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        final ImageView img1 = findViewById(R.id.img1);
-        ImageView img2 = findViewById(R.id.img2);
-        ImageView img3 = findViewById(R.id.img3);
-        ImageView img4 = findViewById(R.id.img4);
-        ImageView img5 = findViewById(R.id.img5);
-        ImageView img6 = findViewById(R.id.img6);
-        ImageView img7 = findViewById(R.id.img7);
-        ImageView img8 = findViewById(R.id.img8);
+        //Firebase
+        database = FirebaseDatabase.getInstance();
+        category = database.getReference("Category");
 
-        final ImageView[] lay = {img3,img4,img5,img6,img7,img8};
-        final ImageView[] layRec = {img1,img2};
-        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.pineapple, R.drawable.rambutan, R.drawable.durian};
-
+        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        callMarket = database.getReference().child("product").child("marketProduct");
-        callMarket.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    getData = d.getValue(GetData.class);
-                    fruitDraw.add(getData.getFruitName());
-                }
-                for(int count = 0 ; count<fruitDraw.size();count++){
-                    for(int countIn = count+1 ; countIn<fruitDraw.size();countIn++){
-                        if(fruitDraw.get(count).matches(fruitDraw.get(countIn))){
-                            fruitDraw.remove(countIn);
-                        }
-                        else {
-                            countxx++;
-                        }
-                    }
-                }
-                fruitRec.add(0);
-                if(fruitDraw.size()>=2) {
-                    fruitRec.clear();
-                    int min = 0;
-                    int max = fruitDraw.size();
-                    Random r = new Random();
-                    int ran1 = r.nextInt(max - min);
-                    int ran2 = r.nextInt(max - min);
-                    while (ran1 == ran2) {
-                        int ran3 = r.nextInt(max - min);
-                        ran2 = ran3;
-                    }
-                    fruitRec.add(ran1);
-                    fruitRec.add(ran2);
-                }
-                for(int count = 0 ; count<fruitRec.size();count++){
-                    if(fruitDraw.get(fruitRec.get(count)).matches("ทุเรียน")){
-                        layRec[count].setImageResource(fruit[5]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("ลำไย")){
-                        layRec[count].setImageResource(fruit[1]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("แตงโม")){
-                        layRec[count].setImageResource(fruit[3]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("มังคุด")){
-                        layRec[count].setImageResource(fruit[0]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("เงาะ")){
-                        layRec[count].setImageResource(fruit[4]);
-                    }
-                    else {
-                        layRec[count].setImageResource(fruit[2]);
-                    }
-                }
-                for(int count = 0 ; count<fruitDraw.size();count++){
-                    if(fruitDraw.get(count).matches("ทุเรียน")){
-                        lay[count].setImageResource(fruit[5]);
-                    }
-                    else if(fruitDraw.get(count).matches("ลำไย")){
-                        lay[count].setImageResource(fruit[1]);
-                    }
-                    else if(fruitDraw.get(count).matches("แตงโม")){
-                        lay[count].setImageResource(fruit[3]);
-                    }
-                    else if(fruitDraw.get(count).matches("มังคุด")){
-                        lay[count].setImageResource(fruit[0]);
-                    }
-                    else if(fruitDraw.get(count).matches("เงาะ")){
-                        lay[count].setImageResource(fruit[4]);
-                    }
-                    else {
-                        lay[count].setImageResource(fruit[2]);
-                    }
-                }
-                for(int count=0 ; count<fruitRec.size();count++){
-                    String[] mStringArray= new String[fruitDraw.size()];
-                    mStringArray = fruitDraw.toArray(mStringArray);
-                    final String[] finalMStringArray = mStringArray;
-                    final int finalCount = count;
-                    layRec[count].setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent next = new Intent(HomeActivity.this, MarListFruit.class);
-                            next.putExtra("MarFruit", finalMStringArray[fruitRec.get(finalCount)]);
-                            startActivity(next);
-                        }
-                    });
-                }
-               for(int count=0 ; count<=fruitDraw.size();count++){
-                   String[] mStringArray= new String[fruitDraw.size()];
-                   mStringArray = fruitDraw.toArray(mStringArray);
-                   final String[] finalMStringArray = mStringArray;
-                   final int finalCount = count;
-                   lay[count].setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent next = new Intent(HomeActivity.this, MarListFruit.class);
-                            next.putExtra("MarFruit", finalMStringArray[finalCount]);
-                            startActivity(next);
-                        }
-                    });
-               }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        //Load menu
+        recyler_menu = (RecyclerView)findViewById(R.id.recycler_menu);
+        recyler_menu.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyler_menu.setLayoutManager(layoutManager);
 
-            }
-        });
+        loadMenu();
+
     }
+
+    private void loadMenu() {
+
+        FirebaseRecyclerAdapter<Category,MenuViewHolder> adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class,R.layout.menu_item,MenuViewHolder.class,category) {
+            @Override
+            protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
+                viewHolder.txtMenuName.setText(model.getName());
+                Picasso.with(getBaseContext()).load(model.getImage())
+                        .into(viewHolder.imageView);
+                final Category clickItem = model;
+                viewHolder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Toast.makeText(HomeActivity.this, ""+clickItem.getName(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+        recyler_menu.setAdapter(adapter);
+    }
+
 
 }
