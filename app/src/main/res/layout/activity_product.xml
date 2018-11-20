@@ -140,7 +140,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="add to bag"
-            android:onClick="addData"/>
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/product_button2"
