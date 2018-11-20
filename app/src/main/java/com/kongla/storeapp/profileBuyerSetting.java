@@ -1,5 +1,7 @@
 package com.kongla.storeapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +17,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class profileBuyerSetting extends AppCompatActivity {
-    ArrayList<String> item1 = new ArrayList<>();
-    ArrayList<String> item2 = new ArrayList<>();
-    FirebaseDatabase database;
-    Query query;
-    DatabaseReference databaseReference, dref, dref1;
-    String data, data2, data3, data4;
+    private ArrayList<String> item1 = new ArrayList<>();
+    private ArrayList<String> item2 = new ArrayList<>();
+    private FirebaseDatabase database;
+    private Query query;
+    private DatabaseReference databaseReference, dref, dref1;
+    private String data, data2, data3, data4;
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +36,12 @@ public class profileBuyerSetting extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("ตั้งค่าผู้ขาย");
 
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        editor = sp.edit();
+        String userID = sp.getString("IDKey","0");
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        query = databaseReference.child("Order").orderByChild("buyerID").equalTo("YQlrwQVc6zOPbIVPu15ir1AXXjg1");
+        query = databaseReference.child("Order").orderByChild("buyerID").equalTo(userID);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
