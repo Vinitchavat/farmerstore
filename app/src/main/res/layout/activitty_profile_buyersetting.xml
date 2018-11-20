@@ -10,13 +10,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textHistory"
+            android:id="@+id/textChangeMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:textSize="20dp"
-            android:text="@string/buyhistory"/>
+            android:text="@string/preorder"/>
 
         <TextView
             android:id="@+id/textdate1"
