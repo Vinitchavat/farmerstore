@@ -20,13 +20,15 @@ public class CustomAdapter extends BaseAdapter {
     Context mContext;
     ArrayList<String> Mes, sender, type;
     ImageView imageView;
+    String user;
 
 
-    public CustomAdapter(Context context, ArrayList<String> Mes, ArrayList<String> sender, ArrayList<String> type) {
+    public CustomAdapter(Context context, ArrayList<String> Mes, ArrayList<String> sender, ArrayList<String> type, String user) {
         this.mContext = context;
         this.Mes = Mes;
         this.sender = sender;
         this.type = type;
+        this.user = user;
     }
 
     @Override
@@ -47,46 +49,80 @@ public class CustomAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = null;
-        if (type.get(position).equals("Message")) {
+        if (user.matches("buyer")) {
+            if (type.get(position).equals("Message")) {
+                if (sender.get(position).equals("buyer")) {
+                    LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = mInflater.inflate(R.layout.layout, parent, false);
+                    TextView textView = (TextView) view.findViewById(R.id.message_text);
+                    textView.setText(Mes.get(position));
+                    return view;
+                } else {
+                    LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = mInflater.inflate(R.layout.layoutsend, parent, false);
+                    TextView textView = (TextView) view.findViewById(R.id.text_message);
+                    textView.setText(Mes.get(position));
+                    return view;
+                }
 
-            if (sender.get(position).equals("buyer")) {
-                LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.layout, parent, false);
-                TextView textView = (TextView) view.findViewById(R.id.message_text);
-                textView.setText(Mes.get(position));
-                return view;
             } else {
-                LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.layoutsend, parent, false);
-                TextView textView = (TextView) view.findViewById(R.id.text_message);
-                textView.setText(Mes.get(position));
-                return view;
-            }
-
-        } else {
-            if (sender.get(position).equals("buyer")) {
-                LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.picleft, parent, false);
-                final ImageView imageView = (ImageView)view.findViewById(R.id.imgView);
+                if (sender.get(position).equals("buyer")) {
+                    LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = mInflater.inflate(R.layout.picleft, parent, false);
+                    final ImageView imageView = (ImageView) view.findViewById(R.id.imgView);
                 /*FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                 StorageReference storageReference = firebaseStorage.getReference();
                 storageReference.child("Image").child("all/" + Mes.get(position)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {*/
-                new DownloadImageTask(imageView).execute(Mes.get(position));
-                   /* }
-                });*/
-                return view;
+                    new DownloadImageTask(imageView).execute(Mes.get(position));
+                    return view;
+                } else {
+                    Uri uri;
+                    LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = mInflater.inflate(R.layout.picright, parent, false);
+                    final ImageView imageView = (ImageView) view.findViewById(R.id.imgView);
+                    new DownloadImageTask(imageView).execute(Mes.get(position));
+                    return view;
+                }
+            }
+        }
+        else {
+            if (type.get(position).equals("Message")) {
+                if (sender.get(position).equals("sender")) {
+                    LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = mInflater.inflate(R.layout.layout, parent, false);
+                    TextView textView = (TextView) view.findViewById(R.id.message_text);
+                    textView.setText(Mes.get(position));
+                    return view;
+                } else {
+                    LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = mInflater.inflate(R.layout.layoutsend, parent, false);
+                    TextView textView = (TextView) view.findViewById(R.id.text_message);
+                    textView.setText(Mes.get(position));
+                    return view;
+                }
+
             } else {
-                Uri uri;
-                LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.picright, parent, false);
-                final ImageView imageView = (ImageView)view.findViewById(R.id.imgView);
-                new DownloadImageTask(imageView).execute(Mes.get(position));
-                return view;
+                if (sender.get(position).equals("sender")) {
+                    LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = mInflater.inflate(R.layout.picleft, parent, false);
+                    final ImageView imageView = (ImageView) view.findViewById(R.id.imgView);
+                    new DownloadImageTask(imageView).execute(Mes.get(position));
+                    return view;
+                } else {
+                    Uri uri;
+                    LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    view = mInflater.inflate(R.layout.picright, parent, false);
+                    final ImageView imageView = (ImageView) view.findViewById(R.id.imgView);
+                    new DownloadImageTask(imageView).execute(Mes.get(position));
+                    return view;
+                }
             }
         }
     }
+
+
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 

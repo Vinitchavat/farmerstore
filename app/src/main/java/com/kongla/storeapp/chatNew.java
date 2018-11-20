@@ -2,6 +2,7 @@ package com.kongla.storeapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -53,6 +54,8 @@ public class chatNew extends AppCompatActivity {
     String photoURL;
     String UserID;
     ProgressBar progressBar;
+    SharedPreferences sp;
+
 
 
     @Override
@@ -62,6 +65,10 @@ public class chatNew extends AppCompatActivity {
 
         progressBar = findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.GONE);
+
+        sp = getSharedPreferences("PREFS",Context.MODE_PRIVATE);
+        final String IDKey = sp.getString("IDKey", "0");
+        final String user = "sender";
 
         text = (EditText) findViewById(R.id.editText);
 
@@ -83,7 +90,7 @@ public class chatNew extends AppCompatActivity {
                     type.add(m.type());
                 }
                 ListView list = (ListView) findViewById(R.id.list);
-                adapter = new CustomAdapter(getApplicationContext(), Mes, sender, type);
+                adapter = new CustomAdapter(getApplicationContext(), Mes, sender, type,user);
                 list.setAdapter(adapter);
                 list.setStackFromBottom(true);
             }
