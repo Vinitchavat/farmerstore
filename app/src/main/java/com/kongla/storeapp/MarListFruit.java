@@ -29,7 +29,7 @@ public class MarListFruit extends AppCompatActivity {
     ArrayList<Integer> quantity = new ArrayList<Integer>();
     ArrayList<String> unitPro = new ArrayList<String>();
     ArrayList<String> allKey = new ArrayList<>();
-    CustomAdapShowMar customAdapShowMar;
+    CustomAdapShowPre customAdapShowMar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class MarListFruit extends AppCompatActivity {
                     draw = R.drawable.longan;
                 }
                 ListView listView =findViewById(R.id.listMar);
-                customAdapShowMar = new CustomAdapShowMar(getApplicationContext(),draw,farmID,fruitName,price,productName,quantity,unitPro);
+                customAdapShowMar = new CustomAdapShowPre(getApplicationContext(),draw,farmID,fruitName,price,productName,quantity,unitPro);
                 listView.setAdapter(customAdapShowMar);
 
                 //send Data to next page here
