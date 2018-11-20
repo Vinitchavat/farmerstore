@@ -196,9 +196,9 @@ public class ProductActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Map map = (Map) dataSnapshot.getValue();
                             final String memberID = String.valueOf(map.get("memberID"));
-                            OrderIDMar orderIDMar = new OrderIDMar(IDKey,memberID,farmID,key);
+                            OrderIdMar orderIdMar = new OrderIdMar(IDKey,memberID,farmID,key);
                             sendMar = database.getReference().child("Order").child("marketProduct");
-                            sendMar.push().setValue(orderIDMar);
+                            sendMar.push().setValue(orderIdMar);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -228,9 +228,9 @@ public class ProductActivity extends AppCompatActivity {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Map map = (Map) dataSnapshot.getValue();
                             final String memberID = String.valueOf(map.get("memberID"));
-                            OrderIDPre orderIDPre = new OrderIDPre(IDKey,memberID,farmID,day,key);
+                            OrderIdPre orderIdPre = new OrderIdPre(IDKey,memberID,farmID,day,key);
                             sendPre = database.getReference().child("Order").child("preorderProduct");
-                            sendPre.push().setValue(orderIDPre);
+                            sendPre.push().setValue(orderIdPre);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -64,11 +64,9 @@ public class chatNew extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         text = (EditText) findViewById(R.id.editText);
-        chat = (TextView) findViewById(R.id.chat);
-        chat.setText(getIntent().getStringExtra("mytext"));
 
         Bundle extras = getIntent().getExtras();
-        order = extras.getString("mytext");
+        order = extras.getString("orderid");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         testapp1 = database.getReference().child("chat").child(order);
@@ -169,7 +167,7 @@ public class chatNew extends AppCompatActivity {
 
         String ordersend;
         Bundle extras = getIntent().getExtras();
-        ordersend = extras.getString("mytext");
+        ordersend = extras.getString("orderid");
 
         testapp2 = database.getReference().child("chat").child(ordersend);
         testapp2.push().setValue(friendly);
@@ -183,7 +181,7 @@ public class chatNew extends AppCompatActivity {
 
         String ordersend;
         Bundle extras = getIntent().getExtras();
-        ordersend = extras.getString("mytext");
+        ordersend = extras.getString("orderid");
 
         testapp2 = database.getReference().child("chat").child(ordersend);
         testapp2.push().setValue(friendly);
