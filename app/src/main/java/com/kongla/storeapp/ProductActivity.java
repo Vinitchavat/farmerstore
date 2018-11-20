@@ -41,31 +41,65 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
-        BuyButton = findViewById(R.id.product_button2);
-        BuyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
-                dialog.setMessage("ยืนยันคำสั่งซื้อ");
-                dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        addData();
-                    }
-                });
-                dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();startActivity(new Intent());
-                    }
-                });
-                dialog.show();
-            }
-        });
-
         Bundle extras = getIntent().getExtras();
         product = extras.getString("product");
         key = extras.getString("key");
+        BuyButton = findViewById(R.id.product_button2);
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String userID = sp.getString("IDKey","0");
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order")
+                .child(product);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int a = 0;
+                for (DataSnapshot d : dataSnapshot.getChildren()){
+                    String p = d.child("productID").getValue(String.class);
+                    String u = d.child("buyerID").getValue(String.class);
+                    if (u.matches(userID) && p.matches(key)){
+                        a++;
+                    }
+                }
+                if(a!=0){
+                    BuyButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(getApplicationContext(),"คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else {
+                    BuyButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
+                            dialog.setMessage("ยืนยันคำสั่งซื้อ");
+                            dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    addData();
+                                }
+                            });
+                            dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();startActivity(new Intent());
+                                }
+                            });
+                            dialog.show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         if (product.matches("marketProduct")) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             callMarket = database.getReference().child("product").child("marketProduct").child(key);
