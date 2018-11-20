@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,39 +34,38 @@ public class profileBuyerSetting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitty_profile_buyersetting);
 
-        /* ** Action Bar ** */
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("ตั้งค่าผู้ขาย");
-
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         editor = sp.edit();
-        String userID = sp.getString("IDKey","0");
+        String userID = sp.getString("IDKey", "0");
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-        query = databaseReference.child("Order").orderByChild("buyerID").equalTo(userID);
 
+        TextView status = findViewById(R.id.textChangeMode);
+        String s = status.getText().toString();
+        if (s.matches("สินค้าสั่งจอง")) {
+            query = databaseReference.child("Order").child("preorderProduct")
+                    .orderByChild("buyerID").equalTo(userID);
+        }
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                item1.clear();item2.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String status = d.child("orderStatus").getValue(String.class);
-                    if (status.equals("Finish")) {
+                    if (status.equals("finish")) {
                         data = d.child("productID").getValue(String.class);
-                        dref1 = database.getReference().child("product").child(data);
+                        data2 = d.child("date").getValue(String.class);
+                        dref1 = database.getReference().child("product").child("preorderProduct").child(data2).child(data);
                         dref1.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                data = dataSnapshot.child("productName").getValue(String.class);
-                                data2 = dataSnapshot.child("productSpecies").getValue(String.class);
-                                if (data2 == null) {
-                                    data2 = "";
-                                }
-                                item1.add(data + data2);
+                                String fname = dataSnapshot.child("fruitName").getValue(String.class);
+                                String pname = dataSnapshot.child("productName").getValue(String.class);
+                                item1.add(fname+pname);
                             }
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                item1.add("Error");
                             }
                         });
                         data3 = d.child("farmID").getValue(String.class);
@@ -78,16 +79,13 @@ public class profileBuyerSetting extends AppCompatActivity {
 
                             @Override
                             public void onCancelled(@NonNull DatabaseError databaseError) {
-                                item2.add("Error");
                             }
                         });
-                    } else {
-                        item1.add("Error");
+                        ListView list2 = (ListView) findViewById(R.id.list);
+                        AdapterPH adapter = new AdapterPH(profileBuyerSetting.this, item1, item2);
+                        list2.setAdapter(adapter);
                     }
                 }
-                ListView list2 = (ListView) findViewById(R.id.list);
-                AdapterPH adapter = new AdapterPH(profileBuyerSetting.this, item1, item2);
-                list2.setAdapter(adapter);
             }
 
             @Override
