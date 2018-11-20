@@ -137,8 +137,8 @@ public class profileMain extends AppCompatActivity {
             button3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                /*Intent i3 = new Intent(getApplicationContext(), BuyerSetting.class);
-                startActivity(i3);*/
+                Intent i3 = new Intent(getApplicationContext(), profileBuyerSetting.class);
+                startActivity(i3);
                 }
             });
         }
