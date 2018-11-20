@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,16 +82,15 @@ public class MainActivity extends AppCompatActivity {
         final String password = inputPassword.getText().toString();
 
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.login_email, Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.login_password, Toast.LENGTH_SHORT).show();
             return;
         } else {
-            loadingBar.setTitle("Login Account");
-            loadingBar.setMessage("Please wait, while we are checking the credentials.");
+            loadingBar.setMessage("กรุณารอสักครู่");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
         }
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                             if (password.length() < 6) {
                                 inputPassword.setError(getString(R.string.minimum_password));
                             } else {
-                                Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, R.string.loginfailed, Toast.LENGTH_SHORT).show();
                             }
                         } else {
 
@@ -120,7 +120,26 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
                             String uID = currentFirebaseUser.getUid();
                             editor.putString("IDKey",uID);
+
+                            /* *** GET user status *** */
+                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                    .child("Users").child(uID);
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String s = dataSnapshot.child("status").getValue(String.class);
+                                    editor.putString("Status",s);
+                                    editor.commit();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Toast.makeText(getApplicationContext(), R.string.error_tryagain, Toast.LENGTH_SHORT).show();
+                                    finish(); startActivity(getIntent());
+                                }
+                            });
                             editor.commit();
+                            loadingBar.dismiss();
 
                             /* *** GO to Homepage *** */
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);

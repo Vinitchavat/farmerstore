@@ -77,6 +77,7 @@ public class profileMain extends AppCompatActivity {
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         editor = sp.edit();
         final String userID = sp.getString("IDKey", "0");
+        final String status = sp.getString("Status","0");
 
         imgProfile = findViewById(R.id.profile_img);
         txtName = findViewById(R.id.profile_textName);
@@ -118,23 +119,29 @@ public class profileMain extends AppCompatActivity {
             }
         });
 
-        Button button2 = (Button) findViewById(R.id.profile_btnSeller);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i2 = new Intent(getApplicationContext(), profileSellerSetting.class);
-                startActivity(i2);
-            }
-        });
+        if(status.matches("seller")){
+            Button button2 = (Button) findViewById(R.id.profile_btnSeller);
+            button2.setVisibility(View.VISIBLE);
+            button2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i2 = new Intent(getApplicationContext(), profileSellerSetting.class);
+                    startActivity(i2);
+                }
+            });
+        }
 
-        Button button3 = (Button) findViewById(R.id.profile_btnBuyer);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*Intent i3 = new Intent(getApplicationContext(), BuyerSetting.class);
-                startActivity(i3);*/
-            }
-        });
+        else {
+            Button button3 = (Button) findViewById(R.id.profile_btnBuyer);
+            button3.setVisibility(View.VISIBLE);
+            button3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                Intent i3 = new Intent(getApplicationContext(), profileBuyerSetting.class);
+                startActivity(i3);
+                }
+            });
+        }
 
         Button button4 = (Button) findViewById(R.id.profile_btnLogout);
         button4.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +150,7 @@ public class profileMain extends AppCompatActivity {
 
                 /* *** Progess Bar *** */
                 loadingBar = new ProgressDialog(profileMain.this);
-                loadingBar.setTitle("Logging out");
+                loadingBar.setTitle("ออกจากระบบ");
                 loadingBar.setCanceledOnTouchOutside(false);
                 loadingBar.show();
 
@@ -152,6 +159,7 @@ public class profileMain extends AppCompatActivity {
                 editor = sp.edit();
                 editor.remove("IDKey");
                 editor.remove("farmID");
+                editor.remove("Status");
                 editor.commit();
 
                 firebaseAuth = FirebaseAuth.getInstance();

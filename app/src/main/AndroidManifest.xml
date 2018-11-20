@@ -22,10 +22,14 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_home"/>
+        <activity android:name=".ProductActivity"
+            android:label="@string/productdes"/>
 
         <activity android:name=".basketMain"
             android:label="@string/title_order"/>
-        <activity android:name=".MarListFruit"></activity>
+        <activity android:name=".MarListFruit"
+            android:label="@string/title_market"
+            android:parentActivityName=".HomeActivity"></activity>
         <activity android:name=".basketMandP"/>
         <activity android:name=".chatNew"/>
         <activity android:name=".PreMain"
@@ -62,6 +66,9 @@
             android:parentActivityName=".profileSellerSetting"
             android:screenOrientation="portrait"
             android:label="@string/editproduct"/>
+        <activity android:name=".profileBuyerSetting"
+            android:parentActivityName=".profileMain"/>
+
     </application>
 
 </manifest>

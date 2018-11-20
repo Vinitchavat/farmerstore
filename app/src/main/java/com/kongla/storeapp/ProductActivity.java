@@ -1,9 +1,9 @@
 package com.kongla.storeapp;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.opengl.GLException;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -21,14 +21,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class ProductActivity extends AppCompatActivity {
 
     private Button AddtobagButton, BuyButton;
     String product, key, day, farmID, fruitName, productName, unitPro, img, price, quantity;
-    public DatabaseReference callMarket, callfarmname;
+    public DatabaseReference callMarket, callfarmname,sendMar,sendPre;
+
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,8 +142,6 @@ public class ProductActivity extends AppCompatActivity {
                 }
             });
         }
-//        AddtobagButton =(Button)findViewById(R.id.product_button1);
-//        BuyButton =(Button)findViewById(R.id.product_button2);
 //        BuyButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -175,4 +174,76 @@ public class ProductActivity extends AppCompatActivity {
             bmImage.setImageBitmap(result);
         }
     }
+
+    public void addData(View view) {
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String IDKey = sp.getString("IDKey", "0");
+        Bundle extras = getIntent().getExtras();
+        product = extras.getString("product");
+        key = extras.getString("key");
+        String memberID;
+        if (product.matches("marketProduct")) {
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            callMarket = database.getReference().child("product").child("marketProduct").child(key);
+            callMarket.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map map = (Map) dataSnapshot.getValue();
+                    farmID = String.valueOf(map.get("farmID"));
+                    callfarmname = database.getReference().child("farmer").child(farmID);
+                    callfarmname.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Map map = (Map) dataSnapshot.getValue();
+                            final String memberID = String.valueOf(map.get("memberID"));
+                            OrderIDMar orderIDMar = new OrderIDMar(IDKey,memberID,farmID,key);
+                            sendMar = database.getReference().child("Order").child("marketProduct");
+                            sendMar.push().setValue(orderIDMar);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        else {
+            day = extras.getString("DayPre");
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            callMarket = database.getReference().child("product").child("preorderProduct").child(day).child(key);
+            callMarket.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map map = (Map) dataSnapshot.getValue();
+                    farmID = String.valueOf(map.get("farmID"));
+                    callfarmname = database.getReference().child("farmer").child(farmID);
+                    callfarmname.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Map map = (Map) dataSnapshot.getValue();
+                            final String memberID = String.valueOf(map.get("memberID"));
+                            OrderIDPre orderIDPre = new OrderIDPre(IDKey,memberID,farmID,day,key);
+                            sendPre = database.getReference().child("Order").child("preorderProduct");
+                            sendPre.push().setValue(orderIDPre);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        }
+
 }
