@@ -6,18 +6,21 @@ public class OrderModel  {
     String productID;
     String orderStatus;
     String date;
+    String sellerID;
     public OrderModel(){}
-    public OrderModel(String farmID, String buyerID, String productID, String orderStatus){
+    public OrderModel(String buyerID, String sellerID, String farmID, String productID, String orderStatus){
         this.buyerID = buyerID;
         this.farmID = farmID;
         this.productID = productID;
         this.orderStatus = orderStatus;
+        this.sellerID = sellerID;
     }
-    public OrderModel(String farmID, String buyerID, String productID, String orderStatus, String date){
+    public OrderModel(String buyerID, String sellerID, String farmID,String productID, String orderStatus, String date){
         this.buyerID = buyerID;
         this.farmID = farmID;
         this.productID = productID;
         this.orderStatus = orderStatus;
         this.date = date;
+        this.sellerID = sellerID;
     }
 }
