@@ -167,7 +167,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
                     });
                 }
-               for(int count=0 ; count<=fruitDraw.size();count++){
+               for(int count=0 ; count<fruitDraw.size();count++){
                    String[] mStringArray= new String[fruitDraw.size()];
                    mStringArray = fruitDraw.toArray(mStringArray);
                    final String[] finalMStringArray = mStringArray;

@@ -7,6 +7,7 @@
     <string name="title_preorder">สินค้าสั่งจอง</string>
     <string name="title_order">ตะกร้าสินค้า</string>
     <string name="title_profile">ผู้ใช้งาน</string>
+    <string name="title_market">สินค้าตลาด</string>
     <string name="btnP">Pre-Order</string>
     <string name="btnM">Market</string>
     <string name="register_empty_warning">กรุณากรอกข้อมูลให้ครบถ้วน</string>
@@ -14,6 +15,10 @@
     <string name="register_phone_warning">กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง</string>
     <string name="register_password_warning">กรุณาตั้งรหัสผ่านมากกว่า 6 ตัวอักษร</string>
     <string name="click_to_add_image">เปลี่ยนรูปภาพ</string>
+    <string name="login_password">กรุณาใส่รหัสผ่าน</string>
+    <string name="login_email">กรุณาใส่อีเมล</string>
+    <string name="recommend_fruit">ผลไม้แนะนำ</string>
+    <string name="allfruit">ผลไม้ทั้งหมด</string>
 
     <string name="profile_editProfile">แก้ไขรายละเอียดผู้ใช้</string>
     <string name="profile_logout">ออกจากระบบ</string>
@@ -48,6 +53,10 @@
     <string name="farmerid">เลขทะเบียนเกษตรกร</string>
     <string name="editproduct">เพิ่ม/แก้ไขสินค้า</string>
     <string name="editfarm">แก้ไขรายละเอียดฟาร์ม</string>
+    <string name="loginfailed">อีเมลหรือรหัสผ่านไม่ถูกต้อง</string>
+    <string name="error_tryagain">มีข้อผิดพลาดเกิดขึ้น กรุณาลองใหม่อีกครั้ง</string>
+    <string name="justamoment">กรุณารอสักครู่</string>
+    <string name="productdes">ข้อมูลสินค้า</string>
 
     <string name="preorder">สินค้าสั่งจอง</string>
     <string name="pre_daylist">รายการสินค้าสั่งจอง</string>
