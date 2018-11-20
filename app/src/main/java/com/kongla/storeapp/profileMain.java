@@ -5,16 +5,33 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.InputStream;
 
 public class profileMain extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
@@ -22,6 +39,9 @@ public class profileMain extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     BottomNavigationView navigation;
+    private ImageView imgProfile;
+    private TextView txtName;
+    private static String imgLink;
 
     /* *** Bottom Navigation *** */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -34,8 +54,8 @@ public class profileMain extends AppCompatActivity {
                     startActivity(i);
                     return true;
                 case R.id.navigation_preorder:
-                    /*i = new Intent(getApplicationContext(), preorderMain.class);
-                    startActivity(i);*/
+                    i = new Intent(getApplicationContext(), PreMain.class);
+                    startActivity(i);
                     return true;
                 case R.id.navigation_order:
                     i = new Intent(getApplicationContext(), basketMain.class);
@@ -54,6 +74,36 @@ public class profileMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_main);
 
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        editor = sp.edit();
+        final String userID = sp.getString("IDKey", "0");
+        final String status = sp.getString("Status","0");
+
+        imgProfile = findViewById(R.id.profile_img);
+        txtName = findViewById(R.id.profile_textName);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String userName = dataSnapshot.child(userID).child("name").getValue(String.class);
+                txtName.setText(userName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        getImage();
+
+        imgProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(),profileEditImage.class);
+                startActivity(i);
+            }
+        });
+
         /* *** Set Selected Menu *** */
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -64,28 +114,34 @@ public class profileMain extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent i = new Intent(getApplicationContext(), EditProfile.class);
-                startActivity(i);*/
+                Intent i = new Intent(getApplicationContext(), profileEditProfile.class);
+                startActivity(i);
             }
         });
 
-        Button button2 = (Button) findViewById(R.id.profile_btnSeller);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*Intent i2 = new Intent(getApplicationContext(), SellerSetting.class);
-                startActivity(i2);*/
-            }
-        });
+        if(status.matches("seller")){
+            Button button2 = (Button) findViewById(R.id.profile_btnSeller);
+            button2.setVisibility(View.VISIBLE);
+            button2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i2 = new Intent(getApplicationContext(), profileSellerSetting.class);
+                    startActivity(i2);
+                }
+            });
+        }
 
-        Button button3 = (Button) findViewById(R.id.profile_btnBuyer);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*Intent i3 = new Intent(getApplicationContext(), BuyerSetting.class);
-                startActivity(i3);*/
-            }
-        });
+        else {
+            Button button3 = (Button) findViewById(R.id.profile_btnBuyer);
+            button3.setVisibility(View.VISIBLE);
+            button3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                Intent i3 = new Intent(getApplicationContext(), profileBuyerSetting.class);
+                startActivity(i3);
+                }
+            });
+        }
 
         Button button4 = (Button) findViewById(R.id.profile_btnLogout);
         button4.setOnClickListener(new View.OnClickListener() {
@@ -94,17 +150,20 @@ public class profileMain extends AppCompatActivity {
 
                 /* *** Progess Bar *** */
                 loadingBar = new ProgressDialog(profileMain.this);
-                loadingBar.setTitle("Logging out");
+                loadingBar.setTitle("ออกจากระบบ");
                 loadingBar.setCanceledOnTouchOutside(false);
                 loadingBar.show();
 
                 /* *** Sign out and delete state *** */
-                firebaseAuth = FirebaseAuth.getInstance();
-                firebaseAuth.signOut();
                 sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
                 editor = sp.edit();
                 editor.remove("IDKey");
+                editor.remove("farmID");
+                editor.remove("Status");
                 editor.commit();
+
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
 
                 /* *** Go back to Login *** */
                 Intent i5 = new Intent(getApplicationContext(), MainActivity.class);
@@ -112,5 +171,47 @@ public class profileMain extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void getImage(){
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        String userID = sp.getString("IDKey","0");
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference = firebaseStorage.getReference();
+        storageReference.child("Image").child("users/" + userID).getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String photoURL = uri.toString();
+                        if (photoURL!=null){
+                            new profileMain.DownloadImageTask((ImageView) findViewById(R.id.profile_img)).execute(photoURL);
+                        }
+                    }
+                });
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

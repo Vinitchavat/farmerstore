@@ -2,24 +2,29 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/profile_img"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20sp"
+        android:contentDescription="@string/click_to_add_image"
         app:layout_constraintBottom_toTopOf="@+id/profile_textName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
 
     <TextView
         android:id="@+id/profile_textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_img"
@@ -27,12 +32,12 @@
 
     <Button
         android:id="@+id/profile_btnedit"
-        android:layout_width="220dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20sp"
         android:text="@string/profile_editProfile"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_btnLogout"
+        app:layout_constraintBottom_toTopOf="@+id/profile_btnSeller"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_textName"/>
@@ -41,41 +46,37 @@
         android:id="@+id/profile_btnLogout"
         android:layout_width="150dp"
         android:layout_height="35dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60sp"
         android:background="@android:color/holo_red_light"
         android:text="@string/profile_logout"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/profile_btnSeller"
-        android:layout_width="160dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20sp"
         android:text="@string/profile_sellerSetting"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/profile_btnBuyer"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnLogout" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit"
+        android:visibility="invisible"/>
 
     <Button
-        android:onClick="addData"
         android:id="@+id/profile_btnBuyer"
-        android:layout_width="160dp"
-        android:layout_height="80dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20sp"
         android:text="@string/profile_buyerSetting"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_btnSeller"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnLogout" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit"
+        android:visibility="invisible"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

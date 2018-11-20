@@ -60,16 +60,16 @@ public class chatNew extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_new);
 
-        progressBar = findViewById(R.id.indeterminateBarChat);
+        progressBar = findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.GONE);
 
-        text = (EditText) findViewById(R.id.editTextChat);
+        text = (EditText) findViewById(R.id.editText);
         chat = (TextView) findViewById(R.id.chat);
         chat.setText(getIntent().getStringExtra("mytext"));
-//
+
         Bundle extras = getIntent().getExtras();
         order = extras.getString("mytext");
-//
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         testapp1 = database.getReference().child("chat").child(order);
         testapp1.addValueEventListener(new ValueEventListener() {
@@ -84,7 +84,7 @@ public class chatNew extends AppCompatActivity {
                     sender.add(m.Sender());
                     type.add(m.type());
                 }
-                ListView list = (ListView) findViewById(R.id.listChat);
+                ListView list = (ListView) findViewById(R.id.list);
                 adapter = new CustomAdapter(getApplicationContext(), Mes, sender, type);
                 list.setAdapter(adapter);
                 list.setStackFromBottom(true);
@@ -100,7 +100,7 @@ public class chatNew extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Edit Profile");
 
-        Button selectImg = (Button) findViewById(R.id.btnChooseChat);
+        Button selectImg = (Button) findViewById(R.id.btnChoose);
         selectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,14 +117,14 @@ public class chatNew extends AppCompatActivity {
                 startActivityForResult(chooserIntent, PICK_IMAGE);
             }
         });
-        Button uploadImg = (Button) findViewById(R.id.btnUploadChat);
+        Button uploadImg = (Button) findViewById(R.id.btnUpload);
         uploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE); //to show
                 UserID = UUID.randomUUID().toString();
                 uploadImage();
-                ImageView imageView = (ImageView)findViewById(R.id.imgmainChat);
+                ImageView imageView = (ImageView)findViewById(R.id.imgmain);
                 imageView.setImageURI(null);
             }
         });
@@ -195,7 +195,7 @@ public class chatNew extends AppCompatActivity {
         if(resultCode == RESULT_OK){
             super.onActivityResult(requestCode, resultCode, data);
             uri = data.getData();
-            ImageView imageView = (ImageView)findViewById(R.id.imgmainChat);
+            ImageView imageView = (ImageView)findViewById(R.id.imgmain);
             imageView.setImageURI(uri);
         }
     }

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,9 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener( new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
             CreateAccount();
-
         } });
 
     }
@@ -77,6 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerNewUser(){
 
+        loadingBar.setMessage("กรุณารอสักครู่");
+        loadingBar.show();
         final String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
         final String name = inputName.getText().toString().trim();
@@ -104,6 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
                             }
+                            loadingBar.dismiss();
                         }
                     });
                 }
