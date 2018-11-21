@@ -73,6 +73,7 @@
             android:parentActivityName=".profileMain"
             android:label="@string/buyhistory"/>
         <activity android:name=".basketPrePro"/>
+        <activity android:name=".basketBuyerNameList"/>
 
     </application>
 
