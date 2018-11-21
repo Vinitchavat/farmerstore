@@ -55,57 +55,111 @@ public class ProductActivity extends AppCompatActivity {
         else {
             BuyButton.setVisibility(View.VISIBLE);
         }
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order")
-                .child(product);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int a = 0;
-                for (DataSnapshot d : dataSnapshot.getChildren()){
-                    String p = d.child("productID").getValue(String.class);
-                    String u = d.child("buyerID").getValue(String.class);
-                    if (u.matches(userID) && p.matches(key)){
-                        a++;
+        if(product.equals("marketProduct")) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order").child(product);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int a = 0;
+                    for (DataSnapshot d : dataSnapshot.getChildren()){
+                        String p = d.child("productID").getValue(String.class);
+                        String u = d.child("buyerID").getValue(String.class);
+                        if (u.matches(userID) && p.matches(key)){
+                            a++;
+                        }
+                    }
+                    if(a!=0){
+                        BuyButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(getApplicationContext(),"คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else {
+                        BuyButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
+                                dialog.setMessage("ยืนยันคำสั่งซื้อ");
+                                dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        addData();
+                                    }
+                                });
+                                dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        finish();startActivity(getIntent());
+                                    }
+                                });
+                                dialog.show();
+                            }
+                        });
                     }
                 }
-                if(a!=0){
-                    BuyButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(getApplicationContext(),"คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                else {
-                    BuyButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
-                            dialog.setMessage("ยืนยันคำสั่งซื้อ");
-                            dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    addData();
-                                }
-                            });
-                            dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    finish();startActivity(getIntent());
-                                }
-                            });
-                            dialog.show();
-                        }
-                    });
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
+        else
+        {
+            day = extras.getString("DayPre");
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order").child(product).child(day);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    int a = 0;
+                    for (DataSnapshot d : dataSnapshot.getChildren()){
+                        String p = d.child("productID").getValue(String.class);
+                        String u = d.child("buyerID").getValue(String.class);
+                        if (u.matches(userID) && p.matches(key)){
+                            a++;
+                        }
+                    }
+                    if(a!=0){
+                        BuyButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Toast.makeText(getApplicationContext(),"คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else {
+                        BuyButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
+                                dialog.setMessage("ยืนยันคำสั่งซื้อ");
+                                dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        addData();
+                                    }
+                                });
+                                dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        finish();startActivity(getIntent());
+                                    }
+                                });
+                                dialog.show();
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
 
 
         if (product.matches("marketProduct")) {
@@ -304,7 +358,7 @@ public class ProductActivity extends AppCompatActivity {
                             Map map = (Map) dataSnapshot.getValue();
                             final String memberID = String.valueOf(map.get("memberID"));
                             OrderModel orderModel = new OrderModel(IDKey,memberID,farmID,key,"none",day);
-                            sendPre = database.getReference().child("Order").child("preorderProduct");
+                            sendPre = database.getReference().child("Order").child("preorderProduct").child(day);
                             sendPre.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
