@@ -62,10 +62,11 @@ public class chatNew extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_new);
 
-        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        final String s = sp.getString("Status","none");
         progressBar = findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.GONE);
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String s = sp.getString("Status","none");
+        final String IDKey = sp.getString("IDKey", "0");
 
         text = (EditText) findViewById(R.id.editText);
 
@@ -163,12 +164,10 @@ public class chatNew extends AppCompatActivity {
     }
 
     public void UploadData(String photoURL) {
-        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        String s = sp.getString("Status","none");
         Date currentTime = Calendar.getInstance().getTime();
         String photo = UserID;
         String time = currentTime.toString();
-        Friendly friendly = new Friendly(s, photoURL, time,"Pic");
+        Friendly friendly = new Friendly("buyer", photoURL, time,"Pic");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String ordersend;

@@ -6,6 +6,8 @@
     <ImageView
         android:id="@+id/imgView"
         android:layout_width="170dp"
-        android:layout_height="199dp" />
+        android:layout_height="199dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
