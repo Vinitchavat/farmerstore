@@ -53,39 +53,79 @@ public class basketMandP extends AppCompatActivity {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             if (user.matches("buyer")) {
                 callbuylist = database.getReference().child("Order").child("marketProduct").orderByChild("buyerID").equalTo(IDKey);
+                callbuylist.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        key.clear();
+                        farmID.clear();
+                        productID.clear();
+                        for (DataSnapshot d : dataSnapshot.getChildren()) {
+                            key.add(d.getKey());
+                            OrderIdMar m = d.getValue(OrderIdMar.class);
+                            productID.add(m.productID);
+                            farmID.add(m.getFarmID());
+                        }
+                        CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID);
+                        ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
+                        listviewMarket.setAdapter(customAdapShowBas);
+                        listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent next = new Intent(basketMandP.this, chatNew.class);
+                                next.putExtra("orderid", key.get(position));
+                                startActivity(next);
+                            }
+
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
             } else {
                 callbuylist = database.getReference().child("Order").child("marketProduct").orderByChild("sellerID").equalTo(IDKey);
-            }
-            callbuylist.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    key.clear();
-                    farmID.clear();
-                    productID.clear();
-                    for (DataSnapshot d : dataSnapshot.getChildren()) {
-                        key.add(d.getKey());
-                        OrderIdMar m = d.getValue(OrderIdMar.class);
-                        productID.add(m.productID);
-                        farmID.add(m.getFarmID());
-                    }
-                    CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID);
-                    ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
-                    listviewMarket.setAdapter(customAdapShowBas);
-                    listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent next = new Intent(basketMandP.this, chatNew.class);
-                            next.putExtra("orderid", key.get(position));
-                            startActivity(next);
+                callbuylist.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        key.clear();
+                        farmID.clear();
+                        productID.clear();
+                        for (DataSnapshot d : dataSnapshot.getChildren()) {
+                            key.add(d.getKey());
+                            OrderIdMar m = d.getValue(OrderIdMar.class);
+                            productID.add(m.productID);
+                            farmID.add(m.getFarmID());
                         }
+                        for(int count = 0 ; count<productID.size();count++){
+                            for(int countIn = count+1 ; countIn<productID.size();countIn++){
+                                if(productID.get(count).matches(productID.get(countIn))){
+                                    productID.remove(countIn);
+                                    farmID.remove(countIn);
+                                    key.remove(count);
+                                }
+                            }
+                        }
+                        CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID);
+                        ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
+                        listviewMarket.setAdapter(customAdapShowBas);
+                        listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent next = new Intent(basketMandP.this, basketBuyerNameList.class);
+                                next.putExtra("productID", productID.get(position));
+                                next.putExtra("product", "market");
+                                startActivity(next);
+                            }
 
-                    });
-                }
+                        });
+                    }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
         } else {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             if (user.matches("buyer")) {
