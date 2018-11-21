@@ -1,6 +1,7 @@
 package com.kongla.storeapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import java.io.InputStream;
@@ -20,13 +22,15 @@ public class CustomAdapter extends BaseAdapter {
     Context mContext;
     ArrayList<String> Mes, sender, type;
     ImageView imageView;
+    SharedPreferences sp;
+    private String state;
 
-
-    public CustomAdapter(Context context, ArrayList<String> Mes, ArrayList<String> sender, ArrayList<String> type) {
+    public CustomAdapter(Context context, ArrayList<String> Mes, ArrayList<String> sender, ArrayList<String> type, String state) {
         this.mContext = context;
         this.Mes = Mes;
         this.sender = sender;
         this.type = type;
+        this.state = state;
     }
 
     @Override
@@ -49,10 +53,10 @@ public class CustomAdapter extends BaseAdapter {
         View view = null;
         if (type.get(position).equals("Message")) {
 
-            if (sender.get(position).equals("buyer")) {
+            if (sender.get(position).equals(state)) {
                 LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.layout, parent, false);
-                TextView textView = (TextView) view.findViewById(R.id.message_text);
+                view = mInflater.inflate(R.layout.layoutsend, parent, false);
+                TextView textView = (TextView) view.findViewById(R.id.text_message);
                 textView.setText(Mes.get(position));
                 return view;
             } else {

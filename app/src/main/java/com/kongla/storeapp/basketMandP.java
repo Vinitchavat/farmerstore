@@ -42,7 +42,7 @@ public class basketMandP extends AppCompatActivity {
 
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String IDKey = sp.getString("IDKey", "0");
-        final String user = "buyer";
+        final String user = sp.getString("Status","none");
 
 
         Bundle extras = getIntent().getExtras();
