@@ -47,6 +47,14 @@ public class ProductActivity extends AppCompatActivity {
         BuyButton = findViewById(R.id.product_button2);
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String userID = sp.getString("IDKey","0");
+        final String s = sp.getString("Status","none");
+
+        if(!s.matches("buyer")){
+            BuyButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            BuyButton.setVisibility(View.VISIBLE);
+        }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order")
                 .child(product);
@@ -84,7 +92,7 @@ public class ProductActivity extends AppCompatActivity {
                             dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    finish();startActivity(new Intent());
+                                    finish();startActivity(getIntent());
                                 }
                             });
                             dialog.show();

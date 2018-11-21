@@ -69,17 +69,10 @@ public class profileEditImage extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            Uri uri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                ImageView img = (ImageView) findViewById(R.id.img);
-                img.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (resultCode == RESULT_OK) {
+            uri = data.getData();
+            ImageView imageView = (ImageView)findViewById(R.id.img);
+            imageView.setImageURI(uri);
         }
     }
 

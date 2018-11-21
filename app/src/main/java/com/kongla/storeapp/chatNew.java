@@ -102,6 +102,7 @@ public class chatNew extends AppCompatActivity {
         /* Action Bar */
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("ติดต่อผู้ซื้อ/ผู้ขาย");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button selectImg = (Button) findViewById(R.id.btnChoose);
         selectImg.setOnClickListener(new View.OnClickListener() {

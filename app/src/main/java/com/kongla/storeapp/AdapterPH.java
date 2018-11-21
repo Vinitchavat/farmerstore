@@ -1,28 +1,37 @@
 package com.kongla.storeapp;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class AdapterPH extends BaseAdapter {
-    ArrayList<String> productName;
+    ArrayList<String> productID;
     Context mContext;
-    ArrayList<String> farmName;
+    ArrayList<String> farmID;
+    ArrayList<String> date;
 
-    public AdapterPH(Context context, ArrayList<String> productName, ArrayList<String> farmName) {
-        this.productName = productName;
-        this.farmName = farmName;
+    public AdapterPH(Context context, ArrayList<String> productID,ArrayList<String> farmID, ArrayList<String> date) {
+        this.productID = productID;
         this.mContext = context;
+        this.farmID = farmID;
+        this.date = date;
     }
 
     @Override
     public int getCount() {
-        return productName.size();
+        return productID.size();
     }
 
     @Override
@@ -36,8 +45,8 @@ public class AdapterPH extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder;
+    public View getView(final int i, View view, ViewGroup viewGroup) {
+        final ViewHolder holder;
         LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (view != null) {
             holder = (ViewHolder) view.getTag();
@@ -46,10 +55,49 @@ public class AdapterPH extends BaseAdapter {
             holder = new ViewHolder();
             view.setTag(holder);
         }
-        holder.tv_info = (TextView) view.findViewById(R.id.item1);
-        holder.tv_info.setText(productName.get(i));
-        holder.tv_info = (TextView) view.findViewById(R.id.item2);
-        holder.tv_info.setText(farmName.get(i));
+        final int j = i;
+        final View fview = view;
+        DatabaseReference databaseReference;
+        if(productID!=null){
+            if (date.get(i).matches("none")){
+                databaseReference = FirebaseDatabase.getInstance().getReference()
+                        .child("product").child("marketProduct").child(productID.get(i));
+            }
+            else {
+                databaseReference = FirebaseDatabase.getInstance().getReference()
+                        .child("product").child("preorderProduct").child(date.get(i)).child(productID.get(i));
+            }
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String fname = dataSnapshot.child("fruitName").getValue(String.class);
+                    String pname = dataSnapshot.child("productName").getValue(String.class);
+                    holder.tv_info = (TextView) fview.findViewById(R.id.item1);
+                    holder.tv_info.setText(fname+pname);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    holder.tv_info = (TextView) fview.findViewById(R.id.item1);
+                    holder.tv_info.setText("Error");
+                }
+            });
+            DatabaseReference dref = FirebaseDatabase.getInstance().getReference()
+                    .child("farmer").child(farmID.get(i));
+            dref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String farmName = dataSnapshot.child("farmName").getValue(String.class);
+                    holder.tv_info = (TextView) fview.findViewById(R.id.item2);
+                    holder.tv_info.setText(farmName);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }
         return view;
     }
 }
