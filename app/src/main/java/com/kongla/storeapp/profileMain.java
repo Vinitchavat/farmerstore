@@ -157,9 +157,9 @@ public class profileMain extends AppCompatActivity {
                 /* *** Sign out and delete state *** */
                 sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
                 editor = sp.edit();
-                editor.remove("IDKey");
-                editor.remove("farmID");
-                editor.remove("Status");
+                editor.remove("IDKey"); // userID
+                editor.remove("farmID"); //
+                editor.remove("Status"); // Buyer or Seller
                 editor.commit();
 
                 firebaseAuth = FirebaseAuth.getInstance();

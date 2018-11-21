@@ -110,13 +110,8 @@ public class chatNew extends AppCompatActivity {
                 Intent pickIntent = new Intent();
                 pickIntent.setType("image/*");
                 pickIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 String pickTitle = "Select or take a new Picture";
                 Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{
-                        takePhotoIntent
-                });
                 startActivityForResult(chooserIntent, PICK_IMAGE);
             }
         });
@@ -164,10 +159,12 @@ public class chatNew extends AppCompatActivity {
     }
 
     public void UploadData(String photoURL) {
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String s = sp.getString("Status","none");
         Date currentTime = Calendar.getInstance().getTime();
         String photo = UserID;
         String time = currentTime.toString();
-        Friendly friendly = new Friendly("buyer", photoURL, time,"Pic");
+        Friendly friendly = new Friendly(s, photoURL, time,"Pic");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String ordersend;
@@ -178,10 +175,12 @@ public class chatNew extends AppCompatActivity {
         testapp2.push().setValue(friendly);
     }
     public void addData(View view) {
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String s = sp.getString("Status","none");
         Date currentTime = Calendar.getInstance().getTime();
         String mes = text.getText().toString();
         String time = currentTime.toString();
-        Friendly friendly = new Friendly("buyer", mes, time,"Message");
+        Friendly friendly = new Friendly(s, mes, time,"Message");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String ordersend;

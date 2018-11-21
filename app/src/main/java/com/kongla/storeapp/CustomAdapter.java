@@ -53,7 +53,7 @@ public class CustomAdapter extends BaseAdapter {
         View view = null;
         if (type.get(position).equals("Message")) {
 
-            if (sender.get(position).equals(state)) {
+            if (sender.get(position).matches(state)) {
                 LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = mInflater.inflate(R.layout.layoutsend, parent, false);
                 TextView textView = (TextView) view.findViewById(R.id.text_message);
@@ -61,16 +61,16 @@ public class CustomAdapter extends BaseAdapter {
                 return view;
             } else {
                 LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.layoutsend, parent, false);
-                TextView textView = (TextView) view.findViewById(R.id.text_message);
+                view = mInflater.inflate(R.layout.layout, parent, false);
+                TextView textView = (TextView) view.findViewById(R.id.message_text);
                 textView.setText(Mes.get(position));
                 return view;
             }
 
         } else {
-            if (sender.get(position).equals("buyer")) {
+            if (sender.get(position).matches(state)) {
                 LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.picleft, parent, false);
+                view = mInflater.inflate(R.layout.picright, parent, false);
                 final ImageView imageView = (ImageView)view.findViewById(R.id.imgView);
                 /*FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                 StorageReference storageReference = firebaseStorage.getReference();
@@ -85,8 +85,8 @@ public class CustomAdapter extends BaseAdapter {
                 Uri uri;
                 LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = mInflater.inflate(R.layout.picright, parent, false);
+                view = mInflater.inflate(R.layout.picleft, parent, false);
                 final ImageView imageView = (ImageView)view.findViewById(R.id.imgView);
-                new DownloadImageTask(imageView).execute(Mes.get(position));
                 return view;
             }
         }
