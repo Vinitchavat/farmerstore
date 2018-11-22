@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:layout_marginLeft="20sp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:text="date" />
     </LinearLayout>
