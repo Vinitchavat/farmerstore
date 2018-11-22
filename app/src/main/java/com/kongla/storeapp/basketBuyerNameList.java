@@ -32,7 +32,7 @@ public class basketBuyerNameList extends AppCompatActivity {
 
         /* Action Bar */
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("รายการสินค้า");
+        actionBar.setTitle("รายชื่อผู้สั่งซื้อ");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();

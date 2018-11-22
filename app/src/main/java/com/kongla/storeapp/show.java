@@ -38,6 +38,11 @@ public class show extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
+        /* Action Bar */
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("รายการสินค้า");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle extras = getIntent().getExtras();
         day = extras.getString("DayPre");
         order = extras.getString("DayPreFruit");

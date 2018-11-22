@@ -62,6 +62,11 @@ public class chatNew extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_new);
 
+        /* Action Bar */
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("ติดต่อผู้ซื้อ/ผู้ขาย");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         progressBar = findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.GONE);
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
@@ -98,11 +103,6 @@ public class chatNew extends AppCompatActivity {
                 chat.setText("Data not founded!");
             }
         });
-
-        /* Action Bar */
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("ติดต่อผู้ซื้อ/ผู้ขาย");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button selectImg = (Button) findViewById(R.id.btnChoose);
         selectImg.setOnClickListener(new View.OnClickListener() {
@@ -201,6 +201,11 @@ public class chatNew extends AppCompatActivity {
             ImageView imageView = (ImageView)findViewById(R.id.imgmain);
             imageView.setImageURI(uri);
         }
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }
 
