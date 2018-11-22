@@ -23,6 +23,7 @@ public class profileBuyerSettingPreorder extends AppCompatActivity {
     private ArrayList<String> item1 = new ArrayList<>();
     private ArrayList<String> item2 = new ArrayList<>();
     private ArrayList<String> item3 = new ArrayList<>();
+    private ArrayList<String> item4 = new ArrayList<>();
     private FirebaseDatabase database;
     private Query query;
     private DatabaseReference databaseReference, dref, dref1;
@@ -47,27 +48,44 @@ public class profileBuyerSettingPreorder extends AppCompatActivity {
         TextView header = findViewById(R.id.header);
         header.setText("ประวัติสินค้าสั่งจอง");
 
-        query = databaseReference.child("Order").child("preorderProduct")
-                .orderByChild("buyerID").equalTo(userID);
-
-        query.addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Order").child("preorderProduct")
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 item1.clear();
                 item2.clear();
+                item3.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    String status = d.child("orderStatus").getValue(String.class);
-                    if (status.matches("finish")) {
-                        data = d.child("productID").getValue(String.class);
-                        data2 = d.child("farmID").getValue(String.class);
-                        String date = d.child("date").getValue(String.class);
-                        item1.add(data);
-                        item2.add(data2);
-                        item3.add(date);
-                    }
+                    item3.add(d.getKey());
+                }
+                for (int i=0; i<item3.size(); i++){
+                    query = databaseReference.child("Order").child("preorderProduct")
+                            .child(item3.get(i)).orderByChild("buyerID").equalTo(userID);
+                    query.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot d : dataSnapshot.getChildren()){
+                                String status = d.child("orderStatus").getValue(String.class);
+                                if (status.matches("finish")) {
+                                    data4 = dataSnapshot.getKey();
+                                    item4.add(data4);
+                                    Log.d("17",data4);
+                                    data = d.child("productID").getValue(String.class);
+                                    data2 = d.child("farmID").getValue(String.class);
+                                    item1.add(data);
+                                    item2.add(data2);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
                 ListView list2 = (ListView) findViewById(R.id.list);
-                AdapterPH adapter = new AdapterPH(profileBuyerSettingPreorder.this, item1, item2, item3);
+                AdapterPH adapter = new AdapterPH(profileBuyerSettingPreorder.this, item1, item2, item4);
                 list2.setAdapter(adapter);
             }
 
