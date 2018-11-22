@@ -59,7 +59,7 @@
             android:screenOrientation="portrait"
             android:label="@string/profile_sellerSetting"/>
         <activity android:name=".profileEditFarm"
-            android:parentActivityName=".profileMain"
+            android:parentActivityName=".profileSellerSetting"
             android:screenOrientation="portrait"
             android:label="@string/editfarm"/>
         <activity android:name=".profileAddProduct"

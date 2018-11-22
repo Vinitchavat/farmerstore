@@ -6,9 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -68,7 +66,7 @@ public class MarListFruit extends AppCompatActivity {
                     draw = R.drawable.orange;
                 }
                 else  if(fruitName.get(0).matches("แตงโม")){
-                    draw = R.drawable.pineapple;
+                    draw = R.drawable.watermelon;
                 }
                 else{
                     draw = R.drawable.longan;

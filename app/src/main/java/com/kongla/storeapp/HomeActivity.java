@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
 
         final ImageView[] lay = {img3,img4,img5,img6};
         final ImageView[] layRec = {img1,img2};
-        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.pineapple, R.drawable.rambutan, R.drawable.durian};
+        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.watermelon, R.drawable.rambutan, R.drawable.durian};
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
                     fruitRec.add(ran1);
                     fruitRec.add(ran2);
                 }
-                /*for(int count = 0 ; count<fruitRec.size();count++){
+                for(int count = 0 ; count<fruitRec.size();count++){
                     if(fruitDraw.get(fruitRec.get(count)).matches("ทุเรียน")){
                         layRec[count].setImageResource(fruit[5]);
                     }
@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity {
                             startActivity(next);
                         }
                     });
-               }*/
+               }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

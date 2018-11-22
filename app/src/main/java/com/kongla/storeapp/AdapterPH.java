@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -73,7 +74,20 @@ public class AdapterPH extends BaseAdapter {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String fname = dataSnapshot.child("fruitName").getValue(String.class);
                     String pname = dataSnapshot.child("productName").getValue(String.class);
+
                     holder.tv_info = (TextView) fview.findViewById(R.id.item1);
+                    holder.imageView = (ImageView) fview.findViewById(R.id.imgfhis);
+
+                    final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.watermelon, R.drawable.rambutan, R.drawable.durian};
+                    switch (fname){
+                        case "มังคุด": holder.imageView.setImageResource(fruit[0]);break;
+                        case "ลำไย": holder.imageView.setImageResource(fruit[1]);break;
+                        case "ส้ม": holder.imageView.setImageResource(fruit[2]);break;
+                        case "แตงโม": holder.imageView.setImageResource(fruit[3]);break;
+                        case "เงาะ": holder.imageView.setImageResource(fruit[4]);break;
+                        case "ทุเรียน": holder.imageView.setImageResource(fruit[6]);break;
+                        default: break;
+                    }
                     holder.tv_info.setText(fname+pname);
                 }
 

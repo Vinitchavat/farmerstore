@@ -57,7 +57,7 @@ public class CustomAdapShowBas extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = mInflater.inflate(R.layout.showlistpre, parent, false);
         final ImageView imageView = view.findViewById(R.id.ImgPro);
-        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.pineapple, R.drawable.rambutan, R.drawable.durian};
+        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.watermelon, R.drawable.rambutan, R.drawable.durian};
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         calllistMar = database.getReference().child("product").child("marketProduct").child(productID.get(position));
         calllistMar.addValueEventListener(new ValueEventListener() {

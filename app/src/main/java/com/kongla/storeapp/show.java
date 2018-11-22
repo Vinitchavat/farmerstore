@@ -6,19 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Queue;
 
 public class show extends AppCompatActivity {
     String day,order;
@@ -76,7 +72,7 @@ public class show extends AppCompatActivity {
                     draw = R.drawable.orange;
                 }
                 else  if(fruitName.get(0).matches("แตงโม")){
-                    draw = R.drawable.pineapple;
+                    draw = R.drawable.watermelon;
                 }
                 else{
                     draw = R.drawable.longan;

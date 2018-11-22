@@ -61,7 +61,7 @@ public class CustomAdapterForPreorder extends BaseAdapter {
         ImageView img6 = view.findViewById(R.id.img6);
 
         final ImageView[] lay = {img1,img2,img3,img4,img5,img6};
-        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.pineapple, R.drawable.rambutan, R.drawable.durian};
+        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.watermelon, R.drawable.rambutan, R.drawable.durian};
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         callPre = database.getReference().child("product").child("preorderProduct").child(clubkey.get(position));
