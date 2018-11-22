@@ -10,7 +10,7 @@
         android:id="@+id/profile_img"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="32dp"
         android:contentDescription="@string/click_to_add_image"
         app:layout_constraintBottom_toTopOf="@+id/profile_textName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,54 +34,55 @@
         android:id="@+id/profile_btnedit"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="20sp"
-        android:text="@string/profile_editProfile"
-        android:textSize="18sp"
-        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="32dp"
         android:background="@drawable/button_redstroke"
+        android:text="@string/profile_editProfile"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/profile_btnSeller"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_textName"/>
+        app:layout_constraintTop_toBottomOf="@id/profile_textName" />
 
     <Button
         android:id="@+id/profile_btnLogout"
         android:layout_width="150dp"
         android:layout_height="35dp"
-        android:layout_marginBottom="60sp"
+        android:layout_marginBottom="48dp"
         android:background="@drawable/button_gen"
         android:text="@string/profile_logout"
-        android:textSize="18sp"
         android:textColor="@color/gen_white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/profile_btnSeller"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="32dp"
         android:text="@string/profile_sellerSetting"
         android:textSize="18sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit" />
 
     <Button
         android:id="@+id/profile_btnBuyer"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="20sp"
-        android:text="@string/markethistory"
-        android:textSize="18sp"
-        android:textColor="@color/gen_white"
+        android:layout_marginTop="32dp"
         android:background="@color/light_red"
+        android:text="@string/markethistory"
+        android:textColor="@color/gen_white"
+        android:textSize="18sp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit"
-        android:visibility="invisible"/>
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnedit" />
 
     <Button
         android:id="@+id/profile_btnBuyer2"
