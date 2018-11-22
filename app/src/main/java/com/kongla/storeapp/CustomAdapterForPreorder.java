@@ -51,7 +51,7 @@ public class CustomAdapterForPreorder extends BaseAdapter {
         view = mInflater.inflate(R.layout.listday, parent, false);
 
         final TextView date = (TextView)view.findViewById(R.id.text1);
-        date.setText(""+clubkey.get(position));
+        date.setText(setDate(clubkey.get(position)));
 
         ImageView img1 = view.findViewById(R.id.img1);
         ImageView img2 = view.findViewById(R.id.img2);
@@ -69,7 +69,6 @@ public class CustomAdapterForPreorder extends BaseAdapter {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 fruitName.clear();
-                int countxx = 0;
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     getData = d.getValue(GetData.class);
                     fruitName.add(getData.getFruitName());
@@ -78,9 +77,6 @@ public class CustomAdapterForPreorder extends BaseAdapter {
                     for(int countIn = count+1 ; countIn<fruitName.size();countIn++){
                         if(fruitName.get(count).matches(fruitName.get(countIn))){
                             fruitName.remove(countIn);
-                        }
-                        else {
-                            countxx++;
                         }
                     }
                 }
@@ -112,5 +108,28 @@ public class CustomAdapterForPreorder extends BaseAdapter {
         });
 
     return view;
+    }
+
+    public String setDate(String date){
+        String d = date.substring(date.lastIndexOf("-")+1);
+        String m = date.substring(date.indexOf("-")+1,date.lastIndexOf("-"));
+        String month;
+        String y = date.substring(0,date.indexOf("-"));
+        switch (m){
+            case "1": month = "มกราคม"; break;
+            case "2": month = "กุมภาพันธ์"; break;
+            case "3": month = "มีนาคม"; break;
+            case "4": month = "เมษายน"; break;
+            case "5": month = "พฤษภาคม"; break;
+            case "6": month = "มิถุนายน"; break;
+            case "7": month = "กรกฎาคม"; break;
+            case "8": month = "สิงหาคม"; break;
+            case "9": month = "กันยายน"; break;
+            case "10": month = "ตุลาคม"; break;
+            case "11": month = "พฤศจิกายน"; break;
+            case "12": month = "ธันวาคม"; break;
+            default: month = m;
+        }
+        return d+" "+ month + " " + y;
     }
 }

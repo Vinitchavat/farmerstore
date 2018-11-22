@@ -5,10 +5,18 @@ public class GetFarmer {
     String farmDescription;
     String farmerNumber;
     String memberID;
-    int farmRating;
     int farmSellProduct;
+    String address;
     public GetFarmer(String farmName){
         this.farmName = farmName;
+    }
+
+    public GetFarmer(String farmName,String farmDescription,String farmerNumber,String address, String memberID){
+        this.farmName = farmName;
+        this.farmDescription = farmDescription;
+        this.farmerNumber = farmerNumber;
+        this.address = address;
+        this.memberID = memberID;
     }
     public String getFarmName() {
         return farmName;
@@ -21,9 +29,6 @@ public class GetFarmer {
     }
     public String getMemberID(){
         return memberID;
-    }
-    public int getFarmRating(){
-        return farmRating;
     }
     public int getFarmSellProduct(){
         return farmSellProduct;

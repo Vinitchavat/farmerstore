@@ -33,8 +33,8 @@
     <Button
         android:id="@+id/profile_btnedit"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/button_redstroke"
         android:text="@string/profile_editProfile"
         android:textColor="@color/colorPrimary"
@@ -45,24 +45,10 @@
         app:layout_constraintTop_toBottomOf="@id/profile_textName" />
 
     <Button
-        android:id="@+id/profile_btnLogout"
-        android:layout_width="150dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="48dp"
-        android:background="@drawable/button_gen"
-        android:text="@string/profile_logout"
-        android:textColor="@color/gen_white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/profile_btnSeller"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="25dp"
         android:text="@string/profile_sellerSetting"
         android:textSize="18sp"
         android:visibility="invisible"
@@ -73,8 +59,8 @@
     <Button
         android:id="@+id/profile_btnBuyer"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="25sp"
         android:background="@color/light_red"
         android:text="@string/markethistory"
         android:textColor="@color/gen_white"
@@ -87,7 +73,7 @@
     <Button
         android:id="@+id/profile_btnBuyer2"
         android:layout_width="match_parent"
-        android:layout_height="57dp"
+        android:layout_height="55dp"
         android:text="@string/preorderhistory"
         android:textSize="18sp"
         android:textColor="@color/gen_white"
@@ -96,6 +82,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_btnBuyer" />
+
+    <Button
+        android:id="@+id/profile_btnLogout"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/button_gen"
+        android:text="@string/profile_logout"
+        android:textColor="@color/gen_white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnBuyer2" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

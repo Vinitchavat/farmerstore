@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,8 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister;
     private ProgressDialog loadingBar;
     private FirebaseAuth firebaseAuth;
-    String[] items = new String[]{"ผู้ซื้อ","ผู้ขาย"};
-    String status = "buyer";
+    String[] items = new String[]{"กดเพื่อเลือก","ผู้ซื้อ", "ผู้ขาย"};
+    String status = "none";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         btnRegister = (Button) findViewById(R.id.register_button);
         inputName = (EditText) findViewById(R.id.register_name);
-        inputPhone = (EditText) findViewById(R.id.register_phone );
+        inputPhone = (EditText) findViewById(R.id.register_phone);
         inputEmail = (EditText) findViewById(R.id.register_email);
         inputPassword = (EditText) findViewById(R.id.register_password);
         loadingBar = new ProgressDialog(this);
@@ -59,10 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 switch (position) {
-                    case 0:
+                    case 1:
                         status = "buyer";
                         break;
-                    case 1:
+                    case 2:
                         status = "seller";
                         break;
                 }
@@ -74,15 +75,21 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        btnRegister.setOnClickListener( new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            CreateAccount();
-        } });
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (status.matches("seller")){
+                    CreateAccount("seller");
+                }
+                else{
+                    CreateAccount("buyer");
+                }
+            }
+        });
 
     }
 
-    private void CreateAccount(){
+    private void CreateAccount(String isSeller) {
 
         String name = inputName.getText().toString();
         String phone = inputPhone.getText().toString();
@@ -98,12 +105,15 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.register_phone_warning, Toast.LENGTH_SHORT).show();
         } else if (password.length() < 6) {
             Toast.makeText(this, R.string.register_password_warning, Toast.LENGTH_SHORT).show();
+        } else if (status.matches("none")) {
+            Toast.makeText(this, "กรุณาเลือกสถานะการลงทะเบียน", Toast.LENGTH_SHORT).show();
         } else {
-            registerNewUser();
+            registerNewUser(isSeller);
         }
+
     }
 
-    private void registerNewUser(){
+    private void registerNewUser(final String isSeller) {
 
         loadingBar.setMessage("กรุณารอสักครู่");
         loadingBar.show();
@@ -112,11 +122,11 @@ public class RegisterActivity extends AppCompatActivity {
         final String name = inputName.getText().toString().trim();
         final String phone = inputPhone.getText().toString().trim();
 
-        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    Users user = new Users(email, name, phone,status);
+                if (task.isSuccessful()) {
+                    Users user = new Users(email, name, phone, status);
                     FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth
                             .getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -125,18 +135,27 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "Register Success",
                                         Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                            }
-                            else {
+                                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                if (isSeller.matches("seller")){
+                                    Intent intent = new Intent(RegisterActivity.this, RegisterFarm.class);
+                                    intent.putExtra("userID",uid);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+
+                                loadingBar.dismiss();
+                            } else {
                                 Toast.makeText(RegisterActivity.this, task.getException().getMessage(),
                                         Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
                             }
-                            loadingBar.dismiss();
                         }
                     });
-                }
-                else {
+                } else {
                     Toast.makeText(RegisterActivity.this, task.getException().getMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
