@@ -115,15 +115,10 @@ public class profileAddProduct extends AppCompatActivity {
         selectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pickIntent = new Intent();
-                pickIntent.setType("image/*");
-                pickIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                String pickTitle = "Select or take a new Picture";
-                Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{takePhotoIntent});
-                startActivityForResult(chooserIntent, PICK_IMAGE);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent
+                        , "Select Picture"), PICK_IMAGE);
                 ID = UUID.randomUUID().toString();
             }
         });
@@ -281,16 +276,9 @@ public class profileAddProduct extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            try {
-                uri = data.getData();
-                Bitmap bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(uri));
-                ImageView img = findViewById(R.id.addProductImage);
-                img.setPadding(0, 0, 0, 0);
-                img.setImageBitmap(bitmap);
-                Toast.makeText(getApplicationContext(), photoURL, Toast.LENGTH_SHORT).show();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            uri = data.getData();
+            ImageView imageView = (ImageView)findViewById(R.id.img);
+            imageView.setImageURI(uri);
         }
     }
 
