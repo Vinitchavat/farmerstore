@@ -20,6 +20,6 @@
         app:arrowLocation="left"
         app:arrowPosition="16dp"
         app:arrowWidth="10dp"
-        app:bubbleColor="#333639" />
+        app:bubbleColor="@color/double_yellow" />
 
 </RelativeLayout>
