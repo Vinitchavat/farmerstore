@@ -2,18 +2,19 @@ package com.kongla.storeapp.Model;
 
 public class Users
 {
-    private String email, name, phone, password;
+    private String email, name, phone, password,status;
 
     public Users()
     {
 
     }
 
-    public Users(String email, String name, String phone) {
+    public Users(String email, String name, String phone,String status) {
         this.email = email;
         this.name = name;
         this.phone = phone;
         this.password = password;
+        this.status = status;
     }
 
 
@@ -44,4 +45,8 @@ public class Users
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String password) { this.status = status; }
 }

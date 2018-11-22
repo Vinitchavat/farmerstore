@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +35,8 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister;
     private ProgressDialog loadingBar;
     private FirebaseAuth firebaseAuth;
+    String[] items = new String[]{"ผู้ซื้อ","ผู้ขาย"};
+    String status = "buyer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,29 @@ public class RegisterActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.register_password);
         loadingBar = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        Spinner statusDrop = findViewById(R.id.spinner1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        statusDrop.setAdapter(adapter);
+        statusDrop.setSelection(1);
+        statusDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                switch (position) {
+                    case 0:
+                        status = "buyer";
+                        break;
+                    case 1:
+                        status = "seller";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btnRegister.setOnClickListener( new View.OnClickListener() {
         @Override
@@ -87,9 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Users user = new Users(
-                            email, name, phone
-                    );
+                    Users user = new Users(email, name, phone,status);
                     FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth
                             .getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
