@@ -41,6 +41,10 @@ public class ProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
 
+        /* Action Bar */
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle extras = getIntent().getExtras();
         product = extras.getString("product");
         key = extras.getString("key");
@@ -55,111 +59,57 @@ public class ProductActivity extends AppCompatActivity {
         else {
             BuyButton.setVisibility(View.VISIBLE);
         }
-        if(product.equals("marketProduct")) {
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order").child(product);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    int a = 0;
-                    for (DataSnapshot d : dataSnapshot.getChildren()){
-                        String p = d.child("productID").getValue(String.class);
-                        String u = d.child("buyerID").getValue(String.class);
-                        if (u.matches(userID) && p.matches(key)){
-                            a++;
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order")
+                .child(product);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int a = 0;
+                for (DataSnapshot d : dataSnapshot.getChildren()){
+                    String p = d.child("productID").getValue(String.class);
+                    String u = d.child("buyerID").getValue(String.class);
+                    if (u.matches(userID) && p.matches(key)){
+                        a++;
+                    }
+                }
+                if(a!=0){
+                    BuyButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(getApplicationContext(),"คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า",Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    if(a!=0){
-                        BuyButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Toast.makeText(getApplicationContext(),"คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    else {
-                        BuyButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
-                                dialog.setMessage("ยืนยันคำสั่งซื้อ");
-                                dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        addData();
-                                    }
-                                });
-                                dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        finish();startActivity(getIntent());
-                                    }
-                                });
-                                dialog.show();
-                            }
-                        });
-                    }
+                    });
                 }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
-        }
-        else
-        {
-            day = extras.getString("DayPre");
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order").child(product).child(day);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    int a = 0;
-                    for (DataSnapshot d : dataSnapshot.getChildren()){
-                        String p = d.child("productID").getValue(String.class);
-                        String u = d.child("buyerID").getValue(String.class);
-                        if (u.matches(userID) && p.matches(key)){
-                            a++;
+                else {
+                    BuyButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
+                            dialog.setMessage("ยืนยันคำสั่งซื้อ");
+                            dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    addData();
+                                }
+                            });
+                            dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    finish();startActivity(getIntent());
+                                }
+                            });
+                            dialog.show();
                         }
-                    }
-                    if(a!=0){
-                        BuyButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Toast.makeText(getApplicationContext(),"คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    else {
-                        BuyButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
-                                dialog.setMessage("ยืนยันคำสั่งซื้อ");
-                                dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        addData();
-                                    }
-                                });
-                                dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        finish();startActivity(getIntent());
-                                    }
-                                });
-                                dialog.show();
-                            }
-                        });
-                    }
+                    });
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
-        }
-
+            }
+        });
 
 
         if (product.matches("marketProduct")) {
@@ -199,6 +149,7 @@ public class ProductActivity extends AppCompatActivity {
                             TextView textDetail3 = findViewById(R.id.product_subdetails3);
                             textDetail3.setText("ชื่อฟาร์ม : " + farmname);
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -335,14 +286,13 @@ public class ProductActivity extends AppCompatActivity {
                         }
                     });
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             });
-        }
-
-        else {
+        } else {
             day = extras.getString("DayPre");
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             callMarket = database.getReference().child("product").child("preorderProduct").child(day).child(key);
@@ -358,7 +308,7 @@ public class ProductActivity extends AppCompatActivity {
                             Map map = (Map) dataSnapshot.getValue();
                             final String memberID = String.valueOf(map.get("memberID"));
                             OrderModel orderModel = new OrderModel(IDKey,memberID,farmID,key,"none",day);
-                            sendPre = database.getReference().child("Order").child("preorderProduct").child(day);
+                            sendPre = database.getReference().child("Order").child("preorderProduct");
                             sendPre.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -368,18 +318,24 @@ public class ProductActivity extends AppCompatActivity {
                                 }
                             });
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
                     });
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             });
         }
-        }
-
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
 }

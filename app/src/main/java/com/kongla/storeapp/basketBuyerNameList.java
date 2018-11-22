@@ -30,6 +30,11 @@ public class basketBuyerNameList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_buyer_name_list);
 
+        /* Action Bar */
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("รายการสินค้า");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle extras = getIntent().getExtras();
         productId = extras.getString("productID");
 
@@ -84,5 +89,10 @@ public class basketBuyerNameList extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

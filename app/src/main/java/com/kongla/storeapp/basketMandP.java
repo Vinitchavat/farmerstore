@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,6 +42,11 @@ public class basketMandP extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_mand_p);
+
+        /* Action Bar */
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("รายการสินค้าที่สั่งซื้อ");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String IDKey = sp.getString("IDKey", "0");
@@ -97,9 +104,9 @@ public class basketMandP extends AppCompatActivity {
                             productID.add(m.productID);
                             farmID.add(m.getFarmID());
                         }
-                        for(int count = 0 ; count<productID.size();count++){
-                            for(int countIn = count+1 ; countIn<productID.size();countIn++){
-                                if(productID.get(count).matches(productID.get(countIn))){
+                        for (int count = 0; count < productID.size(); count++) {
+                            for (int countIn = count + 1; countIn < productID.size(); countIn++) {
+                                if (productID.get(count).matches(productID.get(countIn))) {
                                     productID.remove(countIn);
                                     farmID.remove(countIn);
                                     key.remove(count);
@@ -167,6 +174,11 @@ public class basketMandP extends AppCompatActivity {
                 }
             });
         }
+    }
 
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }
