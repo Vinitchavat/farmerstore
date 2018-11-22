@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,8 +25,9 @@ public class basketPrePro extends AppCompatActivity {
 
     ArrayList<String> productID = new ArrayList<String>();
     ArrayList<String> farmID = new ArrayList<String>();
-//    ArrayList<String> date = new ArrayList<String>();
     ArrayList<String> key = new ArrayList<String>();
+    ArrayList<String> buyerID = new ArrayList<String>();
+    ArrayList<String> sellerID = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,41 +36,102 @@ public class basketPrePro extends AppCompatActivity {
 
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String IDKey = sp.getString("IDKey", "0");
+        final String status = sp.getString("Status", "none");
 
         Bundle extras = getIntent().getExtras();
         day = extras.getString("day");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("buyerID").equalTo(IDKey);
-        callbuylist.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                key.clear();
-                farmID.clear();
-                productID.clear();
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    key.add(d.getKey());
-                    OrderIdMar m = d.getValue(OrderIdMar.class);
-                    productID.add(m.productID);
-                    farmID.add(m.getFarmID());
-                }
-                CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(),day, productID, farmID);
-                ListView listviewMarket = (ListView) findViewById(R.id.listview);
-                listviewMarket.setAdapter(customAdapShowBasPre);
-                listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent next = new Intent(basketPrePro.this, chatNew.class);
-                        next.putExtra("orderid", key.get(position));
-                        startActivity(next);
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        if (status.matches("buyer")) {
+            Query callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("date").equalTo(day);
+            callbuylist.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    key.clear();
+                    farmID.clear();
+                    productID.clear();
+                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                        key.add(d.getKey());
+                        OrderIdMar m = d.getValue(OrderIdMar.class);
+                        productID.add(m.productID);
+                        farmID.add(m.getFarmID());
+                        buyerID.add(m.getBuyerID());
                     }
+                    for (int count = 0; count < buyerID.size(); count++) {
+                        if (!buyerID.get(count).matches(IDKey)) {
+                            key.remove(count);
+                            productID.remove(count);
+                            farmID.remove(count);
+                            buyerID.remove(count);
+                        }
+                    }
+                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID,status);
+                    ListView listviewMarket = (ListView) findViewById(R.id.listview);
+                    listviewMarket.setAdapter(customAdapShowBasPre);
+                    listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent next = new Intent(basketPrePro.this, chatNew.class);
+                            next.putExtra("orderid", key.get(position));
+                            startActivity(next);
+                        }
 
-                });
-            }
+                    });
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+        else {
+            Query callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("date").equalTo(day);
+            callbuylist.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    farmID.clear();
+                    productID.clear();
+                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                        OrderIdMar m = d.getValue(OrderIdMar.class);
+                        productID.add(m.productID);
+                        farmID.add(m.getFarmID());
+                        sellerID.add(m.getSellerID());
+                    }
+                    for (int count = 0; count < sellerID.size(); count++) {
+                        if (!sellerID.get(count).matches(IDKey)) {
+                            productID.remove(count);
+                            farmID.remove(count);
+                            buyerID.remove(count);
+                        }
+                    }
+                    for (int count = 0; count < productID.size(); count++) {
+                        for (int countIn = count + 1; countIn < productID.size(); countIn++) {
+                            if (productID.get(count).matches(productID.get(countIn))) {
+                                productID.remove(countIn);
+                                farmID.remove(countIn);
+                            }
+                        }
+                    }
+                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID,status);
+                    ListView listviewMarket = (ListView) findViewById(R.id.listview);
+                    listviewMarket.setAdapter(customAdapShowBasPre);
+                    listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent next = new Intent(basketPrePro.this, basketBuyerNameList.class);
+                            Toast.makeText(getApplicationContext(),"productID"+productID,Toast.LENGTH_SHORT).show();
+                            next.putExtra("product", "preorder");
+                            next.putExtra("productID", productID.get(position));
+                            startActivity(next);
+                        }
+
+                    });
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
     }
 }

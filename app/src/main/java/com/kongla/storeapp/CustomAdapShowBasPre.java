@@ -24,18 +24,19 @@ public class CustomAdapShowBasPre extends BaseAdapter {
     int draw;
     ArrayList<String> productID = new ArrayList<String>();
     ArrayList<String> farmID = new ArrayList<String>();
-    String day;
+    String day,status;
 
 
 
     public DatabaseReference calllistMar,callfarm;
 
 
-    public CustomAdapShowBasPre(Context context,String day ,ArrayList<String> productID,ArrayList<String> farmID ) {
+    public CustomAdapShowBasPre(Context context,String day ,ArrayList<String> productID,ArrayList<String> farmID ,String status) {
         this.mContext = context;
         this.productID = productID;
         this.farmID = farmID;
         this.day = day;
+        this.status=status;
     }
 
     @Override
@@ -95,21 +96,24 @@ public class CustomAdapShowBasPre extends BaseAdapter {
 
             }
         });
-        callfarm = database.getReference().child("farmer").child(farmID.get(position));
-        callfarm.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Map map = (Map) dataSnapshot.getValue();
-                String farmname = String.valueOf(map.get("farmName"));
+        if(status.matches("buyer")) {
+            callfarm = database.getReference().child("farmer").child(farmID.get(position));
+            callfarm.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Map map = (Map) dataSnapshot.getValue();
+                    String farmname = String.valueOf(map.get("farmName"));
 
-                TextView textView3 = view.findViewById(R.id.showFarmName);
-                textView3.setText("ผู้ขาย : "+farmname);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    TextView textView3 = view.findViewById(R.id.showFarmName);
+                    textView3.setText("ผู้ขาย : " + farmname);
+                }
 
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
         return view;
     }
 }

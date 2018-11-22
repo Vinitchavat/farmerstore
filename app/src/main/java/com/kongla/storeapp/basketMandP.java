@@ -72,7 +72,7 @@ public class basketMandP extends AppCompatActivity {
                             productID.add(m.productID);
                             farmID.add(m.getFarmID());
                         }
-                        CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID);
+                        CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID,user);
                         ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
                         listviewMarket.setAdapter(customAdapShowBas);
                         listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -113,7 +113,7 @@ public class basketMandP extends AppCompatActivity {
                                 }
                             }
                         }
-                        CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID);
+                        CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID,user);
                         ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
                         listviewMarket.setAdapter(customAdapShowBas);
                         listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -137,42 +137,82 @@ public class basketMandP extends AppCompatActivity {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             if (user.matches("buyer")) {
                 callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("buyerID").equalTo(IDKey);
-            } else {
-                callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("sellerID").equalTo(IDKey);
-            }
-            callbuylist.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    key.clear();
-                    date.clear();
-                    productID.clear();
-                    for (DataSnapshot d : dataSnapshot.getChildren()) {
-                        key.add(d.getKey());
-                        OrderIdPre m = d.getValue(OrderIdPre.class);
-                        date.add(m.getDate());
-                        productID.add(m.productID);
-                    }
-                    String[] mStringArray = new String[date.size()];
-                    mStringArray = date.toArray(mStringArray);
-                    final String[] finalMStringArray = mStringArray;
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(basketMandP.this, android.R.layout.simple_list_item_1, android.R.id.text1, finalMStringArray);
-                    ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
-                    listviewMarket.setAdapter(adapter);
-                    listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            Intent next = new Intent(basketMandP.this, basketPrePro.class);
-                            next.putExtra("day", date.get(position));
-                            startActivity(next);
+                callbuylist.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        date.clear();
+                        for (DataSnapshot d : dataSnapshot.getChildren()) {
+                            OrderIdPre m = d.getValue(OrderIdPre.class);
+                            date.add(m.getDate());
                         }
+                        for (int count = 0; count < date.size(); count++) {
+                            for (int countIn = count + 1; countIn < date.size(); countIn++) {
+                                if (date.get(count).matches(date.get(countIn))) {
+                                    date.remove(countIn);
+                                }
+                            }
+                        }
+                        String[] mStringDate = new String[date.size()];
+                        mStringDate = date.toArray(mStringDate);
+                        final String[] finalMStringDate = mStringDate;
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(basketMandP.this, android.R.layout.simple_list_item_1, android.R.id.text1, finalMStringDate);
+                        ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
+                        listviewMarket.setAdapter(adapter);
+                        listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent next = new Intent(basketMandP.this, basketPrePro.class);
+                                next.putExtra("day", date.get(position));
+                                startActivity(next);
+                            }
 
-                    });
-                }
+                        });
+                    }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
+            else {
+                callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("sellerID").equalTo(IDKey);
+                callbuylist.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        date.clear();
+                        for (DataSnapshot d : dataSnapshot.getChildren()) {
+                            OrderIdPre m = d.getValue(OrderIdPre.class);
+                            date.add(m.getDate());
+                        }
+                        for (int count = 0; count < date.size(); count++) {
+                            for (int countIn = count + 1; countIn < date.size(); countIn++) {
+                                if (date.get(count).matches(date.get(countIn))) {
+                                    date.remove(countIn);
+                                }
+                            }
+                        }
+                        String[] mStringDate = new String[date.size()];
+                        mStringDate = date.toArray(mStringDate);
+                        final String[] finalMStringDate = mStringDate;
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(basketMandP.this, android.R.layout.simple_list_item_1, android.R.id.text1, finalMStringDate);
+                        ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
+                        listviewMarket.setAdapter(adapter);
+                        listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Intent next = new Intent(basketMandP.this, basketPrePro.class);
+                                next.putExtra("day", date.get(position));
+                                startActivity(next);
+                            }
+
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
         }
     }
 
