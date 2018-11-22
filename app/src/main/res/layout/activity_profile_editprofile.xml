@@ -27,7 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_email"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/gen_white"/>
 
             <TextView
                 android:id="@+id/textEmail"
@@ -35,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text1"
                 android:textSize="18sp"
+                android:textColor="@color/gen_white"
                 tools:text="@tools:sample/cities" />
 
             <TextView
@@ -44,6 +46,7 @@
                 android:layout_below="@+id/textEmail"
                 android:layout_marginTop="10dp"
                 android:text="@string/profile_password"
+                android:textColor="@color/gen_white"
                 android:textSize="16sp" />
 
             <TextView
@@ -54,6 +57,7 @@
                 android:inputType="textPassword"
                 android:paddingLeft="5dp"
                 android:text="Password"
+                android:textColor="@color/gen_white"
                 android:textSize="18sp" />
         </RelativeLayout>
 
@@ -71,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_fullname"
+                android:textColor="@color/gen_white"
                 android:textSize="16sp" />
 
             <TextView
@@ -79,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text3"
                 android:textSize="19sp"
+                android:textColor="@color/gen_white"
                 tools:text="@tools:sample/full_names" />
         </RelativeLayout>
 
@@ -96,6 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_phone"
+                android:textColor="@color/gen_white"
                 android:textSize="16sp" />
 
             <TextView
@@ -104,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text4"
                 android:textSize="19sp"
+                android:textColor="@color/gen_white"
                 tools:text="@tools:sample/us_phones" />
         </RelativeLayout>
 
@@ -121,6 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/profile_address"
+                android:textColor="@color/gen_white"
                 android:textSize="16sp" />
 
             <TextView
@@ -129,6 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text5"
                 android:textSize="19sp"
+                android:textColor="@color/gen_white"
                 tools:text="@tools:sample/cities" />
         </RelativeLayout>
     </LinearLayout>
