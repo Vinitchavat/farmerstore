@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +17,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class PreMain extends AppCompatActivity {
     public DatabaseReference callPre;
@@ -68,12 +75,12 @@ public class PreMain extends AppCompatActivity {
         callPre.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                countKey = 0;
                 clubkey.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     getK = d.getKey();
-                    clubkey.add(getK);
-                    countKey = countKey + 1;
+                    if(getTimeStamp(getK)>=getTimeStamp("now")){
+                        clubkey.add(getK);
+                    }
                 }
                 String[] mStringArray = new String[clubkey.size()];
                 mStringArray = clubkey.toArray(mStringArray);
@@ -96,5 +103,24 @@ public class PreMain extends AppCompatActivity {
             }
         });
 
+    }
+    public long getTimeStamp(String date){
+        String now;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",new Locale("TH"));
+        if (date.matches("now")){
+            Calendar calendar = Calendar.getInstance();
+            now = dateFormat.format(calendar.getTime());
+        }
+        else {
+            int y = Integer.parseInt(date.substring(0,4))-543;
+            now = String.valueOf(y)+date.substring(4);
+        }
+        try {
+            Date d = (Date)dateFormat.parse(now);
+            return d.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }
