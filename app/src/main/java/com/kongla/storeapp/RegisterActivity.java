@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         Spinner statusDrop = findViewById(R.id.spinner1);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         statusDrop.setAdapter(adapter);
-        statusDrop.setSelection(1);
+        statusDrop.setSelection(0);
         statusDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
