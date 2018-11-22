@@ -29,17 +29,21 @@
 
         <Button
             android:id="@+id/btnChoose"
-            android:layout_width="0dp"
+            android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ChoosePicture" />
+            android:text="Choose Picture"
+            android:textColor="@color/gen_white"
+            android:background="@color/red_orange"/>
 
         <Button
             android:id="@+id/btnUpload"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Upload" />
+            android:text="Upload"
+            android:textColor="@color/gen_white"
+            android:background="@color/not_black"/>
 
 
     </LinearLayout>

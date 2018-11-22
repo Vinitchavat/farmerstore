@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E91E63</color>
+    <color name="colorPrimary">#bd4538</color>
     <color name="colorPrimaryDark">#C2185B</color>
     <color name="colorAccent">#651FFF</color>
+
+    <color name="light_red">#bb4c46</color>
+    <color name="red_orange">#ed6149</color>
+    <color name="blue_grey">#5e6b64</color>
+    <color name="pink_orange">#fa8867</color>
+    <color name="not_black">#202026</color>
+
 
     <color name="gen_black">#000000</color>
     <color name="gen_white">#FFFFFF</color>

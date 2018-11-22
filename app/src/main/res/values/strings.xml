@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">store app</string>
+    <string name="app_name">Farmer Store</string>
     <string name="minimum_password">minimum_password</string>
     <string name="auth_failed">auth_failed</string>
     <string name="title_activity_home">HomeActivity</string>
