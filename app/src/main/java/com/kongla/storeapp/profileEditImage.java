@@ -1,5 +1,6 @@
 package com.kongla.storeapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,6 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class profileEditImage extends AppCompatActivity {
@@ -56,17 +58,10 @@ public class profileEditImage extends AppCompatActivity {
         selectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent pickIntent = new Intent();
-                pickIntent.setType("image/*");
-                pickIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                String pickTitle = "เลือกรูปภาพ หรือ ถ่ายรูปใหม่";
-                Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{
-                        takePhotoIntent
-                });
-                startActivityForResult(chooserIntent, PICK_IMAGE);
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent
+                        , "Select Picture"), PICK_IMAGE);
             }
         });
     }
@@ -75,14 +70,9 @@ public class profileEditImage extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            try {
-                uri = data.getData();
-                Bitmap bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(uri));
-                ImageView img = (ImageView) findViewById(R.id.img);
-                img.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            uri = data.getData();
+            ImageView imageView = (ImageView)findViewById(R.id.img);
+            imageView.setImageURI(uri);
         }
     }
 

@@ -133,12 +133,21 @@ public class profileMain extends AppCompatActivity {
 
         else {
             Button button3 = (Button) findViewById(R.id.profile_btnBuyer);
+            Button button4 = (Button) findViewById(R.id.profile_btnBuyer2);
             button3.setVisibility(View.VISIBLE);
+            button4.setVisibility(View.VISIBLE);
             button3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                 Intent i3 = new Intent(getApplicationContext(), profileBuyerSetting.class);
                 startActivity(i3);
+                }
+            });
+            button4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i4 = new Intent(getApplicationContext(), profileBuyerSettingPreorder.class);
+                    startActivity(i4);
                 }
             });
         }
@@ -157,9 +166,9 @@ public class profileMain extends AppCompatActivity {
                 /* *** Sign out and delete state *** */
                 sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
                 editor = sp.edit();
-                editor.remove("IDKey");
-                editor.remove("farmID");
-                editor.remove("Status");
+                editor.remove("IDKey"); // userID
+                editor.remove("farmID"); //
+                editor.remove("Status"); // Buyer or Seller
                 editor.commit();
 
                 firebaseAuth = FirebaseAuth.getInstance();

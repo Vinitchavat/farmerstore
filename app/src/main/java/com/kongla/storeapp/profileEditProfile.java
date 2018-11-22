@@ -32,8 +32,9 @@ public class profileEditProfile extends AppCompatActivity {
         setContentView(R.layout.activity_profile_editprofile);
 
         /* Action Bar */
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        /*android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Edit Profile");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         firebaseAuth = FirebaseAuth.getInstance();
         textEmail = (TextView) findViewById(R.id.textEmail);

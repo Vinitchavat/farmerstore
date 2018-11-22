@@ -34,6 +34,7 @@ public class basketMandP extends AppCompatActivity {
     ArrayList<String> farmID = new ArrayList<String>();
     ArrayList<String> date = new ArrayList<String>();
     ArrayList<String> key = new ArrayList<String>();
+    Query callbuylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +43,16 @@ public class basketMandP extends AppCompatActivity {
 
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String IDKey = sp.getString("IDKey", "0");
-        final String user = "buyer";
+        final String user = sp.getString("Status", "none");
 
 
         Bundle extras = getIntent().getExtras();
         newString = extras.getString("text");
 
-        if (user.equals("buyer")) {
-            if (newString.equals("Mar")) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                Query callbuylist = database.getReference().child("Order").child("marketProduct").orderByChild("buyerID").equalTo(IDKey);
+        if (newString.equals("Mar")) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            if (user.matches("buyer")) {
+                callbuylist = database.getReference().child("Order").child("marketProduct").orderByChild("buyerID").equalTo(IDKey);
                 callbuylist.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -83,31 +84,37 @@ public class basketMandP extends AppCompatActivity {
                     }
                 });
             } else {
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                Query callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("buyerID").equalTo(IDKey);
+                callbuylist = database.getReference().child("Order").child("marketProduct").orderByChild("sellerID").equalTo(IDKey);
                 callbuylist.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         key.clear();
-                        date.clear();
+                        farmID.clear();
                         productID.clear();
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
                             key.add(d.getKey());
-                            OrderIdPre m = d.getValue(OrderIdPre.class);
-                            date.add(m.getDate());
+                            OrderIdMar m = d.getValue(OrderIdMar.class);
                             productID.add(m.productID);
+                            farmID.add(m.getFarmID());
                         }
-                        String[] mStringArray = new String[date.size()];
-                        mStringArray = date.toArray(mStringArray);
-                        final String[] finalMStringArray = mStringArray;
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(basketMandP.this,android.R.layout.simple_list_item_1, android.R.id.text1,finalMStringArray);
+                        for(int count = 0 ; count<productID.size();count++){
+                            for(int countIn = count+1 ; countIn<productID.size();countIn++){
+                                if(productID.get(count).matches(productID.get(countIn))){
+                                    productID.remove(countIn);
+                                    farmID.remove(countIn);
+                                    key.remove(count);
+                                }
+                            }
+                        }
+                        CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID);
                         ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
-                        listviewMarket.setAdapter(adapter);
+                        listviewMarket.setAdapter(customAdapShowBas);
                         listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Intent next = new Intent(basketMandP.this, basketPrePro.class);
-                                next.putExtra("day", date.get(position));
+                                Intent next = new Intent(basketMandP.this, basketBuyerNameList.class);
+                                next.putExtra("productID", productID.get(position));
+                                next.putExtra("product", "market");
                                 startActivity(next);
                             }
 
@@ -120,7 +127,45 @@ public class basketMandP extends AppCompatActivity {
                 });
             }
         } else {
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            if (user.matches("buyer")) {
+                callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("buyerID").equalTo(IDKey);
+            } else {
+                callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("sellerID").equalTo(IDKey);
+            }
+            callbuylist.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    key.clear();
+                    date.clear();
+                    productID.clear();
+                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                        key.add(d.getKey());
+                        OrderIdPre m = d.getValue(OrderIdPre.class);
+                        date.add(m.getDate());
+                        productID.add(m.productID);
+                    }
+                    String[] mStringArray = new String[date.size()];
+                    mStringArray = date.toArray(mStringArray);
+                    final String[] finalMStringArray = mStringArray;
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(basketMandP.this, android.R.layout.simple_list_item_1, android.R.id.text1, finalMStringArray);
+                    ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
+                    listviewMarket.setAdapter(adapter);
+                    listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent next = new Intent(basketMandP.this, basketPrePro.class);
+                            next.putExtra("day", date.get(position));
+                            startActivity(next);
+                        }
 
+                    });
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
         }
 
     }

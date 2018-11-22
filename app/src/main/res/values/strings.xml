@@ -58,6 +58,8 @@
     <string name="justamoment">กรุณารอสักครู่</string>
     <string name="productdes">ข้อมูลสินค้า</string>
     <string name="buyhistory">ประวัติการซื้อ</string>
+    <string name="markethistory">ประวัติสินค้าตลาด</string>
+    <string name="preorderhistory">ประวัติสินค้าสั่งจอง</string>
 
     <string name="preorder">สินค้าสั่งจอง</string>
     <string name="pre_daylist">รายการสินค้าสั่งจอง</string>

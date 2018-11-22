@@ -1,6 +1,7 @@
 package com.kongla.storeapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import java.io.InputStream;
@@ -20,13 +22,15 @@ public class CustomAdapter extends BaseAdapter {
     Context mContext;
     ArrayList<String> Mes, sender, type;
     ImageView imageView;
+    SharedPreferences sp;
+    private String state;
 
-
-    public CustomAdapter(Context context, ArrayList<String> Mes, ArrayList<String> sender, ArrayList<String> type) {
+    public CustomAdapter(Context context, ArrayList<String> Mes, ArrayList<String> sender, ArrayList<String> type, String state) {
         this.mContext = context;
         this.Mes = Mes;
         this.sender = sender;
         this.type = type;
+        this.state = state;
     }
 
     @Override
@@ -49,24 +53,24 @@ public class CustomAdapter extends BaseAdapter {
         View view = null;
         if (type.get(position).equals("Message")) {
 
-            if (sender.get(position).equals("buyer")) {
-                LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.layout, parent, false);
-                TextView textView = (TextView) view.findViewById(R.id.message_text);
-                textView.setText(Mes.get(position));
-                return view;
-            } else {
+            if (sender.get(position).matches(state)) {
                 LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = mInflater.inflate(R.layout.layoutsend, parent, false);
                 TextView textView = (TextView) view.findViewById(R.id.text_message);
                 textView.setText(Mes.get(position));
                 return view;
+            } else {
+                LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = mInflater.inflate(R.layout.layout, parent, false);
+                TextView textView = (TextView) view.findViewById(R.id.message_text);
+                textView.setText(Mes.get(position));
+                return view;
             }
 
         } else {
-            if (sender.get(position).equals("buyer")) {
+            if (sender.get(position).matches(state)) {
                 LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = mInflater.inflate(R.layout.picleft, parent, false);
+                view = mInflater.inflate(R.layout.picright, parent, false);
                 final ImageView imageView = (ImageView)view.findViewById(R.id.imgView);
                 /*FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
                 StorageReference storageReference = firebaseStorage.getReference();
@@ -81,8 +85,8 @@ public class CustomAdapter extends BaseAdapter {
                 Uri uri;
                 LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = mInflater.inflate(R.layout.picright, parent, false);
+                view = mInflater.inflate(R.layout.picleft, parent, false);
                 final ImageView imageView = (ImageView)view.findViewById(R.id.imgView);
-                new DownloadImageTask(imageView).execute(Mes.get(position));
                 return view;
             }
         }

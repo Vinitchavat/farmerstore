@@ -2,6 +2,7 @@ package com.kongla.storeapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -53,6 +54,7 @@ public class chatNew extends AppCompatActivity {
     String photoURL;
     String UserID;
     ProgressBar progressBar;
+    SharedPreferences sp;
 
 
     @Override
@@ -62,6 +64,9 @@ public class chatNew extends AppCompatActivity {
 
         progressBar = findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.GONE);
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String s = sp.getString("Status","none");
+        final String IDKey = sp.getString("IDKey", "0");
 
         text = (EditText) findViewById(R.id.editText);
 
@@ -83,7 +88,7 @@ public class chatNew extends AppCompatActivity {
                     type.add(m.type());
                 }
                 ListView list = (ListView) findViewById(R.id.list);
-                adapter = new CustomAdapter(getApplicationContext(), Mes, sender, type);
+                adapter = new CustomAdapter(getApplicationContext(), Mes, sender, type, s);
                 list.setAdapter(adapter);
                 list.setStackFromBottom(true);
             }
@@ -96,7 +101,8 @@ public class chatNew extends AppCompatActivity {
 
         /* Action Bar */
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Edit Profile");
+        actionBar.setTitle("ติดต่อผู้ซื้อ/ผู้ขาย");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button selectImg = (Button) findViewById(R.id.btnChoose);
         selectImg.setOnClickListener(new View.OnClickListener() {
@@ -105,13 +111,8 @@ public class chatNew extends AppCompatActivity {
                 Intent pickIntent = new Intent();
                 pickIntent.setType("image/*");
                 pickIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 String pickTitle = "Select or take a new Picture";
                 Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{
-                        takePhotoIntent
-                });
                 startActivityForResult(chooserIntent, PICK_IMAGE);
             }
         });
@@ -159,10 +160,12 @@ public class chatNew extends AppCompatActivity {
     }
 
     public void UploadData(String photoURL) {
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String s = sp.getString("Status","none");
         Date currentTime = Calendar.getInstance().getTime();
         String photo = UserID;
         String time = currentTime.toString();
-        Friendly friendly = new Friendly("buyer", photoURL, time,"Pic");
+        Friendly friendly = new Friendly(s, photoURL, time,"Pic");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String ordersend;
@@ -173,10 +176,12 @@ public class chatNew extends AppCompatActivity {
         testapp2.push().setValue(friendly);
     }
     public void addData(View view) {
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String s = sp.getString("Status","none");
         Date currentTime = Calendar.getInstance().getTime();
         String mes = text.getText().toString();
         String time = currentTime.toString();
-        Friendly friendly = new Friendly("buyer", mes, time,"Message");
+        Friendly friendly = new Friendly(s, mes, time,"Message");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         String ordersend;

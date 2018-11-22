@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
                     fruitRec.add(ran1);
                     fruitRec.add(ran2);
                 }
-                for(int count = 0 ; count<fruitRec.size();count++){
+                /*for(int count = 0 ; count<fruitRec.size();count++){
                     if(fruitDraw.get(fruitRec.get(count)).matches("ทุเรียน")){
                         layRec[count].setImageResource(fruit[5]);
                     }
@@ -178,7 +178,7 @@ public class HomeActivity extends AppCompatActivity {
                             startActivity(next);
                         }
                     });
-               }
+               }*/
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
