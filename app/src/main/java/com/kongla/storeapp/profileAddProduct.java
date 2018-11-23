@@ -326,7 +326,6 @@ public class profileAddProduct extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "เพิ่มสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }
                 });
@@ -340,7 +339,6 @@ public class profileAddProduct extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "เพิ่มสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }
                 });
@@ -366,7 +364,6 @@ public class profileAddProduct extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),
                                                 "แก้ไขสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
-                                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         i.putExtra("type", "preorder");
                                         startActivity(i);
                                     }
@@ -391,7 +388,6 @@ public class profileAddProduct extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "แก้ไขสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }
                 });
@@ -541,7 +537,6 @@ public class profileAddProduct extends AppCompatActivity {
                 editor.putString("ID", Productid);
                 editor.apply();
                 Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
         });

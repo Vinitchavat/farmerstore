@@ -51,7 +51,7 @@ public class profileBuyerSetting extends AppCompatActivity {
                 item1.clear();item2.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String status = d.child("orderStatus").getValue(String.class);
-                    if (status.matches("finish")) {
+                    if (status.matches("finished")) {
                         data = d.child("productID").getValue(String.class);
                         data2 = d.child("farmID").getValue(String.class);
                         item1.add(data);
