@@ -87,7 +87,6 @@ public class basketMandP extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                                 final Intent next = new Intent(basketMandP.this, chatNew.class);
-                                next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 next.putExtra("farmID", farmID.get(position) );
                                 next.putExtra("orderid", key.get(position));
                                 startActivity(next);

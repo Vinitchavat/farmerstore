@@ -80,7 +80,6 @@ public class basketBuyerNameList extends AppCompatActivity {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent next = new Intent(basketBuyerNameList.this, chatNew.class);
-                                        next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         next.putExtra("orderid", key.get(position));
                                         next.putExtra("buyerName",buyername);
                                         startActivity(next);
@@ -142,7 +141,6 @@ public class basketBuyerNameList extends AppCompatActivity {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent next = new Intent(basketBuyerNameList.this, chatNew.class);
-                                        next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         next.putExtra("orderid", key.get(position));
                                         next.putExtra("buyerName",buyername);
                                         startActivity(next);
