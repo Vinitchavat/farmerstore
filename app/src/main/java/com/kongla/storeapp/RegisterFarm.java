@@ -3,6 +3,7 @@ package com.kongla.storeapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -52,11 +53,31 @@ public class RegisterFarm extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(RegisterFarm.this,"ลงทะเบียนเสร็จสิ้น",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(RegisterFarm.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         loadingBar.dismiss();
                     }
                 });
             }
         });
+    }
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }

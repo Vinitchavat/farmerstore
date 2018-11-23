@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -325,6 +326,7 @@ public class profileAddProduct extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "เพิ่มสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }
                 });
@@ -338,6 +340,7 @@ public class profileAddProduct extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "เพิ่มสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }
                 });
@@ -363,6 +366,7 @@ public class profileAddProduct extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),
                                                 "แก้ไขสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
+                                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         i.putExtra("type", "preorder");
                                         startActivity(i);
                                     }
@@ -387,6 +391,7 @@ public class profileAddProduct extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),
                                 "แก้ไขสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     }
                 });
@@ -536,6 +541,7 @@ public class profileAddProduct extends AppCompatActivity {
                 editor.putString("ID", Productid);
                 editor.apply();
                 Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
         });
@@ -546,5 +552,24 @@ public class profileAddProduct extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }

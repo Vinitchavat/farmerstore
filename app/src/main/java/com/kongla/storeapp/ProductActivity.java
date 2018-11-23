@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -276,6 +277,7 @@ public class ProductActivity extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(getApplicationContext(),"การสั่งซื้อเสร็จสิ้น",Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(),basketMain.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 }
                             });
@@ -314,6 +316,7 @@ public class ProductActivity extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(getApplicationContext(),"การสั่งซื้อเสร็จสิ้น",Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(),basketMain.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 }
                             });
@@ -337,5 +340,24 @@ public class ProductActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }

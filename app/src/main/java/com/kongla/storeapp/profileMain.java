@@ -10,9 +10,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,14 +54,17 @@ public class profileMain extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     return true;
                 case R.id.navigation_preorder:
                     i = new Intent(getApplicationContext(), PreMain.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     return true;
                 case R.id.navigation_order:
                     i = new Intent(getApplicationContext(), basketMain.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     return true;
                 case R.id.navigation_profile:
@@ -77,7 +83,7 @@ public class profileMain extends AppCompatActivity {
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         editor = sp.edit();
         final String userID = sp.getString("IDKey", "0");
-        final String status = sp.getString("Status","0");
+        final String status = sp.getString("Status", "0");
 
         imgProfile = findViewById(R.id.profile_img);
         txtName = findViewById(R.id.profile_textName);
@@ -99,7 +105,7 @@ public class profileMain extends AppCompatActivity {
         imgProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),profileEditImage.class);
+                Intent i = new Intent(getApplicationContext(), profileEditImage.class);
                 startActivity(i);
             }
         });
@@ -115,23 +121,23 @@ public class profileMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), profileEditProfile.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
         });
 
-        if(status.matches("seller")){
+        if (status.matches("seller")) {
             Button button2 = (Button) findViewById(R.id.profile_btnSeller);
             button2.setVisibility(View.VISIBLE);
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i2 = new Intent(getApplicationContext(), profileSellerSetting.class);
+                    i2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i2);
                 }
             });
-        }
-
-        else {
+        } else {
             Button button3 = (Button) findViewById(R.id.profile_btnBuyer);
             Button button4 = (Button) findViewById(R.id.profile_btnBuyer2);
             button3.setVisibility(View.VISIBLE);
@@ -139,14 +145,16 @@ public class profileMain extends AppCompatActivity {
             button3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                Intent i3 = new Intent(getApplicationContext(), profileBuyerSetting.class);
-                startActivity(i3);
+                    Intent i3 = new Intent(getApplicationContext(), profileBuyerSetting.class);
+                    i3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i3);
                 }
             });
             button4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i4 = new Intent(getApplicationContext(), profileBuyerSettingPreorder.class);
+                    i4.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i4);
                 }
             });
@@ -176,15 +184,16 @@ public class profileMain extends AppCompatActivity {
 
                 /* *** Go back to Login *** */
                 Intent i5 = new Intent(getApplicationContext(), MainActivity.class);
+                i5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i5);
                 finish();
             }
         });
     }
 
-    private void getImage(){
+    private void getImage() {
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        String userID = sp.getString("IDKey","0");
+        String userID = sp.getString("IDKey", "0");
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
         storageReference.child("Image").child("users/" + userID).getDownloadUrl()
@@ -192,7 +201,7 @@ public class profileMain extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         String photoURL = uri.toString();
-                        if (photoURL!=null){
+                        if (photoURL != null) {
                             new profileMain.DownloadImageTask((ImageView) findViewById(R.id.profile_img)).execute(photoURL);
                         }
                     }
@@ -222,5 +231,26 @@ public class profileMain extends AppCompatActivity {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
+    }
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

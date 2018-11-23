@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -86,6 +87,7 @@ public class profileEditFarm extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "การแก้ไขเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 }
             });
@@ -102,5 +104,24 @@ public class profileEditFarm extends AppCompatActivity {
                     , Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
