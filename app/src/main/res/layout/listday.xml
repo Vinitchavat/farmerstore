@@ -24,7 +24,7 @@
             android:layout_marginLeft="20sp"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
-            android:text="date" />
+            android:text="วันที่" />
     </LinearLayout>
 
     <LinearLayout
