@@ -9,12 +9,14 @@
         android:id="@+id/txtfRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:text="Farm Register"
+        android:layout_marginTop="16dp"
         android:maxLines="1"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="ลงทะเบียนฟาร์ม"
+        android:textColor="@color/colorPrimary"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/txtuser"
         android:layout_width="match_parent"
@@ -81,21 +83,23 @@
         android:id="@+id/btn_farmRegis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:text="ลงทะเบียน"
+        android:textColor="@color/gen_white"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFarmAdd"
+        app:layout_constraintBottom_toTopOf="@+id/farmlogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/editTextFarmAdd" />
 
     <TextView
         android:id="@+id/farmlogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/profile_logout"
-        app:layout_constraintTop_toBottomOf="@+id/btn_farmRegis"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
