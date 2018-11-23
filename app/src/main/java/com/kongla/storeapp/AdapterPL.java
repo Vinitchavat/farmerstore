@@ -23,16 +23,16 @@ public class AdapterPL extends BaseAdapter {
     ArrayList<Integer> productSell;
     ArrayList<String> productID;
     ArrayList<String> imgLink;
-    String status;
+    String type;
 
     public AdapterPL(Context context, ArrayList<String> name, ArrayList<Integer> productSell,
-                     ArrayList<String> productID, ArrayList<String> imgLink, String status) {
+                     ArrayList<String> productID, ArrayList<String> imgLink, String type) {
         this.name = name;
         this.productSell = productSell;
         this.mContext = context;
         this.productID = productID;
         this.imgLink = imgLink;
-        this.status = status;
+        this.type = type;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class AdapterPL extends BaseAdapter {
                 Intent intent = new Intent(mContext,profileAddProduct.class);
                 intent.putExtra("productID",id);
                 intent.putExtra("do","edit");
-                if (status.matches("preorder")){
+                if (type.matches("preorder")){
                     intent.putExtra("type","preorder");
                 }
                 else{

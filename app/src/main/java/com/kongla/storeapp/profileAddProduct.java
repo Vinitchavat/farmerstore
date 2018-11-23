@@ -71,7 +71,7 @@ public class profileAddProduct extends AppCompatActivity {
         final Spinner spinnerUnit = findViewById(R.id.dropdownUnit);
         textName = findViewById(R.id.textProductName);
         perunit = findViewById(R.id.perunit);
-        Button btn_delProduct = findViewById(R.id.deleteProduct);
+        final Button btn_delProduct = findViewById(R.id.deleteProduct);
 
         final SharedPreferences sp = getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sp.edit();
@@ -175,7 +175,25 @@ public class profileAddProduct extends AppCompatActivity {
                 btn_delProduct.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        deleteProduct();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(profileAddProduct.this);
+                        builder.setMessage(R.string.deleteproduct);
+                        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String Productid = getIntent().getStringExtra("productID");
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                        .child("product").child("marketProduct").child(Productid);
+                                databaseReference.child("status").setValue("deleted");
+                                Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
+                                startActivity(i);
+                            }
+                        });
+                        builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.show();
                     }
                 });
                 databaseReference = FirebaseDatabase.getInstance().getReference().child("product").child("marketProduct");
@@ -216,7 +234,34 @@ public class profileAddProduct extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
                             final String id = getIntent().getStringExtra("productID");
-                            String key = d.getKey();
+                            final String key = d.getKey();
+
+                            btn_delProduct.setVisibility(View.VISIBLE);
+                            btn_delProduct.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    String Productid = getIntent().getStringExtra("productID");
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(profileAddProduct.this);
+                                    builder.setMessage(R.string.deleteproduct);
+                                    builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            String Productid = getIntent().getStringExtra("productID");
+                                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                                                    .child("product").child("preorderProduct").child(key).child(Productid);
+                                            databaseReference.child("status").setValue("deleted");
+                                            Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
+                                            startActivity(i);
+                                        }
+                                    });
+                                    builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    builder.show();
+                                }
+                            });
 
                             if (dataSnapshot.child(key).child(id).child("fruitName").getValue() != null) {
 
@@ -247,7 +292,7 @@ public class profileAddProduct extends AppCompatActivity {
                                                 preorderSwitch.setVisibility(View.VISIBLE);
                                                 preorderSwitch.setChecked(true);
                                                 String date = dataSnapshot.getKey();
-                                                editD.setText(date.substring(date.lastIndexOf("-")));
+                                                editD.setText(date.substring(date.lastIndexOf("-")+1));
                                                 editM.setText(date.substring(date.indexOf("-")+1, date.lastIndexOf("-")));
                                                 editY.setText(date.substring(0, date.indexOf("-")));
                                             }
@@ -523,30 +568,6 @@ public class profileAddProduct extends AppCompatActivity {
             bmImage.setImageBitmap(result);
         }
 
-    }
-
-    public void deleteProduct() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(profileAddProduct.this);
-        builder.setMessage(R.string.deleteproduct);
-        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                String Productid = getIntent().getStringExtra("productID");
-                SharedPreferences sp = getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("Status", "Delete");
-                editor.putString("ID", Productid);
-                editor.apply();
-                Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
-                startActivity(i);
-            }
-        });
-        builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
     }
     boolean doubleBackToExitPressedOnce = false;
     @Override
