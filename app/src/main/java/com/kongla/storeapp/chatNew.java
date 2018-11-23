@@ -141,7 +141,6 @@ public class chatNew extends AppCompatActivity {
                 String pickTitle = "กรุณาเลือกรูปภาพ";
                 Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
                 startActivityForResult(chooserIntent, PICK_IMAGE);
-                uploadImg.setVisibility(View.VISIBLE);
             }
         });
 
@@ -229,6 +228,8 @@ public class chatNew extends AppCompatActivity {
             uri = data.getData();
             ImageView imageView = (ImageView)findViewById(R.id.imgmain);
             imageView.setImageURI(uri);
+            Button uploadImg = (Button) findViewById(R.id.btnUpload);
+            uploadImg.setVisibility(View.VISIBLE);
         }
     }
     @Override

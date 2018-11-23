@@ -179,8 +179,6 @@ public class HomeActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             Intent next = new Intent(HomeActivity.this, MarListFruit.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             next.putExtra("MarFruit", finalMStringArray[finalCount]);
                             startActivity(next);
                         }
