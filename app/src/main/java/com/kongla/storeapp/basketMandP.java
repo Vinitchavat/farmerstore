@@ -38,27 +38,32 @@ public class basketMandP extends AppCompatActivity {
     ArrayList<String> dateshow = new ArrayList<String>();
     ArrayList<String> key = new ArrayList<String>();
     Query callbuylist;
+    String fname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basket_mand_p);
 
-        /* Action Bar */
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("รายการสินค้าที่สั่งซื้อ");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String IDKey = sp.getString("IDKey", "0");
         final String user = sp.getString("Status", "none");
 
+        /* Action Bar */
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(user.matches("seller")){
+            actionBar.setTitle("รายการสินค้าที่ถูกสั่งซื้อ");
+        }
+        else if(user.matches("buyer")){
+            actionBar.setTitle("รายการสินค้าที่สั่งซื้อ");
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         newString = extras.getString("text");
 
         if (newString.equals("Mar")) {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
             if (user.matches("buyer")) {
                 callbuylist = database.getReference().child("Order").child("marketProduct").orderByChild("buyerID").equalTo(IDKey);
                 callbuylist.addValueEventListener(new ValueEventListener() {
@@ -78,8 +83,9 @@ public class basketMandP extends AppCompatActivity {
                         listviewMarket.setAdapter(customAdapShowBas);
                         listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Intent next = new Intent(basketMandP.this, chatNew.class);
+                            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                                final Intent next = new Intent(basketMandP.this, chatNew.class);
+                                next.putExtra("farmID", farmID.get(position) );
                                 next.putExtra("orderid", key.get(position));
                                 startActivity(next);
                             }

@@ -43,7 +43,8 @@
             android:layout_weight="1"
             android:text="Upload"
             android:textColor="@color/gen_white"
-            android:background="@color/not_black"/>
+            android:background="@color/not_black"
+            android:visibility="invisible"/>
 
 
     </LinearLayout>

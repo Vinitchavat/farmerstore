@@ -66,7 +66,7 @@ public class basketBuyerNameList extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Map map = (Map) dataSnapshot.getValue();
-                                String buyername = String.valueOf(map.get("name"));
+                                final String buyername = String.valueOf(map.get("name"));
                                 buyerName.add(buyername);
                                 String[] buyerNameString = new String[buyerName.size()];
                                 buyerNameString = buyerName.toArray(buyerNameString);
@@ -79,6 +79,7 @@ public class basketBuyerNameList extends AppCompatActivity {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent next = new Intent(basketBuyerNameList.this, chatNew.class);
                                         next.putExtra("orderid", key.get(position));
+                                        next.putExtra("buyerName",buyername);
                                         startActivity(next);
                                     }
 
@@ -126,7 +127,7 @@ public class basketBuyerNameList extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Map map = (Map) dataSnapshot.getValue();
-                                String buyername = String.valueOf(map.get("name"));
+                                final String buyername = String.valueOf(map.get("name"));
                                 buyerName.add(buyername);
                                 String[] buyerNameString = new String[buyerName.size()];
                                 buyerNameString = buyerName.toArray(buyerNameString);
@@ -139,6 +140,7 @@ public class basketBuyerNameList extends AppCompatActivity {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent next = new Intent(basketBuyerNameList.this, chatNew.class);
                                         next.putExtra("orderid", key.get(position));
+                                        next.putExtra("buyerName",buyername);
                                         startActivity(next);
                                     }
 

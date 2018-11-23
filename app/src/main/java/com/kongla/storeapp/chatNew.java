@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,23 +63,42 @@ public class chatNew extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_new);
 
-        /* Action Bar */
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("ติดต่อผู้ซื้อ/ผู้ขาย");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         progressBar = findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.GONE);
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String s = sp.getString("Status","none");
         final String IDKey = sp.getString("IDKey", "0");
 
-        text = (EditText) findViewById(R.id.editText);
+        /* Action Bar */
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        text = (EditText) findViewById(R.id.editText);
         Bundle extras = getIntent().getExtras();
         order = extras.getString("orderid");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        if(s.matches("seller")){
+            String buyerName = extras.getString("buyerName");
+            actionBar.setTitle(buyerName);
+        }
+        else {
+            String farmID = extras.getString("farmID");
+            DatabaseReference dRef = database.getReference().child("farmer").child(farmID);
+            dRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String fname = dataSnapshot.child("farmName").getValue(String.class);
+                    actionBar.setTitle(fname);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
         testapp1 = database.getReference().child("chat").child(order);
         testapp1.addValueEventListener(new ValueEventListener() {
             @Override
@@ -105,24 +125,27 @@ public class chatNew extends AppCompatActivity {
         });
 
         Button selectImg = (Button) findViewById(R.id.btnChoose);
+        final Button uploadImg = (Button) findViewById(R.id.btnUpload);
         selectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent pickIntent = new Intent();
                 pickIntent.setType("image/*");
                 pickIntent.setAction(Intent.ACTION_GET_CONTENT);
-                String pickTitle = "Select or take a new Picture";
+                String pickTitle = "กรุณาเลือกรูปภาพ";
                 Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
                 startActivityForResult(chooserIntent, PICK_IMAGE);
+                uploadImg.setVisibility(View.VISIBLE);
             }
         });
-        Button uploadImg = (Button) findViewById(R.id.btnUpload);
+
         uploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE); //to show
                 UserID = UUID.randomUUID().toString();
                 uploadImage();
+                uploadImg.setVisibility(View.INVISIBLE);
                 ImageView imageView = (ImageView)findViewById(R.id.imgmain);
                 imageView.setImageURI(null);
             }

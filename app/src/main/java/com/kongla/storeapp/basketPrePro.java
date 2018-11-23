@@ -38,6 +38,16 @@ public class basketPrePro extends AppCompatActivity {
         final String IDKey = sp.getString("IDKey", "0");
         final String status = sp.getString("Status", "none");
 
+        /* Action Bar */
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(status.matches("seller")){
+            actionBar.setTitle("รายการสินค้าที่ถูกสั่งซื้อ");
+        }
+        else if(status.matches("buyer")){
+            actionBar.setTitle("รายการสินค้าที่สั่งซื้อ");
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle extras = getIntent().getExtras();
         day = extras.getString("day");
 
@@ -133,5 +143,10 @@ public class basketPrePro extends AppCompatActivity {
                 }
             });
         }
+    }
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 }

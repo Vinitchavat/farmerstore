@@ -246,9 +246,9 @@ public class profileAddProduct extends AppCompatActivity {
                                                 preorderSwitch.setVisibility(View.VISIBLE);
                                                 preorderSwitch.setChecked(true);
                                                 String date = dataSnapshot.getKey();
-                                                editD.setText(date.substring(8, 10));
-                                                editM.setText(date.substring(5, 7));
-                                                editY.setText(date.substring(0, 4));
+                                                editD.setText(date.substring(date.lastIndexOf("-")));
+                                                editM.setText(date.substring(date.indexOf("-")+1, date.lastIndexOf("-")));
+                                                editY.setText(date.substring(0, date.indexOf("-")));
                                             }
                                         }
                                     }
@@ -308,6 +308,12 @@ public class profileAddProduct extends AppCompatActivity {
 
         if (addoredit.matches("add")) {
             if (preorderSwitch.isChecked()) {
+                if (dDate.length()<2){
+                    dDate = "0"+dDate;
+                }
+                if (mDate.length()<2){
+                    mDate = "0"+mDate;
+                }
                 String childDate = yDate + "-" + mDate + "-" + dDate;
                 DatabaseReference dref = databaseReference.child("product").child("preorderProduct")
                         .child(childDate);

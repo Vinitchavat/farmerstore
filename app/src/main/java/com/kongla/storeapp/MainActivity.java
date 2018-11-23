@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.kongla.storeapp.Model.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         editor = sp.edit();
         String IDKey = sp.getString("IDKey", "0");
-        if (!IDKey.matches("0")){
+        if (!IDKey.matches("0")) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
         }
@@ -117,25 +118,45 @@ public class MainActivity extends AppCompatActivity {
                             /* *** SET Login State *** */
                             sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
                             editor = sp.edit();
-                            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-                            String uID = currentFirebaseUser.getUid();
-                            editor.putString("IDKey",uID);
+                            FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            final String uID = currentFirebaseUser.getUid();
+                            editor.putString("IDKey", uID);
 
+                            final DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
                             /* *** GET user status *** */
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                                    .child("Users").child(uID);
+                            DatabaseReference databaseReference = dataRef.child("Users").child(uID);
                             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String s = dataSnapshot.child("status").getValue(String.class);
-                                    editor.putString("Status",s);
+                                    String name = dataSnapshot.child("name").getValue(String.class);
+                                    if (s.matches("seller")) {
+                                        Query dRef = dataRef.child("farmer").orderByChild("memberID").equalTo(uID);
+                                        dRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                                                    String fname = d.child("farmName").getValue(String.class);
+                                                    editor.putString("farmName", fname);
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+                                    editor.putString("Status", s);
+                                    editor.putString("UserName", name);
                                     editor.commit();
                                 }
 
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
                                     Toast.makeText(getApplicationContext(), R.string.error_tryagain, Toast.LENGTH_SHORT).show();
-                                    finish(); startActivity(getIntent());
+                                    finish();
+                                    startActivity(getIntent());
                                 }
                             });
                             editor.commit();
