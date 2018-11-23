@@ -44,6 +44,8 @@ public class MarListFruit extends AppCompatActivity {
         callDataPre.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                allKey.clear();unitPro.clear();farmID.clear();fruitName.clear();
+                price.clear();productName.clear();quantity.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String key = d.getKey();
                     allKey.add(key);
@@ -95,7 +97,6 @@ public class MarListFruit extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent next = new Intent(MarListFruit.this, ProductActivity.class);
-                        next.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         next.putExtra("product", "marketProduct");
                         next.putExtra("key", allKey.get(position));
                         startActivity(next);

@@ -299,6 +299,7 @@ public class ProductActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                                        finish();startActivity(getIntent());
                                     }
                                 });
                             } else {
@@ -353,6 +354,7 @@ public class ProductActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                                        finish();startActivity(getIntent());
                                     }
                                 });
                             } else {
