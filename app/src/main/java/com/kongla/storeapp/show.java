@@ -74,7 +74,6 @@ public class show extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent next = new Intent(show.this, ProductActivity.class);
-                        next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         next.putExtra("product", "preorderProduct");
                         next.putExtra("farmname", "preorderProduct");
                         next.putExtra("DayPre", day);

@@ -67,13 +67,13 @@ public class basketPrePro extends AppCompatActivity {
                         productID.add(m.productID);
                         farmID.add(m.getFarmID());
                         buyerID.add(m.getBuyerID());
-                    }
-                    for (int count = 0; count < buyerID.size(); count++) {
-                        if (!buyerID.get(count).matches(IDKey)) {
-                            key.remove(count);
-                            productID.remove(count);
-                            farmID.remove(count);
-                            buyerID.remove(count);
+                        for (int count = 0; count < buyerID.size(); count++) {
+                            if (!buyerID.get(count).matches(IDKey)) {
+                                key.remove(count);
+                                productID.remove(count);
+                                farmID.remove(count);
+                                buyerID.remove(count);
+                            }
                         }
                     }
                     CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID,status);
@@ -83,7 +83,6 @@ public class basketPrePro extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent next = new Intent(basketPrePro.this, chatNew.class);
-                            next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             next.putExtra("farmID", farmID.get(position) );
                             next.putExtra("orderid", key.get(position));
                             next.putExtra("statusPro","preorderProduct");

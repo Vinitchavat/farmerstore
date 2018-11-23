@@ -130,7 +130,6 @@ public class basketMandP extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Intent next = new Intent(basketMandP.this, basketBuyerNameList.class);
-                                next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 next.putExtra("productID", productID.get(position));
                                 next.putExtra("product", "market");
                                 startActivity(next);
@@ -184,7 +183,6 @@ public class basketMandP extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Intent next = new Intent(basketMandP.this, basketPrePro.class);
-                                next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 next.putExtra("day", date.get(position));
                                 startActivity(next);
                             }
@@ -227,7 +225,6 @@ public class basketMandP extends AppCompatActivity {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Intent next = new Intent(basketMandP.this, basketPrePro.class);
-                                next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 next.putExtra("day", date.get(position));
                                 startActivity(next);
                             }

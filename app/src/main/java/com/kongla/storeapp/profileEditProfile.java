@@ -61,7 +61,6 @@ public class profileEditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profileEditActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 i.putExtra("data", "name");
                 startActivity(i);
             }
@@ -70,7 +69,6 @@ public class profileEditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profileEditActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 i.putExtra("data", "phone");
                 startActivity(i);
             }
@@ -79,7 +77,6 @@ public class profileEditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profileEditActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 i.putExtra("data", "address");
                 startActivity(i);
             }

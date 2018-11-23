@@ -61,7 +61,6 @@ public class basketMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent Market = new Intent(basketMain.this ,basketMandP.class);
-                Market.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 String x = "Mar";
                 Market.putExtra("text",x);
                 startActivity(Market);
@@ -73,7 +72,6 @@ public class basketMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent Pre = new Intent(basketMain.this ,basketMandP.class);
-                Pre.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 String x = "Pre";
                 Pre.putExtra("text",x);
                 startActivity(Pre);

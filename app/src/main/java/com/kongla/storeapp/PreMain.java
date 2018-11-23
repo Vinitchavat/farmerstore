@@ -98,7 +98,6 @@ public class PreMain extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent next = new Intent(PreMain.this, show.class);
-                        next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         next.putExtra("DayPre", finalMStringArray[position]);
                         startActivity(next);
                     }
