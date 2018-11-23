@@ -36,15 +36,14 @@ public class basketPrePro extends AppCompatActivity {
         setContentView(R.layout.activity_basket_pre_pro);
 
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        final String IDKey = sp.getString("IDKey", "0");
+        final String KKK = sp.getString("IDKey", "0");
         final String status = sp.getString("Status", "none");
 
         /* Action Bar */
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if(status.matches("seller")){
+        if (status.matches("seller")) {
             actionBar.setTitle("รายการสินค้าที่ถูกสั่งซื้อ");
-        }
-        else if(status.matches("buyer")){
+        } else if (status.matches("buyer")) {
             actionBar.setTitle("รายการสินค้าที่สั่งซื้อ");
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,21 +61,17 @@ public class basketPrePro extends AppCompatActivity {
                     farmID.clear();
                     productID.clear();
                     for (DataSnapshot d : dataSnapshot.getChildren()) {
-                        key.add(d.getKey());
                         OrderIdMar m = d.getValue(OrderIdMar.class);
-                        productID.add(m.productID);
-                        farmID.add(m.getFarmID());
-                        buyerID.add(m.getBuyerID());
-                    }
-                    for (int count = 0; count < buyerID.size(); count++) {
-                        if (!buyerID.get(count).matches(IDKey)) {
-                            key.remove(count);
-                            productID.remove(count);
-                            farmID.remove(count);
-                            buyerID.remove(count);
+                        String buyer = m.getBuyerID();
+                        if (buyer.matches(KKK)) {
+                            key.add(d.getKey());
+                            productID.add(m.productID);
+                            farmID.add(m.getFarmID());
+                            buyerID.add(m.getBuyerID());
                         }
                     }
-                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID,status);
+
+                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID, status);
                     ListView listviewMarket = (ListView) findViewById(R.id.listview);
                     listviewMarket.setAdapter(customAdapShowBasPre);
                     listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,9 +79,9 @@ public class basketPrePro extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent next = new Intent(basketPrePro.this, chatNew.class);
                             next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            next.putExtra("farmID", farmID.get(position) );
+                            next.putExtra("farmID", farmID.get(position));
                             next.putExtra("orderid", key.get(position));
-                            next.putExtra("statusPro","preorderProduct");
+                            next.putExtra("statusPro", "preorderProduct");
                             startActivity(next);
                         }
 
@@ -97,8 +92,7 @@ public class basketPrePro extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-        }
-        else {
+        } else {
             Query callbuylist = database.getReference().child("Order").child("preorderProduct").orderByChild("date").equalTo(day);
             callbuylist.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -107,26 +101,24 @@ public class basketPrePro extends AppCompatActivity {
                     productID.clear();
                     for (DataSnapshot d : dataSnapshot.getChildren()) {
                         OrderIdMar m = d.getValue(OrderIdMar.class);
-                        productID.add(m.productID);
-                        farmID.add(m.getFarmID());
-                        sellerID.add(m.getSellerID());
-                    }
-                    for (int count = 0; count < sellerID.size(); count++) {
-                        if (!sellerID.get(count).matches(IDKey)) {
-                            productID.remove(count);
-                            farmID.remove(count);
-                            buyerID.remove(count);
+                        String seller = m.getSellerID();
+                        if (seller.matches(KKK)) {
+                            productID.add(m.productID);
+                            farmID.add(m.getFarmID());
+                            sellerID.add(m.getSellerID());
                         }
+
                     }
                     for (int count = 0; count < productID.size(); count++) {
                         for (int countIn = count + 1; countIn < productID.size(); countIn++) {
                             if (productID.get(count).matches(productID.get(countIn))) {
                                 productID.remove(countIn);
                                 farmID.remove(countIn);
+                                countIn--;
                             }
                         }
                     }
-                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID,status);
+                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID, status);
                     ListView listviewMarket = (ListView) findViewById(R.id.listview);
                     listviewMarket.setAdapter(customAdapShowBasPre);
                     listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -148,12 +140,15 @@ public class basketPrePro extends AppCompatActivity {
             });
         }
     }
+
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
+
     boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -168,7 +163,7 @@ public class basketPrePro extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
