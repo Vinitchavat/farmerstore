@@ -1,5 +1,6 @@
 package com.kongla.storeapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,8 +27,8 @@ public class HomeActivity extends AppCompatActivity {
     public DatabaseReference callMarket;
     Intent i;
     GetData getData;
-    ArrayList<String> fruitDraw = new ArrayList<String>();
-    ArrayList<Integer> fruitRec = new ArrayList<Integer>();
+    private ArrayList<String> fruitDraw = new ArrayList<String>();
+    private ArrayList<Integer> fruitRec = new ArrayList<Integer>();
 
     int countxx;
 

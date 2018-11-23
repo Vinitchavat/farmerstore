@@ -46,8 +46,32 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         editor = sp.edit();
-        String IDKey = sp.getString("IDKey", "0");
-        if (!IDKey.matches("0")) {
+        final String IDKey = sp.getString("IDKey", "0");
+        String status = sp.getString("Status","none");
+        if (!IDKey.matches("0") && status.matches("seller")){
+            DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
+            Query dRef = dataRef.child("farmer").orderByChild("memberID").equalTo(IDKey);
+            dRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    /* ** Check if no register farm ** */
+                    if (!dataSnapshot.exists()) {
+                        Intent intent = new Intent(MainActivity.this, RegisterFarm.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("userID",IDKey);
+                        intent.putExtra("txt","not");
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        else if (!IDKey.matches("0")) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
@@ -131,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
                             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    String s = dataSnapshot.child("status").getValue(String.class);
-                                    String name = dataSnapshot.child("name").getValue(String.class);
+                                    final String s = dataSnapshot.child("status").getValue(String.class);
+                                    final String name = dataSnapshot.child("name").getValue(String.class);
                                     if (s.matches("seller")) {
                                         Query dRef = dataRef.child("farmer").orderByChild("memberID").equalTo(uID);
                                         dRef.addValueEventListener(new ValueEventListener() {
@@ -141,6 +165,15 @@ public class MainActivity extends AppCompatActivity {
                                                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                                                     String fname = d.child("farmName").getValue(String.class);
                                                     editor.putString("farmName", fname);
+                                                }
+                                                /* ** Check if no register farm ** */
+                                                if (!dataSnapshot.exists()) {
+                                                    Intent intent = new Intent(MainActivity.this, RegisterFarm.class);
+                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    intent.putExtra("userID",uID);
+                                                    intent.putExtra("txt","not");
+                                                    startActivity(intent);
+                                                    finish();
                                                 }
                                             }
 
@@ -162,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(getIntent());
                                 }
                             });
-                            editor.commit();
                             loadingBar.dismiss();
 
                             /* *** GO to Homepage *** */
@@ -174,7 +206,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
     boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -189,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
