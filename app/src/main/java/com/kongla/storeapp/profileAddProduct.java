@@ -354,12 +354,6 @@ public class profileAddProduct extends AppCompatActivity {
 
         if (addoredit.matches("add")) {
             if (preorderSwitch.isChecked()) {
-                if (dDate.length()<2){
-                    dDate = "0"+dDate;
-                }
-                if (mDate.length()<2){
-                    mDate = "0"+mDate;
-                }
                 String childDate = yDate + "-" + mDate + "-" + dDate;
                 DatabaseReference dref = databaseReference.child("product").child("preorderProduct")
                         .child(childDate);

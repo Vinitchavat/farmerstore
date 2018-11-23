@@ -2,6 +2,7 @@ package com.kongla.storeapp;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,6 +149,7 @@ public class CustomAdapterForPreorder extends BaseAdapter {
             case "12": month = "ธันวาคม"; break;
             default: month = m;
         }
-        return d+" "+ month + " " + y;
+        String wtd = d + " "+ month + " " + y;
+        return wtd;
     }
 }
