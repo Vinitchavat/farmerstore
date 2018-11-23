@@ -35,6 +35,7 @@ public class basketMandP extends AppCompatActivity {
     ArrayList<String> productID = new ArrayList<String>();
     ArrayList<String> farmID = new ArrayList<String>();
     ArrayList<String> date = new ArrayList<String>();
+    ArrayList<String> dateshow = new ArrayList<String>();
     ArrayList<String> key = new ArrayList<String>();
     Query callbuylist;
 
@@ -152,8 +153,19 @@ public class basketMandP extends AppCompatActivity {
                                 }
                             }
                         }
-                        String[] mStringDate = new String[date.size()];
-                        mStringDate = date.toArray(mStringDate);
+                        for (int count = 0; count < date.size(); count++) {
+                            for (int countIn = count + 1; countIn < date.size(); countIn++) {
+                                if (date.get(count).matches(date.get(countIn))) {
+                                    date.remove(countIn);
+                                }
+                            }
+                        }
+                        for(int position=0 ; position<date.size();position++) {
+                            dateshow.add(setDate(date.get(position)));
+                        }
+
+                        String[] mStringDate = new String[dateshow.size()];
+                        mStringDate = dateshow.toArray(mStringDate);
                         final String[] finalMStringDate = mStringDate;
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(basketMandP.this, android.R.layout.simple_list_item_1, android.R.id.text1, finalMStringDate);
                         ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
@@ -191,8 +203,11 @@ public class basketMandP extends AppCompatActivity {
                                 }
                             }
                         }
-                        String[] mStringDate = new String[date.size()];
-                        mStringDate = date.toArray(mStringDate);
+                        for(int position=0 ; position<date.size();position++) {
+                            dateshow.add(setDate(date.get(position)));
+                        }
+                        String[] mStringDate = new String[dateshow.size()];
+                        mStringDate = dateshow.toArray(mStringDate);
                         final String[] finalMStringDate = mStringDate;
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(basketMandP.this, android.R.layout.simple_list_item_1, android.R.id.text1, finalMStringDate);
                         ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
@@ -220,5 +235,27 @@ public class basketMandP extends AppCompatActivity {
     public boolean onSupportNavigateUp(){
         finish();
         return true;
+    }
+    public String setDate(String date){
+        String d = date.substring(date.lastIndexOf("-")+1);
+        String m = date.substring(date.indexOf("-")+1,date.lastIndexOf("-"));
+        String month;
+        String y = date.substring(0,date.indexOf("-"));
+        switch (m){
+            case "1": month = "มกราคม"; break;
+            case "2": month = "กุมภาพันธ์"; break;
+            case "3": month = "มีนาคม"; break;
+            case "4": month = "เมษายน"; break;
+            case "5": month = "พฤษภาคม"; break;
+            case "6": month = "มิถุนายน"; break;
+            case "7": month = "กรกฎาคม"; break;
+            case "8": month = "สิงหาคม"; break;
+            case "9": month = "กันยายน"; break;
+            case "10": month = "ตุลาคม"; break;
+            case "11": month = "พฤศจิกายน"; break;
+            case "12": month = "ธันวาคม"; break;
+            default: month = m;
+        }
+        return d+" "+ month + " " + y;
     }
 }
