@@ -1,13 +1,14 @@
 package com.kongla.storeapp;
 
 public class OrderIdMar {
-    String buyerID,sellerID,farmID,productID;
+    String buyerID,sellerID,farmID,productID,orderStatus;
     public OrderIdMar(){}
-    public OrderIdMar(String buyerID, String sellerID, String farmID, String productID){
+    public OrderIdMar(String buyerID, String sellerID, String farmID, String productID,String orderStatus){
         this.buyerID=buyerID;
         this.sellerID=sellerID;
         this.farmID = farmID;
         this.productID = productID;
+        this.orderStatus=orderStatus;
     }
     public String getBuyerID() {
         return buyerID;
@@ -20,5 +21,8 @@ public class OrderIdMar {
     }
     public String getProductID() {
         return productID;
+    }
+    public String getOrderStatus(){
+        return orderStatus;
     }
 }

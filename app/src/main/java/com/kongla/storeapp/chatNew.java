@@ -238,7 +238,12 @@ public class chatNew extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.savechat, menu);
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String s = sp.getString("Status","none");
+        if(s.matches("buyer")) {
+            getMenuInflater().inflate(R.menu.savechat, menu);
+
+        }
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -39,8 +39,6 @@ public class basketMandP extends AppCompatActivity {
     ArrayList<String> date = new ArrayList<String>();
     ArrayList<String> dateshow = new ArrayList<String>();
     ArrayList<String> key = new ArrayList<String>();
-    ArrayList<String> orderStatus = new ArrayList<String>();
-
     Query callbuylist;
     String fname;
 
@@ -77,11 +75,13 @@ public class basketMandP extends AppCompatActivity {
                         farmID.clear();
                         productID.clear();
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
-                            key.add(d.getKey());
                             OrderIdMar m = d.getValue(OrderIdMar.class);
-                            productID.add(m.productID);
-                            farmID.add(m.getFarmID());
-//                            orderStatus
+                            String Orderstatus = m.getOrderStatus();
+                            if(Orderstatus.matches("none")) {
+                                key.add(d.getKey());
+                                productID.add(m.productID);
+                                farmID.add(m.getFarmID());
+                            }
                         }
                         CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID,user);
                         ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
@@ -112,10 +112,12 @@ public class basketMandP extends AppCompatActivity {
                         farmID.clear();
                         productID.clear();
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
-                            key.add(d.getKey());
                             OrderIdMar m = d.getValue(OrderIdMar.class);
-                            productID.add(m.productID);
-                            farmID.add(m.getFarmID());
+
+                                key.add(d.getKey());
+                                productID.add(m.productID);
+                                farmID.add(m.getFarmID());
+
                         }
                         for (int count = 0; count < productID.size(); count++) {
                             for (int countIn = count + 1; countIn < productID.size(); countIn++) {
@@ -157,7 +159,10 @@ public class basketMandP extends AppCompatActivity {
                         date.clear();
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
                             OrderIdPre m = d.getValue(OrderIdPre.class);
-                            date.add(m.getDate());
+                            String Orderstatus = m.getOrderStatus();
+                            if(Orderstatus.matches("none")) {
+                                date.add(m.getDate());
+                            }
                         }
                         for (int count = 0; count < date.size(); count++) {
                             for (int countIn = count + 1; countIn < date.size(); countIn++) {
@@ -201,7 +206,7 @@ public class basketMandP extends AppCompatActivity {
                         date.clear();
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
                             OrderIdPre m = d.getValue(OrderIdPre.class);
-                            date.add(m.getDate());
+                                date.add(m.getDate());
                         }
                         for (int count = 0; count < date.size(); count++) {
                             for (int countIn = count + 1; countIn < date.size(); countIn++) {

@@ -81,7 +81,7 @@ public class basketBuyerNameList extends AppCompatActivity {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent next = new Intent(basketBuyerNameList.this, chatNew.class);
                                         next.putExtra("orderid", key.get(position));
-                                        next.putExtra("buyerName",buyername);
+                                        next.putExtra("buyerName",finalBuyerArray[position]);
                                         startActivity(next);
                                     }
 
@@ -142,7 +142,7 @@ public class basketBuyerNameList extends AppCompatActivity {
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                         Intent next = new Intent(basketBuyerNameList.this, chatNew.class);
                                         next.putExtra("orderid", key.get(position));
-                                        next.putExtra("buyerName",buyername);
+                                        next.putExtra("buyerName",finalBuyerArray[position]);
                                         startActivity(next);
                                     }
 
