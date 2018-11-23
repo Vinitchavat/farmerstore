@@ -36,7 +36,7 @@ public class basketPrePro extends AppCompatActivity {
         setContentView(R.layout.activity_basket_pre_pro);
 
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        final String IDKey = sp.getString("IDKey", "0");
+        final String KKK = sp.getString("IDKey", "0");
         final String status = sp.getString("Status", "none");
 
         /* Action Bar */
@@ -62,28 +62,25 @@ public class basketPrePro extends AppCompatActivity {
                     farmID.clear();
                     productID.clear();
                     for (DataSnapshot d : dataSnapshot.getChildren()) {
-                        key.add(d.getKey());
                         OrderIdMar m = d.getValue(OrderIdMar.class);
-                        productID.add(m.productID);
-                        farmID.add(m.getFarmID());
-                        buyerID.add(m.getBuyerID());
-                        for (int count = 0; count < buyerID.size(); count++) {
-                            if (!buyerID.get(count).matches(IDKey)) {
-                                key.remove(count);
-                                productID.remove(count);
-                                farmID.remove(count);
-                                buyerID.remove(count);
-                            }
+                        String buyer = m.getBuyerID();
+                        if (buyer.matches(KKK)) {
+                            key.add(d.getKey());
+                            productID.add(m.productID);
+                            farmID.add(m.getFarmID());
+                            buyerID.add(m.getBuyerID());
                         }
                     }
-                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID,status);
+
+                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID, status);
                     ListView listviewMarket = (ListView) findViewById(R.id.listview);
                     listviewMarket.setAdapter(customAdapShowBasPre);
                     listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent next = new Intent(basketPrePro.this, chatNew.class);
-                            next.putExtra("farmID", farmID.get(position) );
+                            next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            next.putExtra("farmID", farmID.get(position));
                             next.putExtra("orderid", key.get(position));
                             next.putExtra("statusPro","preorderProduct");
                             startActivity(next);
@@ -106,15 +103,11 @@ public class basketPrePro extends AppCompatActivity {
                     productID.clear();
                     for (DataSnapshot d : dataSnapshot.getChildren()) {
                         OrderIdMar m = d.getValue(OrderIdMar.class);
-                        productID.add(m.productID);
-                        farmID.add(m.getFarmID());
-                        sellerID.add(m.getSellerID());
-                    }
-                    for (int count = 0; count < sellerID.size(); count++) {
-                        if (!sellerID.get(count).matches(IDKey)) {
-                            productID.remove(count);
-                            farmID.remove(count);
-                            buyerID.remove(count);
+                        String seller = m.getSellerID();
+                        if (seller.matches(KKK)) {
+                            productID.add(m.productID);
+                            farmID.add(m.getFarmID());
+                            sellerID.add(m.getSellerID());
                         }
                     }
                     for (int count = 0; count < productID.size(); count++) {
@@ -122,10 +115,11 @@ public class basketPrePro extends AppCompatActivity {
                             if (productID.get(count).matches(productID.get(countIn))) {
                                 productID.remove(countIn);
                                 farmID.remove(countIn);
+                                countIn--;
                             }
                         }
                     }
-                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID,status);
+                    CustomAdapShowBasPre customAdapShowBasPre = new CustomAdapShowBasPre(getApplicationContext(), day, productID, farmID, status);
                     ListView listviewMarket = (ListView) findViewById(R.id.listview);
                     listviewMarket.setAdapter(customAdapShowBasPre);
                     listviewMarket.setOnItemClickListener(new AdapterView.OnItemClickListener() {
