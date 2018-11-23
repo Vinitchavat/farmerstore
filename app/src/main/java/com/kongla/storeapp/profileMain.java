@@ -170,6 +170,8 @@ public class profileMain extends AppCompatActivity {
                 /* *** Sign out and delete state *** */
                 sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
                 editor = sp.edit();
+                editor.remove("farmName");
+                editor.remove("UserName");
                 editor.remove("IDKey"); // userID
                 editor.remove("farmID"); //
                 editor.remove("Status"); // Buyer or Seller

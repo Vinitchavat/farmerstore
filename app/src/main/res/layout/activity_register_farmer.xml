@@ -15,12 +15,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/txtuser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:layout_marginTop="15sp"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/txtfRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <EditText
         android:id="@+id/editTextFarmName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30sp"
+        android:layout_marginTop="60sp"
         android:includeFontPadding="false"
         android:inputType="textShortMessage"
         android:hint="@string/farmname"
@@ -74,6 +84,16 @@
         android:text="ลงทะเบียน"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/editTextFarmAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/farmlogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_logout"
+        app:layout_constraintTop_toBottomOf="@+id/btn_farmRegis"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
