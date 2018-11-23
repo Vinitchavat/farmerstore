@@ -65,9 +65,27 @@ public class CustomAdapShowPre extends BaseAdapter {
         final View view;
         LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = mInflater.inflate(R.layout.showlistpre,parent,false);
-
         ImageView imageView = view.findViewById(R.id.ImgPro);
-        imageView.setImageResource(draw);
+        if(draw==1) {
+            if (fruitName.get(position).matches("ทุเรียน")) {
+                draw = R.drawable.durian;
+            } else if (fruitName.get(position).matches("มังคุด")) {
+                draw = R.drawable.mangosteen;
+            } else if (fruitName.get(position).matches("เงาะ")) {
+                draw = R.drawable.rambutan;
+            } else if (fruitName.get(position).matches("ส้ม")) {
+                draw = R.drawable.orange;
+            } else if (fruitName.get(position).matches("แตงโม")) {
+                draw = R.drawable.watermelon;
+            } else {
+                draw = R.drawable.longan;
+            }
+            imageView.setImageResource(draw);
+            draw=1;
+        }
+        else {
+            imageView.setImageResource(draw);
+        }
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         calllistPre = database.getReference().child("farmer").child(farmID.get(position));

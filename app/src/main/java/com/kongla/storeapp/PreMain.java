@@ -92,7 +92,7 @@ public class PreMain extends AppCompatActivity {
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent next = new Intent(PreMain.this, PreListDay.class);
+                        Intent next = new Intent(PreMain.this, show.class);
                         next.putExtra("DayPre", finalMStringArray[position]);
                         startActivity(next);
                     }

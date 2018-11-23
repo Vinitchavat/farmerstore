@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -28,6 +29,7 @@ public class show extends AppCompatActivity {
     ArrayList<String> unitPro = new ArrayList<String>();
     ArrayList<String> allKey = new ArrayList<String>();
     CustomAdapShowPre customAdapShowPre;
+    public DatabaseReference callDataPre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +43,9 @@ public class show extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         day = extras.getString("DayPre");
-        order = extras.getString("DayPreFruit");
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query callDataPre = database.getReference().child("product").child("preorderProduct").child(day).orderByChild("fruitName").equalTo(order);
+        callDataPre = database.getReference().child("product").child("preorderProduct").child(day);
         callDataPre.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -59,24 +60,8 @@ public class show extends AppCompatActivity {
                     quantity.add(getData.getQuantity());
                     unitPro.add(getData.getUnitPro());
                 }
-                if(fruitName.get(0).matches("ทุเรียน")){
-                    draw = R.drawable.durian;
-                }
-                else if(fruitName.get(0).matches("มังคุด")){
-                    draw = R.drawable.mangosteen;
-                }
-                else if(fruitName.get(0).matches("เงาะ")){
-                    draw = R.drawable.rambutan;
-                }
-                else if(fruitName.get(0).matches("ส้ม")){
-                    draw = R.drawable.orange;
-                }
-                else  if(fruitName.get(0).matches("แตงโม")){
-                    draw = R.drawable.watermelon;
-                }
-                else{
-                    draw = R.drawable.longan;
-                }
+                draw = 1;
+
                 ListView listView =findViewById(R.id.listShowPre);
                 customAdapShowPre = new CustomAdapShowPre(getApplicationContext(),draw,farmID,fruitName,price,productName,quantity,unitPro);
                 listView.setAdapter(customAdapShowPre);
