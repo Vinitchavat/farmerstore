@@ -67,17 +67,34 @@ public class CustomAdapShowPre extends BaseAdapter {
         view = mInflater.inflate(R.layout.showlistpre,parent,false);
         ImageView imageView = view.findViewById(R.id.ImgPro);
         if(draw==1) {
-            if (fruitName.get(position).matches("ทุเรียน")) {
+            if(fruitName.get(position).matches("ทุเรียน")){
                 draw = R.drawable.durian;
-            } else if (fruitName.get(position).matches("มังคุด")) {
+            }
+            else  if(fruitName.get(position).matches("สับปะรด")){
+                draw = R.drawable.pineapple;
+            }
+            else  if(fruitName.get(position).matches("องุ่น")){
+                draw = R.drawable.grape;
+            }
+            else  if(fruitName.get(position).matches("แก้วมังกร")){
+                draw = R.drawable.dragonfruit;
+            }
+            else  if(fruitName.get(position).matches("ลิ้นจี่")){
+                draw = R.drawable.lychee;
+            }
+            else if(fruitName.get(position).matches("มังคุด")){
                 draw = R.drawable.mangosteen;
-            } else if (fruitName.get(position).matches("เงาะ")) {
+            }
+            else if(fruitName.get(position).matches("เงาะ")){
                 draw = R.drawable.rambutan;
-            } else if (fruitName.get(position).matches("ส้ม")) {
+            }
+            else if(fruitName.get(position).matches("ส้ม")){
                 draw = R.drawable.orange;
-            } else if (fruitName.get(position).matches("แตงโม")) {
-                draw = R.drawable.watermelon;
-            } else {
+            }
+            else  if(fruitName.get(position).matches("มะม่วง")){
+                draw = R.drawable.mango;
+            }
+            else{
                 draw = R.drawable.longan;
             }
             imageView.setImageResource(draw);

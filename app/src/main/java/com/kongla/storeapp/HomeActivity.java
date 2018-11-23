@@ -28,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     GetData getData;
     ArrayList<String> fruitDraw = new ArrayList<String>();
     ArrayList<Integer> fruitRec = new ArrayList<Integer>();
+    int Fcount=0;
 
     int countxx;
 
@@ -77,7 +78,8 @@ public class HomeActivity extends AppCompatActivity {
 
         final ImageView[] lay = {img3,img4,img5,img6};
         final ImageView[] layRec = {img1,img2};
-        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.watermelon, R.drawable.rambutan, R.drawable.durian};
+        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.mango, R.drawable.rambutan, R.drawable.durian
+                ,R.drawable.lychee,R.drawable.grape,R.drawable.dragonfruit,R.drawable.pineapple};
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -96,12 +98,13 @@ public class HomeActivity extends AppCompatActivity {
                         if(fruitDraw.get(count).matches(fruitDraw.get(countIn))){
                             fruitDraw.remove(countIn);
                         }
-                        else {
-                            countxx++;
-                        }
                     }
                 }
                 fruitRec.add(0);
+                Fcount = fruitDraw.size();
+                if(fruitDraw.size()>=6){
+                    Fcount=6;
+                }
                 if(fruitDraw.size()>=2) {
                     fruitRec.clear();
                     int min = 0;
@@ -117,43 +120,70 @@ public class HomeActivity extends AppCompatActivity {
                     fruitRec.add(ran2);
                 }
                 for(int count = 0 ; count<fruitRec.size();count++){
-                    if(fruitDraw.get(fruitRec.get(count)).matches("ทุเรียน")){
-                        layRec[count].setImageResource(fruit[5]);
+                    if(fruitDraw.get(fruitRec.get(count)).matches("มังคุด")){
+                        layRec[count].setImageResource(fruit[0]);
                     }
                     else if(fruitDraw.get(fruitRec.get(count)).matches("ลำไย")){
                         layRec[count].setImageResource(fruit[1]);
                     }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("แตงโม")){
-                        layRec[count].setImageResource(fruit[3]);
+                    else if(fruitDraw.get(fruitRec.get(count)).matches("ส้ม")){
+                        layRec[count].setImageResource(fruit[2]);
                     }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("มังคุด")){
-                        layRec[count].setImageResource(fruit[0]);
+                    else if(fruitDraw.get(fruitRec.get(count)).matches("มะม่วง")){
+                        layRec[count].setImageResource(fruit[3]);
                     }
                     else if(fruitDraw.get(fruitRec.get(count)).matches("เงาะ")){
                         layRec[count].setImageResource(fruit[4]);
                     }
-                    else {
-                        layRec[count].setImageResource(fruit[2]);
+                    else if(fruitDraw.get(fruitRec.get(count)).matches("ทุเรียน")){
+                        layRec[count].setImageResource(fruit[5]);
                     }
+                    else if(fruitDraw.get(fruitRec.get(count)).matches("ลิ้นจี่")){
+                        layRec[count].setImageResource(fruit[6]);
+                    }
+                    else if(fruitDraw.get(fruitRec.get(count)).matches("องุ่น")){
+                        layRec[count].setImageResource(fruit[7]);
+                    }
+                    else if(fruitDraw.get(fruitRec.get(count)).matches("แก้วมังกร")){
+                        layRec[count].setImageResource(fruit[8]);
+                    }
+                    else {
+                        layRec[count].setImageResource(fruit[9]);
+                    }
+
+
+
                 }
-                for(int count = 0 ; count<fruitDraw.size();count++){
-                    if(fruitDraw.get(count).matches("ทุเรียน")){
-                        lay[count].setImageResource(fruit[5]);
+                for(int count = 0 ; count<Fcount;count++){
+                    if(fruitDraw.get(count).matches("มังคุด")){
+                        lay[count].setImageResource(fruit[0]);
                     }
                     else if(fruitDraw.get(count).matches("ลำไย")){
                         lay[count].setImageResource(fruit[1]);
                     }
-                    else if(fruitDraw.get(count).matches("แตงโม")){
-                        lay[count].setImageResource(fruit[3]);
+                    else if(fruitDraw.get(count).matches("ส้ม")){
+                        lay[count].setImageResource(fruit[2]);
                     }
-                    else if(fruitDraw.get(count).matches("มังคุด")){
-                        lay[count].setImageResource(fruit[0]);
+                    else if(fruitDraw.get(count).matches("มะม่วง")){
+                        lay[count].setImageResource(fruit[3]);
                     }
                     else if(fruitDraw.get(count).matches("เงาะ")){
                         lay[count].setImageResource(fruit[4]);
                     }
+                    else if(fruitDraw.get(count).matches("ทุเรียน")){
+                        lay[count].setImageResource(fruit[5]);
+                    }
+                    else if(fruitDraw.get(count).matches("ลิ้นจี่")){
+                        lay[count].setImageResource(fruit[6]);
+                    }
+                    else if(fruitDraw.get(count).matches("องุ่น")){
+                        lay[count].setImageResource(fruit[7]);
+                    }
+                    else if(fruitDraw.get(count).matches("แก้วมังกร")){
+                        lay[count].setImageResource(fruit[8]);
+                    }
                     else {
-                        lay[count].setImageResource(fruit[2]);
+                        lay[count].setImageResource(fruit[9]);
                     }
                 }
                 for(int count=0 ; count<fruitRec.size();count++){
@@ -170,7 +200,7 @@ public class HomeActivity extends AppCompatActivity {
                         }
                     });
                 }
-               for(int count=0 ; count<fruitDraw.size();count++){
+               for(int count=0 ; count<Fcount;count++){
                    String[] mStringArray= new String[fruitDraw.size()];
                    mStringArray = fruitDraw.toArray(mStringArray);
                    final String[] finalMStringArray = mStringArray;

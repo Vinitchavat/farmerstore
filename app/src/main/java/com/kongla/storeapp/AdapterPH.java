@@ -78,14 +78,20 @@ public class AdapterPH extends BaseAdapter {
                     holder.tv_info = (TextView) fview.findViewById(R.id.item1);
                     holder.imageView = (ImageView) fview.findViewById(R.id.imgfhis);
 
-                    final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.watermelon, R.drawable.rambutan, R.drawable.durian};
+                    final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.mango, R.drawable.rambutan, R.drawable.durian
+                    ,R.drawable.lychee,R.drawable.grape,R.drawable.dragonfruit,R.drawable.pineapple};
                     switch (fname){
                         case "มังคุด": holder.imageView.setImageResource(fruit[0]);break;
                         case "ลำไย": holder.imageView.setImageResource(fruit[1]);break;
                         case "ส้ม": holder.imageView.setImageResource(fruit[2]);break;
-                        case "แตงโม": holder.imageView.setImageResource(fruit[3]);break;
+                        case "มะม่วง": holder.imageView.setImageResource(fruit[3]);break;
                         case "เงาะ": holder.imageView.setImageResource(fruit[4]);break;
-                        case "ทุเรียน": holder.imageView.setImageResource(fruit[6]);break;
+                        case "ทุเรียน": holder.imageView.setImageResource(fruit[5]);break;
+                        case "ลิ้นจี่": holder.imageView.setImageResource(fruit[6]);break;
+                        case "องุ่น": holder.imageView.setImageResource(fruit[7]);break;
+                        case "แก้วมังกร": holder.imageView.setImageResource(fruit[8]);break;
+                        case "สับปะรด": holder.imageView.setImageResource(fruit[9]);break;
+
                         default: break;
                     }
                     holder.tv_info.setText(fname+pname);

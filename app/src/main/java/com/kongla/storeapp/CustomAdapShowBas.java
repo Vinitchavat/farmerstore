@@ -57,7 +57,8 @@ public class CustomAdapShowBas extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = mInflater.inflate(R.layout.showlistpre, parent, false);
         final ImageView imageView = view.findViewById(R.id.ImgPro);
-        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.watermelon, R.drawable.rambutan, R.drawable.durian};
+        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.mango, R.drawable.rambutan, R.drawable.durian
+                ,R.drawable.lychee,R.drawable.grape,R.drawable.dragonfruit,R.drawable.pineapple};
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         calllistMar = database.getReference().child("product").child("marketProduct").child(productID.get(position));
         calllistMar.addValueEventListener(new ValueEventListener() {
@@ -69,18 +70,36 @@ public class CustomAdapShowBas extends BaseAdapter {
                 productName = String.valueOf(map.get("productName"));
                 quantity = String.valueOf(map.get("quantity"));
                 unitPro = String.valueOf(map.get("unit"));
-                if (fruitName.matches("ทุเรียน")) {
-                    imageView.setImageResource(fruit[5]);
-                } else if (fruitName.matches("ลำไย")) {
-                    imageView.setImageResource(fruit[1]);
-                } else if (fruitName.matches("แตงโม")) {
-                    imageView.setImageResource(fruit[3]);
-                } else if (fruitName.matches("มังคุด")) {
+
+                if(fruitName.matches("มังคุด")){
                     imageView.setImageResource(fruit[0]);
-                } else if (fruitName.matches("เงาะ")) {
-                    imageView.setImageResource(fruit[4]);
-                } else {
+                }
+                else if(fruitName.matches("ลำไย")){
+                    imageView.setImageResource(fruit[1]);
+                }
+                else if(fruitName.matches("ส้ม")){
                     imageView.setImageResource(fruit[2]);
+                }
+                else if(fruitName.matches("มะม่วง")){
+                    imageView.setImageResource(fruit[3]);
+                }
+                else if(fruitName.matches("เงาะ")){
+                    imageView.setImageResource(fruit[4]);
+                }
+                else if(fruitName.matches("ทุเรียน")){
+                    imageView.setImageResource(fruit[5]);
+                }
+                else if(fruitName.matches("ลิ้นจี่")){
+                    imageView.setImageResource(fruit[6]);
+                }
+                else if(fruitName.matches("องุ่น")){
+                    imageView.setImageResource(fruit[7]);
+                }
+                else if(fruitName.matches("แก้วมังกร")){
+                    imageView.setImageResource(fruit[8]);
+                }
+                else {
+                    imageView.setImageResource(fruit[9]);
                 }
                 TextView textView1 =view.findViewById(R.id.showName);
                 TextView textView2 =view.findViewById(R.id.showPriceandUnit);

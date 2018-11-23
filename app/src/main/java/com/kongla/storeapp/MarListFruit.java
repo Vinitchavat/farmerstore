@@ -58,6 +58,18 @@ public class MarListFruit extends AppCompatActivity {
                 if(fruitName.get(0).matches("ทุเรียน")){
                     draw = R.drawable.durian;
                 }
+                else  if(fruitName.get(0).matches("สับปะรด")){
+                    draw = R.drawable.pineapple;
+                }
+                else  if(fruitName.get(0).matches("องุ่น")){
+                    draw = R.drawable.grape;
+                }
+                else  if(fruitName.get(0).matches("แก้วมังกร")){
+                    draw = R.drawable.dragonfruit;
+                }
+                else  if(fruitName.get(0).matches("ลิ้นจี่")){
+                    draw = R.drawable.lychee;
+                }
                 else if(fruitName.get(0).matches("มังคุด")){
                     draw = R.drawable.mangosteen;
                 }
@@ -67,8 +79,8 @@ public class MarListFruit extends AppCompatActivity {
                 else if(fruitName.get(0).matches("ส้ม")){
                     draw = R.drawable.orange;
                 }
-                else  if(fruitName.get(0).matches("แตงโม")){
-                    draw = R.drawable.watermelon;
+                else  if(fruitName.get(0).matches("มะม่วง")){
+                    draw = R.drawable.mango;
                 }
                 else{
                     draw = R.drawable.longan;

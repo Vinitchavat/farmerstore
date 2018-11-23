@@ -24,6 +24,7 @@ public class CustomAdapterForPreorder extends BaseAdapter {
     public DatabaseReference callPre;
     GetData getData;
     ArrayList<String> fruitName = new ArrayList<String>();
+    int Fcount=0;
 
     public CustomAdapterForPreorder(Context context, ArrayList<String> clubkey){
         this.mContext = context;
@@ -61,7 +62,8 @@ public class CustomAdapterForPreorder extends BaseAdapter {
         ImageView img6 = view.findViewById(R.id.img6);
 
         final ImageView[] lay = {img1,img2,img3,img4,img5,img6};
-        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.watermelon, R.drawable.rambutan, R.drawable.durian};
+        final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.mango, R.drawable.rambutan, R.drawable.durian
+                ,R.drawable.lychee,R.drawable.grape,R.drawable.dragonfruit,R.drawable.pineapple};
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         callPre = database.getReference().child("product").child("preorderProduct").child(clubkey.get(position));
@@ -80,24 +82,40 @@ public class CustomAdapterForPreorder extends BaseAdapter {
                         }
                     }
                 }
-                for(int count = 0 ; count<fruitName.size();count++){
-                    if(fruitName.get(count).matches("ทุเรียน")){
-                        lay[count].setImageResource(fruit[5]);
+                Fcount = fruitName.size();
+                if(fruitName.size()>=6){
+                    Fcount=6;
+                }
+                for(int count = 0 ; count<Fcount;count++){
+                    if(fruitName.get(count).matches("มังคุด")){
+                        lay[count].setImageResource(fruit[0]);
                     }
                     else if(fruitName.get(count).matches("ลำไย")){
                         lay[count].setImageResource(fruit[1]);
                     }
-                    else if(fruitName.get(count).matches("แตงโม")){
-                        lay[count].setImageResource(fruit[3]);
+                    else if(fruitName.get(count).matches("ส้ม")){
+                        lay[count].setImageResource(fruit[2]);
                     }
-                    else if(fruitName.get(count).matches("มังคุด")){
-                        lay[count].setImageResource(fruit[0]);
+                    else if(fruitName.get(count).matches("มะม่วง")){
+                        lay[count].setImageResource(fruit[3]);
                     }
                     else if(fruitName.get(count).matches("เงาะ")){
                         lay[count].setImageResource(fruit[4]);
                     }
+                    else if(fruitName.get(count).matches("ทุเรียน")){
+                        lay[count].setImageResource(fruit[5]);
+                    }
+                    else if(fruitName.get(count).matches("ลิ้นจี่")){
+                        lay[count].setImageResource(fruit[6]);
+                    }
+                    else if(fruitName.get(count).matches("องุ่น")){
+                        lay[count].setImageResource(fruit[7]);
+                    }
+                    else if(fruitName.get(count).matches("แก้วมังกร")){
+                        lay[count].setImageResource(fruit[8]);
+                    }
                     else {
-                        lay[count].setImageResource(fruit[2]);
+                        lay[count].setImageResource(fruit[9]);
                     }
                 }
             }
