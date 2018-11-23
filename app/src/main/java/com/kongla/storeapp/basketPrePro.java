@@ -129,7 +129,6 @@ public class basketPrePro extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent next = new Intent(basketPrePro.this, basketBuyerNameList.class);
-                            Toast.makeText(getApplicationContext(),"productID"+productID,Toast.LENGTH_SHORT).show();
                             next.putExtra("product", "preorder");
                             next.putExtra("productID", productID.get(position));
                             startActivity(next);
