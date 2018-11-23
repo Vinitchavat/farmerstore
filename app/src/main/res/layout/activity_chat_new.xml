@@ -32,7 +32,8 @@
             android:layout_width="10dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Choose Picture"
+            android:text="เลือกรูปภาพ"
+            android:textSize="16dp"
             android:textColor="@color/gen_white"
             android:background="@color/red_orange"/>
 
@@ -41,7 +42,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Upload"
+            android:text="อัพโหลด"
+            android:textSize="16dp"
             android:textColor="@color/gen_white"
             android:background="@color/not_black"
             android:visibility="invisible"/>

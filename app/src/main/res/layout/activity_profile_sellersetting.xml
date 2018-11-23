@@ -58,7 +58,9 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="300dp"
                 android:includeFontPadding="false"
+                android:background="@drawable/button_gen"
                 android:text="@string/edit"
+                android:textColor="@color/gen_white"
                 android:textSize="10dp" />
         </RelativeLayout>
 

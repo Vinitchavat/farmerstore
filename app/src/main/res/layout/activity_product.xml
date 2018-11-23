@@ -141,9 +141,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/gen_white"
-            android:text="Add to Bag"
+            android:text="เพิ่มลงตะกร้า"
             android:textColor="@color/colorPrimary"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textAllCaps="false"
             android:visibility="visible" />
 
@@ -153,10 +153,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/red_orange"
-            android:text="Buy"
+            android:text="ซื้อ"
             android:textAllCaps="false"
             android:textColor="@color/gen_white"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
