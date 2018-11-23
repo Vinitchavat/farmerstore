@@ -34,9 +34,6 @@
         <activity android:name=".chatNew"/>
         <activity android:name=".PreMain"
             android:label="@string/preorder"/>
-        <activity android:name=".PreListDay"
-            android:parentActivityName=".PreMain"
-            android:label="@string/pre_daylist"/>
         <activity android:name=".show"/>
 
         <activity android:name=".profileMain"
