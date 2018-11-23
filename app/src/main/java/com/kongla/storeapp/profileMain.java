@@ -121,7 +121,6 @@ public class profileMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), profileEditProfile.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             }
         });
@@ -133,7 +132,6 @@ public class profileMain extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i2 = new Intent(getApplicationContext(), profileSellerSetting.class);
-                    i2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i2);
                 }
             });
@@ -146,7 +144,6 @@ public class profileMain extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i3 = new Intent(getApplicationContext(), profileBuyerSetting.class);
-                    i3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i3);
                 }
             });
@@ -154,7 +151,6 @@ public class profileMain extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent i4 = new Intent(getApplicationContext(), profileBuyerSettingPreorder.class);
-                    i4.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i4);
                 }
             });
