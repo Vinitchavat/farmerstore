@@ -86,6 +86,7 @@ public class basketPrePro extends AppCompatActivity {
                             next.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             next.putExtra("farmID", farmID.get(position) );
                             next.putExtra("orderid", key.get(position));
+                            next.putExtra("statusPro","preorderProduct");
                             startActivity(next);
                         }
 

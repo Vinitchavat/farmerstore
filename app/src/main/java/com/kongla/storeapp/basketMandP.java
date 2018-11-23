@@ -89,6 +89,7 @@ public class basketMandP extends AppCompatActivity {
                                 final Intent next = new Intent(basketMandP.this, chatNew.class);
                                 next.putExtra("farmID", farmID.get(position) );
                                 next.putExtra("orderid", key.get(position));
+                                next.putExtra("statusPro","marketProduct");
                                 startActivity(next);
                             }
 

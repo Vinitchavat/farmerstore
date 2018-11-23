@@ -19,6 +19,9 @@
     <string name="login_email">กรุณาใส่อีเมล</string>
     <string name="recommend_fruit">ผลไม้แนะนำ</string>
     <string name="allfruit">ผลไม้ทั้งหมด</string>
+    <string name="savechat">5555</string>
+    <string name="delchat">2222</string>
+
 
     <string name="profile_editProfile">แก้ไขรายละเอียดผู้ใช้</string>
     <string name="profile_logout">ออกจากระบบ</string>
