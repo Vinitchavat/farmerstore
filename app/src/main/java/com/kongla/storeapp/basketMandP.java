@@ -39,6 +39,8 @@ public class basketMandP extends AppCompatActivity {
     ArrayList<String> date = new ArrayList<String>();
     ArrayList<String> dateshow = new ArrayList<String>();
     ArrayList<String> key = new ArrayList<String>();
+    ArrayList<String> orderStatus = new ArrayList<String>();
+
     Query callbuylist;
     String fname;
 
@@ -79,6 +81,7 @@ public class basketMandP extends AppCompatActivity {
                             OrderIdMar m = d.getValue(OrderIdMar.class);
                             productID.add(m.productID);
                             farmID.add(m.getFarmID());
+//                            orderStatus
                         }
                         CustomAdapShowBas customAdapShowBas = new CustomAdapShowBas(getApplicationContext(), productID, farmID,user);
                         ListView listviewMarket = (ListView) findViewById(R.id.listviewM);
@@ -120,7 +123,8 @@ public class basketMandP extends AppCompatActivity {
                                 if (productID.get(count).matches(productID.get(countIn))) {
                                     productID.remove(countIn);
                                     farmID.remove(countIn);
-                                    key.remove(count);
+                                    key.remove(countIn);
+                                    countIn--;
                                 }
                             }
                         }
@@ -161,13 +165,7 @@ public class basketMandP extends AppCompatActivity {
                             for (int countIn = count + 1; countIn < date.size(); countIn++) {
                                 if (date.get(count).matches(date.get(countIn))) {
                                     date.remove(countIn);
-                                }
-                            }
-                        }
-                        for (int count = 0; count < date.size(); count++) {
-                            for (int countIn = count + 1; countIn < date.size(); countIn++) {
-                                if (date.get(count).matches(date.get(countIn))) {
-                                    date.remove(countIn);
+                                    countIn--;
                                 }
                             }
                         }
@@ -212,6 +210,7 @@ public class basketMandP extends AppCompatActivity {
                             for (int countIn = count + 1; countIn < date.size(); countIn++) {
                                 if (date.get(count).matches(date.get(countIn))) {
                                     date.remove(countIn);
+                                    countIn--;
                                 }
                             }
                         }
