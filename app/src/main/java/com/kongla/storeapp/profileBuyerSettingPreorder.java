@@ -57,7 +57,7 @@ public class profileBuyerSettingPreorder extends AppCompatActivity {
                 item2.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String status = d.child("orderStatus").getValue(String.class);
-                    if (status.matches("finish")) {
+                    if (status.matches("finished")) {
                         data = d.child("productID").getValue(String.class);
                         data2 = d.child("farmID").getValue(String.class);
                         String date = d.child("date").getValue(String.class);

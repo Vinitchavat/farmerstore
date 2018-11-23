@@ -33,7 +33,7 @@ public class ProductActivity extends AppCompatActivity {
 
     private Button AddtobagButton, BuyButton;
     String product, key, day, farmID, fruitName, productName, unitPro, img, price, quantity;
-    public DatabaseReference callMarket, callfarmname,sendMar,sendPre;
+    public DatabaseReference callMarket, callfarmname, sendMar, sendPre;
 
     SharedPreferences sp;
 
@@ -50,15 +50,17 @@ public class ProductActivity extends AppCompatActivity {
         product = extras.getString("product");
         key = extras.getString("key");
         BuyButton = findViewById(R.id.product_button2);
+        AddtobagButton = findViewById(R.id.product_button1);
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        final String userID = sp.getString("IDKey","0");
-        final String s = sp.getString("Status","none");
+        final String userID = sp.getString("IDKey", "0");
+        final String s = sp.getString("Status", "none");
 
-        if(!s.matches("buyer")){
+        if (!s.matches("buyer")) {
             BuyButton.setVisibility(View.INVISIBLE);
-        }
-        else {
+            AddtobagButton.setVisibility(View.INVISIBLE);
+        } else {
             BuyButton.setVisibility(View.VISIBLE);
+            AddtobagButton.setVisibility(View.VISIBLE);
         }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Order")
@@ -67,22 +69,27 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int a = 0;
-                for (DataSnapshot d : dataSnapshot.getChildren()){
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String p = d.child("productID").getValue(String.class);
                     String u = d.child("buyerID").getValue(String.class);
-                    if (u.matches(userID) && p.matches(key)){
+                    if (u.matches(userID) && p.matches(key)) {
                         a++;
                     }
                 }
-                if(a!=0){
+                if (a != 0) {
                     BuyButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(getApplicationContext(),"คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }
-                else {
+                    AddtobagButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(getApplicationContext(), "คุณสั่งซื้อสินค้านี้ไปแล้ว\nดูสินค้าได้ที่ตะกร้าสินค้า", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
                     BuyButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -91,13 +98,31 @@ public class ProductActivity extends AppCompatActivity {
                             dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    addData();
+                                    addData("buy");
                                 }
                             });
                             dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    finish();startActivity(getIntent());
+                                }
+                            });
+                            dialog.show();
+                        }
+                    });
+                    AddtobagButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(ProductActivity.this);
+                            dialog.setMessage("ยืนยันคำสั่งซื้อ");
+                            dialog.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    addData("add");
+                                }
+                            });
+                            dialog.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
                                 }
                             });
                             dialog.show();
@@ -135,9 +160,9 @@ public class ProductActivity extends AppCompatActivity {
                     TextView textDetail1 = findViewById(R.id.product_subdetails1);
                     TextView textDetail2 = findViewById(R.id.product_subdetails2);
 
-                    textName.setText("" + fruitName +" "+ productName);
-                    textPrice.setText("" + price +"บาท ต่อ "+unitPro);
-                    textDetail1.setText("พันธ์ผลไม้ :" +productName);
+                    textName.setText("" + fruitName + " " + productName);
+                    textPrice.setText("" + price + "บาท ต่อ " + unitPro);
+                    textDetail1.setText("พันธ์ผลไม้ :" + productName);
                     textDetail2.setText("ปริมาณสินค้า : " + quantity + " " + unitPro);
 
                     callfarmname = database.getReference().child("farmer").child(farmID);
@@ -164,8 +189,7 @@ public class ProductActivity extends AppCompatActivity {
 
                 }
             });
-        }
-        else {
+        } else {
             day = extras.getString("DayPre");
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             callMarket = database.getReference().child("product").child("preorderProduct").child(day).child(key);
@@ -188,9 +212,9 @@ public class ProductActivity extends AppCompatActivity {
                     TextView textDetail1 = findViewById(R.id.product_subdetails1);
                     TextView textDetail2 = findViewById(R.id.product_subdetails2);
 
-                    textName.setText("" + fruitName +" "+ productName);
-                    textPrice.setText("ราคา" + price +"บาท ต่อ "+unitPro);
-                    textDetail1.setText("พันธ์ผลไม้ :" +productName);
+                    textName.setText("" + fruitName + " " + productName);
+                    textPrice.setText("ราคา" + price + "บาท ต่อ " + unitPro);
+                    textDetail1.setText("พันธ์ผลไม้ :" + productName);
                     textDetail2.setText("ปริมาณสินค้า : " + quantity + " " + unitPro);
 
                     callfarmname = database.getReference().child("farmer").child(farmID);
@@ -203,6 +227,7 @@ public class ProductActivity extends AppCompatActivity {
                             TextView textDetail3 = findViewById(R.id.product_subdetails3);
                             textDetail3.setText("ชื่อฟาร์ม : " + farmname);
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -217,14 +242,8 @@ public class ProductActivity extends AppCompatActivity {
                 }
             });
         }
-//        BuyButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent =  new Intent(ProductActivity.this, basketMain.class);
-//                startActivity(intent);
-//            }
-//        });
     }
+
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
@@ -250,7 +269,7 @@ public class ProductActivity extends AppCompatActivity {
         }
     }
 
-    public void addData() {
+    public void addData(final String buyoradd) {
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String IDKey = sp.getString("IDKey", "0");
         Bundle extras = getIntent().getExtras();
@@ -259,29 +278,44 @@ public class ProductActivity extends AppCompatActivity {
         if (product.matches("marketProduct")) {
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             callMarket = database.getReference().child("product").child("marketProduct").child(key);
-            callMarket.addValueEventListener(new ValueEventListener() {
+            callMarket.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Map map = (Map) dataSnapshot.getValue();
                     farmID = String.valueOf(map.get("farmID"));
+                    int pSell = Integer.parseInt(String.valueOf(map.get("productSell")));
+                    pSell = pSell + 1;
+                    callMarket.child("productSell").setValue(pSell);
                     callfarmname = database.getReference().child("farmer").child(farmID);
                     callfarmname.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Map map = (Map) dataSnapshot.getValue();
                             final String memberID = String.valueOf(map.get("memberID"));
-                            OrderModel orderModel = new OrderModel(IDKey,memberID,farmID,key,"none");
+                            OrderModel orderModel = new OrderModel(IDKey, memberID, farmID, key, "none");
                             sendMar = database.getReference().child("Order").child("marketProduct");
-                            sendMar.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getApplicationContext(),"การสั่งซื้อเสร็จสิ้น",Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(),basketMain.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                }
-                            });
+                            if (buyoradd.matches("add")) {
+                                sendMar.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                sendMar.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), chatNew.class);
+                                        intent.putExtra("statusPro", "none");
+                                        intent.putExtra("orderid", sendMar.getKey());
+                                        intent.putExtra("farmID", farmID);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -298,28 +332,42 @@ public class ProductActivity extends AppCompatActivity {
             day = extras.getString("DayPre");
             final FirebaseDatabase database = FirebaseDatabase.getInstance();
             callMarket = database.getReference().child("product").child("preorderProduct").child(day).child(key);
-            callMarket.addValueEventListener(new ValueEventListener() {
+            callMarket.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Map map = (Map) dataSnapshot.getValue();
                     farmID = String.valueOf(map.get("farmID"));
+                    int pSell = Integer.parseInt(String.valueOf(map.get("productSell")));
+                    pSell = pSell+1;
+                    callMarket.child("productSell").setValue(pSell);
                     callfarmname = database.getReference().child("farmer").child(farmID);
                     callfarmname.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Map map = (Map) dataSnapshot.getValue();
                             final String memberID = String.valueOf(map.get("memberID"));
-                            OrderModel orderModel = new OrderModel(IDKey,memberID,farmID,key,"none",day);
+                            OrderModel orderModel = new OrderModel(IDKey, memberID, farmID, key, "none", day);
                             sendPre = database.getReference().child("Order").child("preorderProduct");
-                            sendPre.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getApplicationContext(),"การสั่งซื้อเสร็จสิ้น",Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(),basketMain.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                }
-                            });
+                            if (buyoradd.matches("add")) {
+                                sendPre.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                sendPre.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), basketMain.class);
+                                        intent.putExtra("orderid", sendPre.getKey());
+                                        intent.putExtra("farmID", farmID);
+                                        intent.putExtra("day", day);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
                         }
 
                         @Override
@@ -336,8 +384,9 @@ public class ProductActivity extends AppCompatActivity {
             });
         }
     }
+
     @Override
-    public boolean onSupportNavigateUp(){
+    public boolean onSupportNavigateUp() {
         finish();
         return true;
     }

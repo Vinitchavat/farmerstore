@@ -113,11 +113,9 @@ public class basketMandP extends AppCompatActivity {
                         productID.clear();
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
                             OrderIdMar m = d.getValue(OrderIdMar.class);
-
                                 key.add(d.getKey());
                                 productID.add(m.productID);
                                 farmID.add(m.getFarmID());
-
                         }
                         for (int count = 0; count < productID.size(); count++) {
                             for (int countIn = count + 1; countIn < productID.size(); countIn++) {

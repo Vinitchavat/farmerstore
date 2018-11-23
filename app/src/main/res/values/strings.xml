@@ -65,6 +65,7 @@
     <string name="markethistory">ประวัติสินค้าตลาด</string>
     <string name="preorderhistory">ประวัติสินค้าสั่งจอง</string>
     <string name="clickbacktwice">"กดปุ่มกลับอีกครั้งเพื่อออกจากโปรแกรม"</string>
+    <string name="send">ส่ง</string>
 
     <string name="preorder">สินค้าสั่งจอง</string>
     <string name="pre_daylist">รายการสินค้าสั่งจอง</string>
