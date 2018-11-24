@@ -276,13 +276,13 @@ public class chatNew extends AppCompatActivity {
 
         if (id == R.id.savechat ) {
             AlertDialog.Builder builder = new AlertDialog.Builder(chatNew.this);
-            builder.setMessage("ได้รับสินต้าและตรวจสอบสินค้าเรียบร้อย");
+            builder.setMessage("ได้รับสินต้า/ตรวจสอบสินค้าเรียบร้อยและลบแชท\nแชทยังคงแสดงอยู่ในประวัต");
             builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
                     database.child("Order").child(statusPro).child(key).child("orderStatus").setValue("finished");
                     Toast.makeText(getApplicationContext(),
-                            "การแก้ไขเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                            "ลบแชทเรียบร้อย", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), basketMain.class);
                     startActivity(i);
                 }
@@ -297,12 +297,13 @@ public class chatNew extends AppCompatActivity {
         }
         if (id == R.id.delchat ) {
             AlertDialog.Builder builder = new AlertDialog.Builder(chatNew.this);
-            builder.setMessage("ได้รับสินค้าและตรวจสอบสินค้าเรียบร้อย");
+            builder.setMessage("ยกเลิกการซื้อสินค้าและลบแชท\nแชทยังคงแสดงอยู่ในประวัต");
+
             builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
                     database.child("Order").child(statusPro).child(key).child("orderStatus").setValue("cancel");
-                    Toast.makeText(getApplicationContext(), "การแก้ไขเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "ลบแชทเรียบร้อย", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), basketMain.class);
                     startActivity(i);
                 }

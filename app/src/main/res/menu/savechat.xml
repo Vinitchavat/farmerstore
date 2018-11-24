@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="เพิ่ม/ลบ"
+    <item android:title="ยืนยัน/ยกเลิกสินค้า-->"
         app:showAsAction="always"/>
     <item
         android:id="@+id/savechat"
