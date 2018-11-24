@@ -66,8 +66,8 @@ public class AdapterPL extends BaseAdapter {
         holder.tv_info = (TextView) view.findViewById(R.id.productSell);
         String pSell = productSell.get(i).toString();
         holder.tv_info.setText("มีทั้งหมด " + pSell + " คำสั่งซื้อ");
-        /*holder.imageView = view.findViewById(R.id.productImage);
-        new DownloadImageTask(holder.imageView).execute(imgLink.get(i));*/
+        holder.imageView = view.findViewById(R.id.productImage);
+        new DownloadImageTask(holder.imageView).execute(imgLink.get(i));
 
         final String id = productID.get(i);
         holder.button = (Button) view.findViewById(R.id.btn_editproduct);

@@ -50,18 +50,18 @@ public class MainActivity extends AppCompatActivity {
         final String IDKey = sp.getString("IDKey", "0");
         String status = sp.getString("Status","none");
         String fid = sp.getString("farmID","none");
-        if (!IDKey.matches("0") && status.matches("seller") && fid.matches("none")){
-            Intent intent = new Intent(MainActivity.this, RegisterFarm.class);
+        if (!IDKey.matches("0") && status.matches("seller")){
+            /*Intent intent = new Intent(MainActivity.this, RegisterFarm.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("userID",IDKey);
             intent.putExtra("txt","not");
-            finish();startActivity(intent);
-            /*DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
+            finish();startActivity(intent);*/
+            DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
             Query dRef = dataRef.child("farmer").orderByChild("memberID").equalTo(IDKey);
-            dRef.addValueEventListener(new ValueEventListener() {
+            dRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    *//* ** Check if no register farm ** *//*
+                     /* ** Check if no register farm ** */
                     if (!dataSnapshot.exists()) {
                         Intent intent = new Intent(MainActivity.this, RegisterFarm.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });*/
+            });
         }
         else if (!IDKey.matches("0")) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);

@@ -579,7 +579,7 @@ public class profileAddProduct extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "กดอีกครั้งเพื่อไปยังหน้ารายการสินค้า", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
