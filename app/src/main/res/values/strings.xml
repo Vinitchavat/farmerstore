@@ -19,8 +19,8 @@
     <string name="login_email">กรุณาใส่อีเมล</string>
     <string name="recommend_fruit">ผลไม้แนะนำ</string>
     <string name="allfruit">ผลไม้ทั้งหมด</string>
-    <string name="savechat">ได้รับสินค้าเรียบร้อย/ลบแชท</string>
-    <string name="delchat">ยกเลิกการซื้อสินค้า/ลบแชท</string>
+    <string name="savechat">ได้รับสินค้าเรียบร้อย/จบการสนทนา</string>
+    <string name="delchat">ยกเลิกการซื้อสินค้า/จบการสนทนา</string>
     <string name="showchat">กดฉันหน่อย</string>
     <string name="asktologin">มีบัญชีผู้ใช้แล้ว เข้าสู่ระบบ?</string>
 

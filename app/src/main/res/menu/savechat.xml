@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="ปุ่มกดยืนยันและยกเลิกสินค้า-->"
+    <item android:title="ปุ่มกดเมื่อจบการสนทนา-->"
         app:showAsAction="always"/>
     <item
         android:id="@+id/savechat"
