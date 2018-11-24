@@ -29,10 +29,12 @@ import java.util.Locale;
 
 public class PreMain extends AppCompatActivity {
     public DatabaseReference callPre;
-    CustomAdapterForPreorder adapterCus;
-    ArrayList<String> clubkey = new ArrayList<>();
-    String getK;
-    int countKey;
+    private CustomAdapterForPreorder adapterCus;
+    private ArrayList<String> clubkey = new ArrayList<>();
+    private ArrayList<String> key = new ArrayList<>();
+    private String[] finalMStringArray;
+    private String getK;
+    private int countKey;
 
     BottomNavigationView navigation;
 
@@ -81,54 +83,79 @@ public class PreMain extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 clubkey.clear();
+                key.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     getK = d.getKey();
-                    if(getTimeStamp(getK)>=getTimeStamp("now")){
-                        clubkey.add(getK);
-                    }
+                    key.add(getK);
                 }
-                String[] mStringArray = new String[clubkey.size()];
-                mStringArray = clubkey.toArray(mStringArray);
-                final String[] finalMStringArray = mStringArray;
-                ListView list = (ListView) findViewById(R.id.list);
-                adapterCus = new CustomAdapterForPreorder(getApplicationContext(),clubkey);
-                list.setAdapter(adapterCus);
+                for (int i = 0; i < key.size(); i++) {
+                    final int j = i;
+                    callPre.child(key.get(j)).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot dd : dataSnapshot.getChildren()) {
+                                String s = dd.child("status").getValue(String.class);
+                                if (s == null) {
+                                    if (getTimeStamp(getK) >= getTimeStamp("now")) {
+                                        clubkey.add(key.get(j));
+                                        Log.d("17", j + key.get(j));
+                                    }
+                                    break;
+                                }
+                            }
+                            String[] mStringArray = new String[clubkey.size()];
+                            mStringArray = clubkey.toArray(mStringArray);
+                            finalMStringArray = mStringArray;
+                            ListView list = (ListView) findViewById(R.id.list);
+                            adapterCus = new CustomAdapterForPreorder(getApplicationContext(), clubkey);
+                            list.setAdapter(adapterCus);
 
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent next = new Intent(PreMain.this, show.class);
-                        next.putExtra("DayPre", finalMStringArray[position]);
-                        startActivity(next);
-                    }
-                });
+                            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Intent next = new Intent(PreMain.this, show.class);
+                                    next.putExtra("DayPre", finalMStringArray[position]);
+                                    startActivity(next);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
 
     }
-    public long getTimeStamp(String date){
+
+    public long getTimeStamp(String date) {
         String now;
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",new Locale("TH"));
-        if (date.matches("now")){
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("TH"));
+        if (date.matches("now")) {
             Calendar calendar = Calendar.getInstance();
             now = dateFormat.format(calendar.getTime());
-        }
-        else {
-            int y = Integer.parseInt(date.substring(0,4))-543;
-            now = String.valueOf(y)+date.substring(4);
+        } else {
+            int y = Integer.parseInt(date.substring(0, 4)) - 543;
+            now = String.valueOf(y) + date.substring(4);
         }
         try {
-            Date d = (Date)dateFormat.parse(now);
+            Date d = (Date) dateFormat.parse(now);
             return d.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
             return 0;
         }
     }
+
     boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -143,7 +170,7 @@ public class PreMain extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }

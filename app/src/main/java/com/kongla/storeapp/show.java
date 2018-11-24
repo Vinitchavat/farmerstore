@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -59,15 +60,18 @@ public class show extends AppCompatActivity {
                 quantity.clear();
                 unitPro.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    getData = d.getValue(GetData.class);
-                    String key = d.getKey();
-                    allKey.add(key);
-                    farmID.add(getData.getFarmID());
-                    fruitName.add(getData.getFruitName());
-                    price.add(getData.getPrice());
-                    productName.add(getData.getProductName());
-                    quantity.add(getData.getQuantity());
-                    unitPro.add(getData.getUnitPro());
+                    String s = d.child("status").getValue(String.class);
+                    if (s==null){
+                        getData = d.getValue(GetData.class);
+                        String key = d.getKey();
+                        allKey.add(key);
+                        farmID.add(getData.getFarmID());
+                        fruitName.add(getData.getFruitName());
+                        price.add(getData.getPrice());
+                        productName.add(getData.getProductName());
+                        quantity.add(getData.getQuantity());
+                        unitPro.add(getData.getUnitPro());
+                    }
                 }
                 draw = 1;
 

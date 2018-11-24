@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -53,15 +54,18 @@ public class MarListFruit extends AppCompatActivity {
                 allKey.clear();unitPro.clear();farmID.clear();fruitName.clear();
                 price.clear();productName.clear();quantity.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    String key = d.getKey();
-                    allKey.add(key);
-                    getData = d.getValue(GetData.class);
-                    farmID.add(getData.getFarmID());
-                    fruitName.add(getData.getFruitName());
-                    price.add(getData.getPrice());
-                    productName.add(getData.getProductName());
-                    quantity.add(getData.getQuantity());
-                    unitPro.add(getData.getUnitPro());
+                    String s = d.child("status").getValue(String.class);
+                    if (s==null){
+                        String key = d.getKey();
+                        allKey.add(key);
+                        getData = d.getValue(GetData.class);
+                        farmID.add(getData.getFarmID());
+                        fruitName.add(getData.getFruitName());
+                        price.add(getData.getPrice());
+                        productName.add(getData.getProductName());
+                        quantity.add(getData.getQuantity());
+                        unitPro.add(getData.getUnitPro());
+                    }
                 }
                 int position =0;
                 while(position  < fruitName.size()){

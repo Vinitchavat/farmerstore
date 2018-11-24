@@ -91,9 +91,13 @@ public class HomeActivity extends AppCompatActivity {
         callMarket.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                fruitDraw.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    getData = d.getValue(GetData.class);
-                    fruitDraw.add(getData.getFruitName());
+                    String s = d.child("status").getValue(String.class);
+                    if(s==null){
+                        getData = d.getValue(GetData.class);
+                        fruitDraw.add(getData.getFruitName());
+                    }
                 }
                 for(int count = 0 ; count<fruitDraw.size();count++){
                     for(int countIn = count+1 ; countIn<fruitDraw.size();countIn++){
