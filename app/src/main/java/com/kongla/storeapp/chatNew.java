@@ -132,6 +132,7 @@ public class chatNew extends AppCompatActivity {
 
         Button selectImg = (Button) findViewById(R.id.btnChoose);
         final Button uploadImg = (Button) findViewById(R.id.btnUpload);
+        final Button delbtn = (Button) findViewById(R.id.delPic);
         selectImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,10 +152,21 @@ public class chatNew extends AppCompatActivity {
                 UserID = UUID.randomUUID().toString();
                 uploadImage();
                 uploadImg.setVisibility(View.INVISIBLE);
+                delbtn.setVisibility(View.INVISIBLE);
                 ImageView imageView = (ImageView)findViewById(R.id.imgmain);
                 imageView.setImageURI(null);
             }
         });
+        delbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delbtn.setVisibility(View.INVISIBLE);
+                uploadImg.setVisibility(View.INVISIBLE);
+                ImageView imageView = (ImageView)findViewById(R.id.imgmain);
+                imageView.setImageURI(null);
+            }
+        });
+
     }
     private void getImage(){
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
@@ -229,7 +241,9 @@ public class chatNew extends AppCompatActivity {
             ImageView imageView = (ImageView)findViewById(R.id.imgmain);
             imageView.setImageURI(uri);
             Button uploadImg = (Button) findViewById(R.id.btnUpload);
+            Button delbtn = (Button) findViewById(R.id.delPic);
             uploadImg.setVisibility(View.VISIBLE);
+            delbtn.setVisibility(View.VISIBLE);
         }
     }
     @Override

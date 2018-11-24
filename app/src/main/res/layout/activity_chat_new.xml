@@ -24,14 +24,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/editText"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="4">
 
 
         <Button
             android:id="@+id/btnChoose"
             android:layout_width="10dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="เลือกรูปภาพ"
             android:textSize="16dp"
             android:textColor="@color/gen_white"
@@ -47,6 +47,17 @@
             android:textColor="@color/gen_white"
             android:background="@color/not_black"
             android:visibility="invisible"/>
+        <Button
+            android:id="@+id/delPic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ลบภาพ"
+            android:textSize="16dp"
+            android:textColor="@color/gen_white"
+            android:background="@color/not_black"
+            android:visibility="invisible"/>
+
 
 
     </LinearLayout>
