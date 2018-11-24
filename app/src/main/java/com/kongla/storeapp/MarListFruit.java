@@ -30,6 +30,7 @@ public class MarListFruit extends AppCompatActivity {
     ArrayList<String> unitPro = new ArrayList<String>();
     ArrayList<String> allKey = new ArrayList<>();
     CustomAdapShowPre customAdapShowMar;
+    Query callDataPre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,12 @@ public class MarListFruit extends AppCompatActivity {
         order = extras.getString("MarFruit");
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query callDataPre = database.getReference().child("product").child("marketProduct").orderByChild("fruitName").equalTo(order);
+        if(!order.matches("all")) {
+            callDataPre= database.getReference().child("product").child("marketProduct").orderByChild("fruitName").equalTo(order);
+        }
+        else {
+            callDataPre = database.getReference().child("product").child("marketProduct");
+        }
         callDataPre.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -57,35 +63,35 @@ public class MarListFruit extends AppCompatActivity {
                     quantity.add(getData.getQuantity());
                     unitPro.add(getData.getUnitPro());
                 }
-                if(fruitName.get(0).matches("ทุเรียน")){
-                    draw = R.drawable.durian;
+                int position =0;
+                while(position  < fruitName.size()){
+
                 }
-                else  if(fruitName.get(0).matches("สับปะรด")){
-                    draw = R.drawable.pineapple;
+                if(!order.matches("all")) {
+                    if (fruitName.get(0).matches("ทุเรียน")) {
+                        draw = R.drawable.durian;
+                    } else if (fruitName.get(0).matches("สับปะรด")) {
+                        draw = R.drawable.pineapple;
+                    } else if (fruitName.get(0).matches("องุ่น")) {
+                        draw = R.drawable.grape;
+                    } else if (fruitName.get(0).matches("แก้วมังกร")) {
+                        draw = R.drawable.dragonfruit;
+                    } else if (fruitName.get(0).matches("ลิ้นจี่")) {
+                        draw = R.drawable.lychee;
+                    } else if (fruitName.get(0).matches("มังคุด")) {
+                        draw = R.drawable.mangosteen;
+                    } else if (fruitName.get(0).matches("เงาะ")) {
+                        draw = R.drawable.rambutan;
+                    } else if (fruitName.get(0).matches("ส้ม")) {
+                        draw = R.drawable.orange;
+                    } else if (fruitName.get(0).matches("มะม่วง")) {
+                        draw = R.drawable.mango;
+                    } else {
+                        draw = R.drawable.longan;
+                    }
                 }
-                else  if(fruitName.get(0).matches("องุ่น")){
-                    draw = R.drawable.grape;
-                }
-                else  if(fruitName.get(0).matches("แก้วมังกร")){
-                    draw = R.drawable.dragonfruit;
-                }
-                else  if(fruitName.get(0).matches("ลิ้นจี่")){
-                    draw = R.drawable.lychee;
-                }
-                else if(fruitName.get(0).matches("มังคุด")){
-                    draw = R.drawable.mangosteen;
-                }
-                else if(fruitName.get(0).matches("เงาะ")){
-                    draw = R.drawable.rambutan;
-                }
-                else if(fruitName.get(0).matches("ส้ม")){
-                    draw = R.drawable.orange;
-                }
-                else  if(fruitName.get(0).matches("มะม่วง")){
-                    draw = R.drawable.mango;
-                }
-                else{
-                    draw = R.drawable.longan;
+                else {
+                    draw = 1;
                 }
                 ListView listView =findViewById(R.id.listMar);
                 customAdapShowMar = new CustomAdapShowPre(getApplicationContext(),draw,farmID,fruitName,price,productName,quantity,unitPro);

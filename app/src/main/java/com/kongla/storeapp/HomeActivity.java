@@ -10,6 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -215,6 +216,15 @@ public class HomeActivity extends AppCompatActivity {
                         }
                     });
                }
+               Button allfruit = findViewById(R.id.text3);
+                allfruit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent next = new Intent(HomeActivity.this, MarListFruit.class);
+                        next.putExtra("MarFruit", "all");
+                        startActivity(next);
+                    }
+                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

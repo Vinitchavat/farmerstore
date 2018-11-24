@@ -56,13 +56,28 @@
             android:layout_weight="4"
             android:weightSum="20"
             android:padding="5sp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_weight="3"
+                android:weightSum="12">
 
             <TextView
                 android:id="@+id/text2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:text="ผลไม้ทั้งหมด" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="ผลไม้อื่นๆ" />
+
+                <Button
+                    android:id="@+id/text3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:text="ผลไม้ทั้งหมด" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
