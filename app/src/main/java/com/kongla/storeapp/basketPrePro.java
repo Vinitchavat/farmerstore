@@ -64,11 +64,14 @@ public class basketPrePro extends AppCompatActivity {
                     for (DataSnapshot d : dataSnapshot.getChildren()) {
                         OrderIdMar m = d.getValue(OrderIdMar.class);
                         String buyer = m.getBuyerID();
+                        String Orderstatus = m.getOrderStatus();
                         if (buyer.matches(KKK)) {
-                            key.add(d.getKey());
-                            productID.add(m.productID);
-                            farmID.add(m.getFarmID());
-                            buyerID.add(m.getBuyerID());
+                            if(Orderstatus.matches("none")) {
+                                key.add(d.getKey());
+                                productID.add(m.productID);
+                                farmID.add(m.getFarmID());
+                                buyerID.add(m.getBuyerID());
+                            }
                         }
                     }
 
