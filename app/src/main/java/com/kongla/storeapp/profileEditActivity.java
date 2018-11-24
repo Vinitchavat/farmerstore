@@ -19,7 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class profileEditActivity extends AppCompatActivity {
-    private String data, head;
+    private String data, head, txt;
     private TextView attr;
     private EditText editText;
     private int editTextLength;
@@ -31,23 +31,29 @@ public class profileEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_editactivity);
 
         data = getIntent().getStringExtra("data");
+        txt = getIntent().getStringExtra("txt");
         attr = (TextView) findViewById(R.id.editProfileText);
         editText = (EditText) findViewById(R.id.editProfileEditText);
+
+        editText.setText(txt);
 
         /* ** SET condition for user input ** */
         if(data.matches("phone")){
             editText.setInputType(InputType.TYPE_CLASS_PHONE);
+            editText.setMaxLines(1);
             head = "แก้ไขเบอร์โทร";
             editTextLength = 10;
         }
         else if(data.matches("name")){
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+            editText.setMaxLines(1);
             head = "แก้ไขชื่อ-นามสกุล";
             editTextLength = 3;
         }
         else if(data.matches("address")){
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS
                     |InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            editText.setMaxLines(4);
             head = "แก้ไขที่อยู่";
             editTextLength = 10;
         }

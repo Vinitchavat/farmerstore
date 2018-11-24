@@ -23,7 +23,6 @@ public class profileEditProfile extends AppCompatActivity {
     private TextView textEmail, textPassword, textName, textPhone, textAddress;
     private FirebaseAuth firebaseAuth;
     public DatabaseReference databaseReference;
-    private static final String PREFS = "PREFS";
     private String email, name, phone, address;
     SharedPreferences sp;
 
@@ -62,6 +61,7 @@ public class profileEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profileEditActivity.class);
                 i.putExtra("data", "name");
+                i.putExtra("txt",textName.getText().toString().trim());
                 startActivity(i);
             }
         });
@@ -70,6 +70,7 @@ public class profileEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profileEditActivity.class);
                 i.putExtra("data", "phone");
+                i.putExtra("txt",textPhone.getText().toString().trim());
                 startActivity(i);
             }
         });
@@ -78,6 +79,7 @@ public class profileEditProfile extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), profileEditActivity.class);
                 i.putExtra("data", "address");
+                i.putExtra("txt",textAddress.getText().toString().trim());
                 startActivity(i);
             }
         });
