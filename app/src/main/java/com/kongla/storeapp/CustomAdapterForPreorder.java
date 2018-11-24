@@ -127,6 +127,12 @@ public class CustomAdapterForPreorder extends BaseAdapter {
         String m = date.substring(date.indexOf("-") + 1, date.lastIndexOf("-"));
         String month;
         String y = date.substring(0, date.indexOf("-"));
+        if (m.substring(0,1).matches("0")){
+            m = m.substring(1);
+        }
+        if (d.substring(0,1).matches("0")){
+            d = d.substring(1);
+        }
         switch (m) {
             case "1":
                 month = "มกราคม";

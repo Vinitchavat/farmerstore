@@ -176,6 +176,10 @@ public class profileMain extends AppCompatActivity {
                 editor.remove("farmID"); //
                 editor.remove("Status"); // Buyer or Seller
                 editor.commit();
+                sp = getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE);
+                editor = sp.edit();
+                editor.remove("farmID");
+                editor.commit();
 
                 firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.signOut();
@@ -239,16 +243,5 @@ public class profileMain extends AppCompatActivity {
             super.onBackPressed();
             return;
         }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
     }
 }

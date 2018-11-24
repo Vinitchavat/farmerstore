@@ -7,8 +7,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,10 +19,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.UUID;
@@ -42,6 +48,8 @@ public class RegisterFarm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_farmer);
 
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        editor = sp.edit();
         final Intent i = getIntent();
         final Button btn_regis = (Button) findViewById(R.id.btn_farmRegis);
         editName = (EditText) findViewById(R.id.editTextFarmName);
@@ -74,14 +82,15 @@ public class RegisterFarm extends AppCompatActivity {
                 String fDes = editDes.getText().toString().trim();
                 String fNum = editNum.getText().toString().trim();
                 String fAdd = editAdd.getText().toString().trim();
-                if (TextUtils.isEmpty(fName) || TextUtils.isEmpty(fDes) || TextUtils.isEmpty(fNum) || TextUtils.isEmpty(fAdd)) {
+                if (TextUtils.isEmpty(fName) || TextUtils.isEmpty(fDes) || TextUtils.isEmpty(fNum) || TextUtils.isEmpty(fAdd)
+                        || fName.length()<3 || fAdd.length()<10) {
                     Toast.makeText(getApplicationContext(), R.string.register_empty_warning, Toast.LENGTH_LONG).show();
+                }
+                else if (fNum.length() != 13) {
+                    Toast.makeText(getApplicationContext(), "กรุณาใส่หมายเลขบัตรประชาชนให้ครบ", Toast.LENGTH_LONG).show();
                 }
                 else if (uri==null){
                     Toast.makeText(getApplicationContext(), "กรุณาใส่ภาพ", Toast.LENGTH_LONG).show();
-                }
-                else if (fNum.length() != 13) {
-                    Toast.makeText(getApplicationContext(), "กรุณาใส่หมายเลขฟาร์มให้ครบ", Toast.LENGTH_LONG).show();
                 }
                 else {
                     loadingBar.setMessage("กรุณารอสักครู่");
@@ -89,12 +98,16 @@ public class RegisterFarm extends AppCompatActivity {
 
                     String userID = i.getStringExtra("userID");
 
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                             .child("farmer");
                     GetFarmer farmerModel = new GetFarmer(fName, fDes, fNum, fAdd, userID);
+                    final String fid = databaseReference.push().getKey();
+                    editor.putString("farmID",fid);
+                    editor.commit();
                     databaseReference.push().setValue(farmerModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            uploadImage(fid);
                             Toast.makeText(RegisterFarm.this, "ลงทะเบียนเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterFarm.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -134,6 +147,37 @@ public class RegisterFarm extends AppCompatActivity {
                 i5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i5);
                 finish();
+            }
+        });
+    }
+
+    private void uploadImage(final String fID) {
+        final String farmID = fID;
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        final String userID = sp.getString("IDKey", "0");
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference()
+                .child("Image").child("farmRegister/" + userID);
+        storageRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getApplicationContext(),
+                        "ระบบได้รับภาพแล้ว", Toast.LENGTH_SHORT).show();
+            }
+        });
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                        .child("farmer").child(farmID);
+                databaseReference.child("imgLink").setValue(uri.toString());
+            }
+        });
+        storageRef.putFile(uri).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(),
+                        "มีข้อผิดพลาดเกิดขึ้น กรุณาลองใหม่อีกครั้ง", Toast.LENGTH_SHORT).show();
             }
         });
     }
