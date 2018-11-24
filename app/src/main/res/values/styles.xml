@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/light_red</item>
         <item name="titleTextColor">@android:color/white</item>
         <item name="subtitleTextColor">@android:color/white</item>
+        <item name="android:spinnerStyle">@style/Theme.AppCompat.Light</item>
     </style>
 
 </resources>

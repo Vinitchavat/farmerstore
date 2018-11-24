@@ -15,11 +15,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,8 +68,6 @@ public class chatNew extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_new);
-
-
 
         progressBar = findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.GONE);
@@ -276,7 +276,7 @@ public class chatNew extends AppCompatActivity {
 
         if (id == R.id.savechat ) {
             AlertDialog.Builder builder = new AlertDialog.Builder(chatNew.this);
-            builder.setMessage("ได้รับสิรค้าาและตรวจสอบสินค้าเรียบร้อย");
+            builder.setMessage("ได้รับสินต้าและตรวจสอบสินค้าเรียบร้อย");
             builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -297,11 +297,11 @@ public class chatNew extends AppCompatActivity {
         }
         if (id == R.id.delchat ) {
             AlertDialog.Builder builder = new AlertDialog.Builder(chatNew.this);
-            builder.setMessage("ได้รับสิรค้าาและตรวจสอบสินค้าเรียบร้อย");
+            builder.setMessage("ได้รับสินค้าและตรวจสอบสินค้าเรียบร้อย");
             builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-                    database.child("Order").child(statusPro).child(key).child("orderStatus").setValue("cancle");
+                    database.child("Order").child(statusPro).child(key).child("orderStatus").setValue("cancel");
                     Toast.makeText(getApplicationContext(), "การแก้ไขเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), basketMain.class);
                     startActivity(i);
