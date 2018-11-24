@@ -78,8 +78,11 @@ public class HomeActivity extends AppCompatActivity {
         ImageView img4 = findViewById(R.id.img4);
         ImageView img5 = findViewById(R.id.img5);
         ImageView img6 = findViewById(R.id.img6);
+        ImageView img7 = findViewById(R.id.img7);
+        ImageView img8 = findViewById(R.id.img8);
 
-        final ImageView[] lay = {img3,img4,img5,img6};
+
+        final ImageView[] lay = {img3,img4,img5,img6,img7,img8};
         final ImageView[] layRec = {img1,img2};
         final int[] fruit = {R.drawable.mangosteen, R.drawable.longan, R.drawable.orange, R.drawable.mango, R.drawable.rambutan, R.drawable.durian
                 ,R.drawable.lychee,R.drawable.grape,R.drawable.dragonfruit,R.drawable.pineapple};
