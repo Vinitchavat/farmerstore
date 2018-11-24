@@ -51,9 +51,14 @@ public class show extends AppCompatActivity {
         callDataPre.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                allKey.clear();
+                farmID.clear();
+                fruitName.clear();
+                productName.clear();
+                price.clear();
+                quantity.clear();
+                unitPro.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    allKey.clear();farmID.clear();fruitName.clear();
-                    productName.clear();price.clear();quantity.clear();unitPro.clear();
                     getData = d.getValue(GetData.class);
                     String key = d.getKey();
                     allKey.add(key);
