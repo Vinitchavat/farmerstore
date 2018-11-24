@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterFarm extends AppCompatActivity {
 
-    private EditText editName,editDes,editNum,editAdd;
+    private EditText editName, editDes, editNum, editAdd;
     ProgressDialog loadingBar;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
@@ -34,14 +35,14 @@ public class RegisterFarm extends AppCompatActivity {
 
         final Intent i = getIntent();
         final Button btn_regis = (Button) findViewById(R.id.btn_farmRegis);
-        editName = (EditText) findViewById(R.id.editTextFarmName) ;
-        editDes = (EditText) findViewById(R.id.editTextFarmDes) ;
-        editNum = (EditText) findViewById(R.id.editTextFarmNum) ;
-        editAdd = (EditText) findViewById(R.id.editTextFarmAdd) ;
+        editName = (EditText) findViewById(R.id.editTextFarmName);
+        editDes = (EditText) findViewById(R.id.editTextFarmDes);
+        editNum = (EditText) findViewById(R.id.editTextFarmNum);
+        editAdd = (EditText) findViewById(R.id.editTextFarmAdd);
         loadingBar = new ProgressDialog(RegisterFarm.this);
 
         String mes = i.getStringExtra("txt");
-        if(mes.matches("not")){
+        if (mes.matches("not")) {
             TextView textView = (TextView) findViewById(R.id.txtuser);
             textView.setText("*เนื่องจากบัญชีของคุณเป็นผู้ขายที่ยังไม่มีการลงทะเบียนฟาร์ม จึงพบหน้านี้");
         }
@@ -49,28 +50,36 @@ public class RegisterFarm extends AppCompatActivity {
         btn_regis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadingBar.setMessage("กรุณารอสักครู่");
-                loadingBar.show();
                 String fName = editName.getText().toString().trim();
                 String fDes = editDes.getText().toString().trim();
                 String fNum = editNum.getText().toString().trim();
                 String fAdd = editAdd.getText().toString().trim();
+                if (TextUtils.isEmpty(fName) || TextUtils.isEmpty(fDes) || TextUtils.isEmpty(fNum) || TextUtils.isEmpty(fAdd)) {
+                    Toast.makeText(getApplicationContext(), R.string.register_empty_warning, Toast.LENGTH_LONG).show();
+                }
+                else if (fNum.length() != 13) {
+                    Toast.makeText(getApplicationContext(), "กรุณาใส่หมายเลขฟาร์มให้ครบ", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    loadingBar.setMessage("กรุณารอสักครู่");
+                    loadingBar.show();
 
-                String userID = i.getStringExtra("userID");
+                    String userID = i.getStringExtra("userID");
 
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                        .child("farmer");
-                GetFarmer farmerModel = new GetFarmer(fName,fDes,fNum,fAdd,userID);
-                databaseReference.push().setValue(farmerModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(RegisterFarm.this,"ลงทะเบียนเสร็จสิ้น",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterFarm.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        loadingBar.dismiss();
-                    }
-                });
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+                            .child("farmer");
+                    GetFarmer farmerModel = new GetFarmer(fName, fDes, fNum, fAdd, userID);
+                    databaseReference.push().setValue(farmerModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(RegisterFarm.this, "ลงทะเบียนเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterFarm.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            loadingBar.dismiss();
+                        }
+                    });
+                }
             }
         });
 
@@ -105,7 +114,9 @@ public class RegisterFarm extends AppCompatActivity {
             }
         });
     }
+
     boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -120,7 +131,7 @@ public class RegisterFarm extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
