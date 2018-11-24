@@ -276,13 +276,12 @@ public class chatNew extends AppCompatActivity {
 
         if (id == R.id.savechat ) {
             AlertDialog.Builder builder = new AlertDialog.Builder(chatNew.this);
-            builder.setMessage("ได้รับสินต้า/ตรวจสอบสินค้าเรียบร้อยและจบการสนทนา\n!!การยืนยันจะไม่ลบการสนทนาแต่จะย้ายไปเก็บไว้ที่ประวัติ!!");
+            builder.setMessage("ได้รับสินต้า/ตรวจสอบสินค้าเรียบร้อยและจบการสนทนา\n!!การยืนยันจะเป็นการลบการสนทนาและไม่สามารถกู้คืนได้!!");
             builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
                     database.child("Order").child(statusPro).child(key).child("orderStatus").setValue("finished");
-                    Toast.makeText(getApplicationContext(),
-                            "ย้ายแชทไปที่ประวัติเรียบร้อย", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "ยืนยันและลบการสนทนาเรียบร้อย", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), basketMain.class);
                     startActivity(i);
                 }
@@ -297,13 +296,13 @@ public class chatNew extends AppCompatActivity {
         }
         if (id == R.id.delchat ) {
             AlertDialog.Builder builder = new AlertDialog.Builder(chatNew.this);
-            builder.setMessage("ยกเลิกการซื้อสินค้าและจบการสนทนา\n!!การยกเลิกจะเป็นการลบการสนทนาและไม่สามารถกู้คืนได้!!");
+            builder.setMessage("ยกเลิกการซื้อสินค้าและจบการสนทนา\n!!การยกเลิกจะเป็นการลบการสนทนาและไม่สามารถกซื้อสินค้าชนิดนี้ได้อีก!!");
 
             builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
                     database.child("Order").child(statusPro).child(key).child("orderStatus").setValue("cancel");
-                    Toast.makeText(getApplicationContext(), "ลบแชทเรียบร้อย", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "ยกเลิกและลบการสนทนาเรียบร้อย", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), basketMain.class);
                     startActivity(i);
                 }
