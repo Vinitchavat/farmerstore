@@ -110,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
         /* *** Check fields *** */
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(this, R.string.register_empty_warning, Toast.LENGTH_SHORT).show();
-        } else if (name.length() <= 3) {
+        } else if (name.length()<3) {
             Toast.makeText(this, R.string.register_name_warning, Toast.LENGTH_SHORT).show();
         } else if (phone.length() < 10) {
             Toast.makeText(this, R.string.register_phone_warning, Toast.LENGTH_SHORT).show();
@@ -181,19 +181,9 @@ public class RegisterActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
+            Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
             return;
         }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
     }
 }
 

@@ -120,8 +120,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.login_email, Toast.LENGTH_SHORT).show();
             return;
         }
-
-        if (TextUtils.isEmpty(password)) {
+        else if (TextUtils.isEmpty(password)) {
             Toast.makeText(getApplicationContext(), R.string.login_password, Toast.LENGTH_SHORT).show();
             return;
         } else {
