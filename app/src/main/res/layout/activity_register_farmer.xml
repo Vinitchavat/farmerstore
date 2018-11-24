@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="25sp"
@@ -83,6 +84,7 @@
         android:id="@+id/btn_farmRegis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
         android:background="@color/colorPrimary"
         android:text="ลงทะเบียน"
         android:textColor="@color/gen_white"
@@ -90,16 +92,45 @@
         app:layout_constraintBottom_toTopOf="@+id/farmlogout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFarmAdd" />
+        app:layout_constraintTop_toBottomOf="@+id/picName" />
 
     <TextView
         android:id="@+id/farmlogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="5dp"
         android:text="@string/profile_logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_farmRegis" />
+
+    <Button
+        android:id="@+id/choosePic"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="3dp"
+        android:text="เลือกภาพ"
+        app:layout_constraintBottom_toTopOf="@+id/btn_farmRegis"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/picName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFarmAdd"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/picName"
+        android:layout_width="195dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="13dp"
+        android:text="กรุณาใส่รูปบัตรประชาชน"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_farmRegis"
+        app:layout_constraintEnd_toStartOf="@+id/choosePic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFarmAdd" />
 
 </android.support.constraint.ConstraintLayout>
