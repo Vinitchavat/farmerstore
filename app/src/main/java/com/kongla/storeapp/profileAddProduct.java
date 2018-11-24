@@ -323,7 +323,7 @@ public class profileAddProduct extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             uri = data.getData();
-            ImageView imageView = (ImageView)findViewById(R.id.img);
+            ImageView imageView = (ImageView)findViewById(R.id.addProductImage);
             imageView.setImageURI(uri);
         }
     }
@@ -354,6 +354,12 @@ public class profileAddProduct extends AppCompatActivity {
 
         if (addoredit.matches("add")) {
             if (preorderSwitch.isChecked()) {
+                if (dDate.length()<2){
+                    dDate = "0" + dDate;
+                }
+                if (mDate.length()<2){
+                    mDate = "0" + mDate;
+                }
                 String childDate = yDate + "-" + mDate + "-" + dDate;
                 DatabaseReference dref = databaseReference.child("product").child("preorderProduct")
                         .child(childDate);
@@ -386,18 +392,19 @@ public class profileAddProduct extends AppCompatActivity {
             final String id = getIntent().getStringExtra("productID");
             if (preorderSwitch.isChecked()) {
                 String childDate = yDate + "-" + mDate + "-" + dDate;
-                final DatabaseReference dref = databaseReference.child("product").child("preorderProduct");
+                final DatabaseReference dref = databaseReference.child("product").child("preorderProduct")
+                        .child(childDate);
 
                 dref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
                             String key = d.getKey();
-                            if (dataSnapshot.child(key).child(id).child("fruitName").getValue() != null) {
+                            if (dataSnapshot.child(id).child("fruitName").getValue() != null) {
 
                                 ProductModel productModel = new ProductModel(farmID, fruitName, productName, price,
                                         quantity, unitSelect, 0, url);
-                                dref.child(key).child(id).setValue(productModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                dref.child(id).setValue(productModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         Toast.makeText(getApplicationContext(),

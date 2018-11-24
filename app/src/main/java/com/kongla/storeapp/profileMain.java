@@ -176,6 +176,10 @@ public class profileMain extends AppCompatActivity {
                 editor.remove("farmID"); //
                 editor.remove("Status"); // Buyer or Seller
                 editor.commit();
+                sp = getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE);
+                editor = sp.edit();
+                editor.remove("farmID");
+                editor.commit();
 
                 firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.signOut();

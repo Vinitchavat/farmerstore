@@ -105,8 +105,8 @@ public class profileSellerSetting extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String id = d.getKey();
-                    editor.putString("farmID", id);
-                    editor.commit();
+                    /*editor.putString("farmID", id);
+                    editor.commit();*/
                 }
             }
 
@@ -179,29 +179,33 @@ public class profileSellerSetting extends AppCompatActivity {
     }
 
     public void marketProduct() {
-        sp = getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String farmID = sp.getString("farmID", "0");
         DatabaseReference dataRef2 = FirebaseDatabase.getInstance().getReference().child("product").child("marketProduct");
         final Query q1 = dataRef2.orderByChild("farmID").equalTo(farmID);
-        img.clear();
-        pFruit.clear();
-        pID.clear();
-        pSell.clear();
         q1.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                pFruit.clear();
+                pSell.clear();
+                pID.clear();
+                img.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String fname = d.child("fruitName").getValue(String.class);
                     String pname = d.child("productName").getValue(String.class);
                     Integer psell = d.child("productSell").getValue(Integer.class);
                     imgUrl = d.child("imgLink").getValue(String.class);
                     String productid = d.getKey();
+                    pFruit.add(fname + pname);
+                    pSell.add(psell);
+                    pID.add(productid);
+                    img.add(imgUrl);
                     String st = d.child("status").getValue(String.class);
-                    if (st == null) {
-                        pFruit.add(fname + pname);
-                        pSell.add(psell);
-                        pID.add(productid);
-                        img.add(imgUrl);
+                    if (st != null && st.matches("deleted")) {
+                        pFruit.remove(pFruit.size() - 1);
+                        pSell.remove(pSell.size() - 1);
+                        pID.remove(pID.size() - 1);
+                        img.remove(img.size() - 1);
                     }
                 }
                 ListView listView = findViewById(R.id.list_product);
@@ -215,6 +219,10 @@ public class profileSellerSetting extends AppCompatActivity {
                     params.height = (int) pixels;
                     listView.setLayoutParams(params);
                 }
+                ListView list = (ListView) findViewById(R.id.list_product);
+                AdapterPL adapter = new AdapterPL(getApplicationContext(), pFruit, pSell, pID, img, "market");
+                list.setAdapter(null);
+                list.setAdapter(adapter);
             }
 
             @Override
@@ -222,33 +230,23 @@ public class profileSellerSetting extends AppCompatActivity {
 
             }
         });
-        ListView list = (ListView) findViewById(R.id.list_product);
-        AdapterPL adapter = new AdapterPL(profileSellerSetting.this, pFruit, pSell, pID, img, "market");
-        list.setAdapter(null);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
     }
 
     public void preorderProduct() {
         final ArrayList<String> childDate = new ArrayList<>();
-        sp = getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String farmID = sp.getString("farmID", "0");
-        img.clear();
-        pFruit.clear();
-        pID.clear();
-        pSell.clear();
-        childDate.clear();
 
         final DatabaseReference dataRef3 = FirebaseDatabase.getInstance().getReference().child("product")
                 .child("preorderProduct");
         dataRef3.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                pFruit.clear();
+                pSell.clear();
+                pID.clear();
+                img.clear();
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String key = d.getKey();
                     final Query q2 = dataRef3.child(key).orderByChild("farmID").equalTo(farmID);
@@ -261,13 +259,19 @@ public class profileSellerSetting extends AppCompatActivity {
                                 Integer psell = d.child("productSell").getValue(Integer.class);
                                 imgUrl = d.child("imgLink").getValue(String.class);
                                 String productid = d.getKey();
+                                pFruit.add(fname + pname);
+                                pSell.add(psell);
+                                pID.add(productid);
+                                img.add(imgUrl);
+
                                 String ss = d.child("status").getValue(String.class);
-                                if (ss == null) {
-                                    pFruit.add(fname + pname);
-                                    pSell.add(psell);
-                                    pID.add(productid);
-                                    img.add(imgUrl);
+                                if (ss != null && ss.matches("deleted")) {
+                                    pFruit.remove(pFruit.size() - 1);
+                                    pSell.remove(pSell.size() - 1);
+                                    pID.remove(pID.size() - 1);
+                                    img.remove(img.size() - 1);
                                 }
+                                Log.d("17", fname + pname);
                             }
                             ListView listView = findViewById(R.id.list_product);
                             ViewGroup.LayoutParams params = listView.getLayoutParams();
@@ -286,22 +290,16 @@ public class profileSellerSetting extends AppCompatActivity {
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
                     });
+                    ListView list = (ListView) findViewById(R.id.list_product);
+                    AdapterPL adapter = new AdapterPL(getApplicationContext(), pFruit, pSell, pID, img, "preorder");
+                    list.setAdapter(null);
+                    list.setAdapter(adapter);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.v("error", databaseError.toString());
-            }
-        });
-        ListView list = (ListView) findViewById(R.id.list_product);
-        AdapterPL adapter = new AdapterPL(profileSellerSetting.this, pFruit, pSell, pID, img, "preorder");
-        list.setAdapter(null);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
             }
         });
     }
