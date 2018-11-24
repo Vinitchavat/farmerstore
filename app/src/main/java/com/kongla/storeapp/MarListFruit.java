@@ -68,9 +68,6 @@ public class MarListFruit extends AppCompatActivity {
                     }
                 }
                 int position =0;
-                while(position  < fruitName.size()){
-
-                }
                 if(!order.matches("all")) {
                     if (fruitName.get(0).matches("ทุเรียน")) {
                         draw = R.drawable.durian;
