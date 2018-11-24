@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -206,6 +207,14 @@ public class profileMain extends AppCompatActivity {
                         if (photoURL != null) {
                             new profileMain.DownloadImageTask((ImageView) findViewById(R.id.profile_img)).execute(photoURL);
                         }
+                    }
+                });
+        storageReference.child("Image").child("users/" + userID).getDownloadUrl()
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        TextView textView = (TextView) findViewById(R.id.clicktochangeimg);
+                        textView.setVisibility(View.VISIBLE);
                     }
                 });
     }

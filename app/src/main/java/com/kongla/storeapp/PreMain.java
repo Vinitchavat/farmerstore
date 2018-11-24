@@ -96,9 +96,8 @@ public class PreMain extends AppCompatActivity {
                             for (DataSnapshot dd : dataSnapshot.getChildren()) {
                                 String s = dd.child("status").getValue(String.class);
                                 if (s == null) {
-                                    if (getTimeStamp(getK) >= getTimeStamp("now")) {
+                                    if (getTimeStamp(key.get(j)) >= getTimeStamp("now")) {
                                         clubkey.add(key.get(j));
-                                        Log.d("17", j + key.get(j));
                                     }
                                     break;
                                 }
