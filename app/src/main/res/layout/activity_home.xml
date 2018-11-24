@@ -28,6 +28,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
+                android:paddingLeft="5dp"
+                android:textSize="18dp"
+                android:textColor="@color/colorPrimary"
                 android:text="ผลไม้แนะนำ" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,6 +71,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
+                android:textSize="18dp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/colorPrimary"
                 android:text="ผลไม้อื่นๆ" />
 
                 <Button
@@ -75,7 +81,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
-                    android:text="ผลไม้ทั้งหมด" />
+                    android:text="ผลไม้ทั้งหมด"
+                    android:textSize="16dp"
+                    android:textColor="@color/gen_white"
+                    android:background="@drawable/button_pink2"/>
             </LinearLayout>
 
             <LinearLayout
