@@ -329,4 +329,14 @@ public class profileSellerSetting extends AppCompatActivity {
             bmImage.setImageBitmap(result);
         }
     }
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        Toast.makeText(this, "กรุณาใช้ปุ่มกลับด้านบน เพื่อย้อนกลับ", Toast.LENGTH_SHORT).show();
+    }
 }
+

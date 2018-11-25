@@ -1,5 +1,6 @@
 package com.kongla.storeapp;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -43,6 +44,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -61,7 +63,6 @@ public class profileAddProduct extends AppCompatActivity {
     private String photoURL;
     private Uri uri;
     private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,13 +74,8 @@ public class profileAddProduct extends AppCompatActivity {
         perunit = findViewById(R.id.perunit);
         final Button btn_delProduct = findViewById(R.id.deleteProduct);
 
-        final SharedPreferences sp = getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE);
+        final SharedPreferences sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sp.edit();
-
-        /* Action Bar */
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("เพิ่มสินค้า");
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /* ** UNIT SELECT ** */
         final String[] unit = {"กิโลกรัม", "ผล"};
@@ -119,7 +115,7 @@ public class profileAddProduct extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent
-                        , "Select Picture"), PICK_IMAGE);
+                        , "เลือกรูปภาพ"), PICK_IMAGE);
                 ID = UUID.randomUUID().toString();
             }
         });
@@ -156,7 +152,7 @@ public class profileAddProduct extends AppCompatActivity {
             }
         });
 
-        /* *** READ DATE *** */
+        /* *** READ DATA *** */
         perunit = findViewById(R.id.perunit);
         editName = findViewById(R.id.addTextProductName);
         editQ = findViewById(R.id.editQuantity);
@@ -164,7 +160,7 @@ public class profileAddProduct extends AppCompatActivity {
         editD = findViewById(R.id.editDate);
         editM = findViewById(R.id.editMonth);
         editY = findViewById(R.id.editYear);
-        img = findViewById(R.id.addProductImage);
+        img = (ImageView) findViewById(R.id.addProductImage);
         addoredit = getIntent().getStringExtra("do");
         final String s = getIntent().getStringExtra("type");
         final String id = getIntent().getStringExtra("productID");
@@ -214,9 +210,9 @@ public class profileAddProduct extends AppCompatActivity {
                             editP.setText(d4.toString());
                             urlLink = productModel.getImgLink();
                             if (urlLink != null) {
+                                img.setPadding(0, 0, 0, 0);
                                 new profileAddProduct.DownloadImageTask(img).execute(urlLink);
                             }
-                            img.setPadding(0, 0, 0, 0);
                         }
                     }
 
@@ -329,7 +325,7 @@ public class profileAddProduct extends AppCompatActivity {
     }
 
     public void saveData(final String url) {
-        final SharedPreferences sp = getSharedPreferences("PREF_NAME", Context.MODE_PRIVATE);
+        final SharedPreferences sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String farmID = sp.getString("farmID", "0");
         textName = findViewById(R.id.textProductName);
         perunit = findViewById(R.id.perunit);
@@ -342,6 +338,7 @@ public class profileAddProduct extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         addoredit = getIntent().getStringExtra("do");
+        progressDialog = new ProgressDialog(profileAddProduct.this);
 
         final String fruitName = textName.getText().toString();
         final String productName = editName.getText().toString().trim();
@@ -368,6 +365,7 @@ public class profileAddProduct extends AppCompatActivity {
                 dref.push().setValue(productModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),
                                 "เพิ่มสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
@@ -381,6 +379,7 @@ public class profileAddProduct extends AppCompatActivity {
                 dref.push().setValue(productModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),
                                 "เพิ่มสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
@@ -407,6 +406,7 @@ public class profileAddProduct extends AppCompatActivity {
                                 dref.child(id).setValue(productModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        progressDialog.dismiss();
                                         Toast.makeText(getApplicationContext(),
                                                 "แก้ไขสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
@@ -431,6 +431,7 @@ public class profileAddProduct extends AppCompatActivity {
                 dref.setValue(productModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),
                                 "แก้ไขสินค้าเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getApplicationContext(), profileSellerSetting.class);
@@ -454,7 +455,7 @@ public class profileAddProduct extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.actionbarcheck) {
 
-            /* *** CHECK DATA FIELD *** */
+            /* *** CHECK DATA FIELDS *** */
             Switch preorderSwitch = findViewById(R.id.switchPreorder);
             textName = findViewById(R.id.textProductName);
             editName = findViewById(R.id.addTextProductName);
@@ -463,6 +464,7 @@ public class profileAddProduct extends AppCompatActivity {
             editD = findViewById(R.id.editDate);
             editM = findViewById(R.id.editMonth);
             editY = findViewById(R.id.editYear);
+            addoredit = getIntent().getStringExtra("do");
 
             if (textName.getText().toString().matches("เลือกชื่อผลไม้")) {
                 Toast.makeText(getApplicationContext(), "กรุณาเลือกชื่อผลไม้", Toast.LENGTH_SHORT).show();
@@ -488,22 +490,29 @@ public class profileAddProduct extends AppCompatActivity {
                     return false;
                 }
             }
-
+            else if (ID == null && addoredit.matches("add")) {
+                Toast.makeText(getApplicationContext(), "กรุณาเพิ่มรูปภาพสินค้า", Toast.LENGTH_SHORT).show();
+                return false;
+            }
             AlertDialog.Builder builder = new AlertDialog.Builder(profileAddProduct.this);
             builder.setMessage(R.string.savedata);
             builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    if (ID == null) {
-                        progressDialog.setTitle("กรุณารอสักครู่");
-                        progressDialog.show();
+                    progressDialog = new ProgressDialog(profileAddProduct.this);
+                    progressDialog.setMessage("กรุณารอสักครู่");
+                    progressDialog.show();
+                    if (ID == null && addoredit.matches("edit")) {
                         saveData(urlLink);
-                        progressDialog.dismiss();
-                    } else {
-                        progressDialog.setTitle("กรุณารอสักครู่");
-                        progressDialog.show();
+                    } else{
                         uploadImage(ID);
-                        getURI();
-                        progressDialog.dismiss();
+                        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                        StorageReference storageReference = firebaseStorage.getReference();
+                        storageReference.child("Image").child("Product/" + ID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                saveData(uri.toString());
+                            }
+                        });
                     }
                 }
             });
@@ -522,25 +531,29 @@ public class profileAddProduct extends AppCompatActivity {
     }
 
     private void uploadImage(String id) {
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference()
+        final StorageReference storageRef = FirebaseStorage.getInstance().getReference()
                 .child("Image").child("Product/" + id);
+        storageRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                StorageReference storageReference = firebaseStorage.getReference();
+                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        photoURL = uri.toString();
+                        saveData(photoURL);
+                    }
+                });
+            }
+        });
         storageRef.putFile(uri).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getApplicationContext(),
-                        "Upload Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void getURI() {
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReference();
-        storageReference.child("Image").child("Product/" + ID).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                photoURL = uri.toString();
-                saveData(photoURL);
+                        "เพิ่มรูปภาพล้มเหลว", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                return;
             }
         });
     }
@@ -577,16 +590,6 @@ public class profileAddProduct extends AppCompatActivity {
             super.onBackPressed();
             return;
         }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "กดอีกครั้งเพื่อไปยังหน้ารายการสินค้า", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
+        Toast.makeText(this, "กรุณาใช้ปุ่มกลับด้านบน เพื่อย้อนกลับ", Toast.LENGTH_SHORT).show();
     }
 }

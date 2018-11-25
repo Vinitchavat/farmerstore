@@ -57,8 +57,8 @@
     <Button
         android:id="@+id/profile_btnSeller"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
         android:text="@string/profile_sellerSetting"
         android:background="@color/light_red"
         android:textColor="@color/gen_white"
@@ -87,6 +87,19 @@
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:text="@string/preorderhistory"
+        android:textSize="18sp"
+        android:textColor="@color/gen_white"
+        android:background="@color/pink_orange"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_btnBuyer" />
+
+    <Button
+        android:id="@+id/profile_add"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:text="@string/profile_addproduct"
         android:textSize="18sp"
         android:textColor="@color/gen_white"
         android:background="@color/pink_orange"

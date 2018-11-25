@@ -75,6 +75,7 @@ public class AdapterPL extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext,profileAddProduct.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("productID",id);
                 intent.putExtra("do","edit");
                 if (type.matches("preorder")){

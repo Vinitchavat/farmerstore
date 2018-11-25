@@ -128,7 +128,17 @@ public class profileMain extends AppCompatActivity {
 
         if (status.matches("seller")) {
             Button button2 = (Button) findViewById(R.id.profile_btnSeller);
+            Button addProduct = (Button) findViewById(R.id.profile_add) ;
             button2.setVisibility(View.VISIBLE);
+            addProduct.setVisibility(View.VISIBLE);
+            addProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getApplicationContext(), profileAddProduct.class);
+                    i.putExtra("do", "add");
+                    startActivity(i);
+                }
+            });
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
