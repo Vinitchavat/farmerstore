@@ -70,6 +70,9 @@
         <activity android:name=".profileBuyerSettingPreorder"
             android:parentActivityName=".profileMain"
             android:label="@string/buyhistory"/>
+        <activity android:name=".aboutus"
+            android:label="@string/aboutus"
+            android:parentActivityName=".profileMain"/>
         <activity android:name=".RegisterFarm"/>
         <activity android:name=".basketPrePro"/>
         <activity android:name=".basketBuyerNameList"/>

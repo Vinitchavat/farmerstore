@@ -114,7 +114,7 @@ public class profileEditFarm extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, R.string.clickbacktwice, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "กดปุ่มกลับอีกครั้ง เพื่อไปยังหน้าตั้งค่าผู้ขาย", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 

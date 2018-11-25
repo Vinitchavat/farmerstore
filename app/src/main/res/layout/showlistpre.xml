@@ -28,16 +28,22 @@
             android:id="@+id/showName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textSize="17sp"
+            android:maxLines="1"/>
         <TextView
             android:id="@+id/showPriceandUnit"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textSize="17sp"
+            android:maxLines="1"/>
         <TextView
             android:id="@+id/showFarmName"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textSize="17sp"
+            android:maxLines="1"/>
     </LinearLayout>
 </LinearLayout>

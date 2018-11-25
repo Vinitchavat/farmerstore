@@ -23,6 +23,7 @@
     <string name="delchat">ยกเลิกการซื้อสินค้า</string>
     <string name="showchat">กดฉันหน่อย</string>
     <string name="asktologin">มีบัญชีผู้ใช้แล้ว เข้าสู่ระบบ?</string>
+    <string name="aboutus">เกี่ยวกับเรา</string>
 
     <string name="profile_editProfile">แก้ไขรายละเอียดผู้ใช้</string>
     <string name="profile_logout">ออกจากระบบ</string>
@@ -70,6 +71,18 @@
     <string name="preorder">สินค้าสั่งจอง</string>
     <string name="pre_daylist">รายการสินค้าสั่งจอง</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="by">Developer\n\nPSK | VNW | ATK | ARD \n ITE19 KMITL</string>
+    <string name="credit">Credit</string>
+    <string name="Credits">\n
+        \"Dragon Fruit\" by AB, from \nthenounproject.com\n
+        \"Durian\" by Icons Producer, from \nthenounproject.com\n
+        \"Grapes\" by Vladimir Belochkin, from \nthenounproject.com\n
+        \"Grapes\" by Artem Kovyazin, from \nthenounproject.com\n
+        \"Lychee\" by Icons Producer, from \nthenounproject.com\n
+        \"Mango\" by A. Stone, from \nthenounproject.com\n
+        \"Mangosteen\" by Alena Artemova, from \nthenounproject.com\n
+        \"Orange\" by Rakhmat Setiawan, from \nthenounproject.com\n
+        \"Pineapple\" by Icons Producer, from \nthenounproject.com\n
+        \"Rambutan\" by Maria Zamchy, from \nthenounproject.com\n
+        \"Watermelon\" by AFY Studio, from \nthenounproject.com\n\nillustrated by Jang</string>
 </resources>
