@@ -99,14 +99,14 @@ public class RegisterFarm extends AppCompatActivity {
                     String userID = i.getStringExtra("userID");
 
                     final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                            .child("farmer");
+                            .child("farmer").push();
                     GetFarmer farmerModel = new GetFarmer(fName, fDes, fNum, fAdd, userID);
-                    final String fid = databaseReference.push().getKey();
-                    editor.putString("farmID",fid);
-                    editor.commit();
-                    databaseReference.push().setValue(farmerModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    databaseReference.setValue(farmerModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            final String fid = databaseReference.getKey();
+                            editor.putString("farmID",fid);
+                            editor.commit();
                             uploadImage(fid);
                             Toast.makeText(RegisterFarm.this, "ลงทะเบียนเสร็จสิ้น", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(RegisterFarm.this, MainActivity.class);
@@ -152,7 +152,7 @@ public class RegisterFarm extends AppCompatActivity {
     }
 
     private void uploadImage(final String fID) {
-        final String farmID = fID;
+        final String f = fID;
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String userID = sp.getString("IDKey", "0");
 
@@ -169,7 +169,7 @@ public class RegisterFarm extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                        .child("farmer").child(farmID);
+                        .child("farmer").child(f);
                 databaseReference.child("imgLink").setValue(uri.toString());
             }
         });

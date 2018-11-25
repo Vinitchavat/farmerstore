@@ -215,14 +215,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-        auth.signInWithEmailAndPassword(email, password).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), R.string.error_tryagain, Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(getIntent());
-            }
-        });
 
     }
 

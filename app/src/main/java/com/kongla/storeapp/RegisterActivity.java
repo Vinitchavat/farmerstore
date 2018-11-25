@@ -170,7 +170,8 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Toast.makeText(RegisterActivity.this, task.getException().getMessage(),
+                    loadingBar.dismiss();
+                    Toast.makeText(RegisterActivity.this, "มีผู้ใช้อีเมลนี้ไปแล้ว",
                             Toast.LENGTH_SHORT).show();
                 }
             }

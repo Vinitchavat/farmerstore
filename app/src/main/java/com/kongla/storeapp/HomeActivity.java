@@ -32,7 +32,6 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<Integer> fruitRec = new ArrayList<Integer>();
     int Fcount=0;
 
-    int countxx;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -110,7 +109,6 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    fruitRec.add(0);
                     Fcount = fruitDraw.size();
                     if(fruitDraw.size()>=6){
                         Fcount=6;
