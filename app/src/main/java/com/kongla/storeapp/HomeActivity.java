@@ -110,7 +110,6 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    fruitRec.add(0);
                     Fcount = fruitDraw.size();
                     if(fruitDraw.size()>=6){
                         Fcount=6;
