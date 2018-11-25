@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         final String IDKey = sp.getString("IDKey", "0");
         String status = sp.getString("Status","none");
         String fid = sp.getString("farmID","none");
-        if (!IDKey.matches("0") && status.matches("seller")){
+        if (!IDKey.matches("0") && status.matches("seller") && FirebaseAuth.getInstance().getCurrentUser()!=null){
             DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
             Query dRef = dataRef.child("farmer").orderByChild("memberID").equalTo(IDKey);
             dRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        else if (!IDKey.equals("0")) {
+        else if (!IDKey.equals("0") && FirebaseAuth.getInstance().getCurrentUser()!=null) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

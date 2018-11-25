@@ -93,32 +93,15 @@ public class profileSellerSetting extends AppCompatActivity {
             editor.apply();
         }*/
 
-        /* *** GET FarmID *** */
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("farmer");
-        Query query = databaseReference.orderByChild("memberID").equalTo(userID);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    String id = d.getKey();
-                    /*editor.putString("farmID", id);
-                    editor.commit();*/
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
         final String farmID = sp.getString("farmID", "0");
+        Log.d("17",farmID);
 
         /* ** FARM HEADER ** */
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference dataRef1 = database.getReference().child("farmer").child(farmID);
         dataRef1.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 textFarmName = dataSnapshot.child("farmName").getValue(String.class);
                 textFarmDes = dataSnapshot.child("farmDescription").getValue(String.class);
                 farmName.setText(textFarmName);
@@ -126,7 +109,7 @@ public class profileSellerSetting extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });

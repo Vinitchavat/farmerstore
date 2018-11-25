@@ -94,144 +94,146 @@ public class HomeActivity extends AppCompatActivity {
         callMarket.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                fruitDraw.clear();
-                for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    String s = d.child("status").getValue(String.class);
-                    if(s==null){
-                        getData = d.getValue(GetData.class);
-                        fruitDraw.add(getData.getFruitName());
-                    }
-                }
-                for(int count = 0 ; count<fruitDraw.size();count++){
-                    for(int countIn = count+1 ; countIn<fruitDraw.size();countIn++){
-                        if(fruitDraw.get(count).matches(fruitDraw.get(countIn))){
-                            fruitDraw.remove(countIn);
+                if(dataSnapshot.exists()){
+                    fruitDraw.clear();
+                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                        String s = d.child("status").getValue(String.class);
+                        if(s==null){
+                            getData = d.getValue(GetData.class);
+                            fruitDraw.add(getData.getFruitName());
                         }
                     }
-                }
-                fruitRec.add(0);
-                Fcount = fruitDraw.size();
-                if(fruitDraw.size()>=6){
-                    Fcount=6;
-                }
-                if(fruitDraw.size()>=2) {
-                    fruitRec.clear();
-                    int min = 0;
-                    int max = fruitDraw.size();
-                    Random r = new Random();
-                    int ran1 = r.nextInt(max - min);
-                    int ran2 = r.nextInt(max - min);
-                    while (ran1 == ran2) {
-                        int ran3 = r.nextInt(max - min);
-                        ran2 = ran3;
+                    for(int count = 0 ; count<fruitDraw.size();count++){
+                        for(int countIn = count+1 ; countIn<fruitDraw.size();countIn++){
+                            if(fruitDraw.get(count).matches(fruitDraw.get(countIn))){
+                                fruitDraw.remove(countIn);
+                            }
+                        }
                     }
-                    fruitRec.add(ran1);
-                    fruitRec.add(ran2);
-                }
-                for(int count = 0 ; count<fruitRec.size();count++){
-                    if(fruitDraw.get(fruitRec.get(count)).matches("มังคุด")){
-                        layRec[count].setImageResource(fruit[0]);
+                    fruitRec.add(0);
+                    Fcount = fruitDraw.size();
+                    if(fruitDraw.size()>=6){
+                        Fcount=6;
                     }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("ลำไย")){
-                        layRec[count].setImageResource(fruit[1]);
+                    if(fruitDraw.size()>=2) {
+                        fruitRec.clear();
+                        int min = 0;
+                        int max = fruitDraw.size();
+                        Random r = new Random();
+                        int ran1 = r.nextInt(max - min);
+                        int ran2 = r.nextInt(max - min);
+                        while (ran1 == ran2) {
+                            int ran3 = r.nextInt(max - min);
+                            ran2 = ran3;
+                        }
+                        fruitRec.add(ran1);
+                        fruitRec.add(ran2);
                     }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("ส้ม")){
-                        layRec[count].setImageResource(fruit[2]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("มะม่วง")){
-                        layRec[count].setImageResource(fruit[3]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("เงาะ")){
-                        layRec[count].setImageResource(fruit[4]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("ทุเรียน")){
-                        layRec[count].setImageResource(fruit[5]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("ลิ้นจี่")){
-                        layRec[count].setImageResource(fruit[6]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("องุ่น")){
-                        layRec[count].setImageResource(fruit[7]);
-                    }
-                    else if(fruitDraw.get(fruitRec.get(count)).matches("แก้วมังกร")){
-                        layRec[count].setImageResource(fruit[8]);
-                    }
-                    else {
-                        layRec[count].setImageResource(fruit[9]);
-                    }
+                    for(int count = 0 ; count<fruitRec.size();count++){
+                        if(fruitDraw.get(fruitRec.get(count)).matches("มังคุด")){
+                            layRec[count].setImageResource(fruit[0]);
+                        }
+                        else if(fruitDraw.get(fruitRec.get(count)).matches("ลำไย")){
+                            layRec[count].setImageResource(fruit[1]);
+                        }
+                        else if(fruitDraw.get(fruitRec.get(count)).matches("ส้ม")){
+                            layRec[count].setImageResource(fruit[2]);
+                        }
+                        else if(fruitDraw.get(fruitRec.get(count)).matches("มะม่วง")){
+                            layRec[count].setImageResource(fruit[3]);
+                        }
+                        else if(fruitDraw.get(fruitRec.get(count)).matches("เงาะ")){
+                            layRec[count].setImageResource(fruit[4]);
+                        }
+                        else if(fruitDraw.get(fruitRec.get(count)).matches("ทุเรียน")){
+                            layRec[count].setImageResource(fruit[5]);
+                        }
+                        else if(fruitDraw.get(fruitRec.get(count)).matches("ลิ้นจี่")){
+                            layRec[count].setImageResource(fruit[6]);
+                        }
+                        else if(fruitDraw.get(fruitRec.get(count)).matches("องุ่น")){
+                            layRec[count].setImageResource(fruit[7]);
+                        }
+                        else if(fruitDraw.get(fruitRec.get(count)).matches("แก้วมังกร")){
+                            layRec[count].setImageResource(fruit[8]);
+                        }
+                        else {
+                            layRec[count].setImageResource(fruit[9]);
+                        }
 
 
 
-                }
-                for(int count = 0 ; count<Fcount;count++){
-                    if(fruitDraw.get(count).matches("มังคุด")){
-                        lay[count].setImageResource(fruit[0]);
                     }
-                    else if(fruitDraw.get(count).matches("ลำไย")){
-                        lay[count].setImageResource(fruit[1]);
+                    for(int count = 0 ; count<Fcount;count++){
+                        if(fruitDraw.get(count).matches("มังคุด")){
+                            lay[count].setImageResource(fruit[0]);
+                        }
+                        else if(fruitDraw.get(count).matches("ลำไย")){
+                            lay[count].setImageResource(fruit[1]);
+                        }
+                        else if(fruitDraw.get(count).matches("ส้ม")){
+                            lay[count].setImageResource(fruit[2]);
+                        }
+                        else if(fruitDraw.get(count).matches("มะม่วง")){
+                            lay[count].setImageResource(fruit[3]);
+                        }
+                        else if(fruitDraw.get(count).matches("เงาะ")){
+                            lay[count].setImageResource(fruit[4]);
+                        }
+                        else if(fruitDraw.get(count).matches("ทุเรียน")){
+                            lay[count].setImageResource(fruit[5]);
+                        }
+                        else if(fruitDraw.get(count).matches("ลิ้นจี่")){
+                            lay[count].setImageResource(fruit[6]);
+                        }
+                        else if(fruitDraw.get(count).matches("องุ่น")){
+                            lay[count].setImageResource(fruit[7]);
+                        }
+                        else if(fruitDraw.get(count).matches("แก้วมังกร")){
+                            lay[count].setImageResource(fruit[8]);
+                        }
+                        else {
+                            lay[count].setImageResource(fruit[9]);
+                        }
                     }
-                    else if(fruitDraw.get(count).matches("ส้ม")){
-                        lay[count].setImageResource(fruit[2]);
+                    for(int count=0 ; count<fruitRec.size();count++){
+                        String[] mStringArray= new String[fruitDraw.size()];
+                        mStringArray = fruitDraw.toArray(mStringArray);
+                        final String[] finalMStringArray = mStringArray;
+                        final int finalCount = count;
+                        layRec[count].setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent next = new Intent(HomeActivity.this, MarListFruit.class);
+                                next.putExtra("MarFruit", finalMStringArray[fruitRec.get(finalCount)]);
+                                startActivity(next);
+                            }
+                        });
                     }
-                    else if(fruitDraw.get(count).matches("มะม่วง")){
-                        lay[count].setImageResource(fruit[3]);
+                    for(int count=0 ; count<Fcount;count++){
+                        String[] mStringArray= new String[fruitDraw.size()];
+                        mStringArray = fruitDraw.toArray(mStringArray);
+                        final String[] finalMStringArray = mStringArray;
+                        final int finalCount = count;
+                        lay[count].setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent next = new Intent(HomeActivity.this, MarListFruit.class);
+                                next.putExtra("MarFruit", finalMStringArray[finalCount]);
+                                startActivity(next);
+                            }
+                        });
                     }
-                    else if(fruitDraw.get(count).matches("เงาะ")){
-                        lay[count].setImageResource(fruit[4]);
-                    }
-                    else if(fruitDraw.get(count).matches("ทุเรียน")){
-                        lay[count].setImageResource(fruit[5]);
-                    }
-                    else if(fruitDraw.get(count).matches("ลิ้นจี่")){
-                        lay[count].setImageResource(fruit[6]);
-                    }
-                    else if(fruitDraw.get(count).matches("องุ่น")){
-                        lay[count].setImageResource(fruit[7]);
-                    }
-                    else if(fruitDraw.get(count).matches("แก้วมังกร")){
-                        lay[count].setImageResource(fruit[8]);
-                    }
-                    else {
-                        lay[count].setImageResource(fruit[9]);
-                    }
-                }
-                for(int count=0 ; count<fruitRec.size();count++){
-                    String[] mStringArray= new String[fruitDraw.size()];
-                    mStringArray = fruitDraw.toArray(mStringArray);
-                    final String[] finalMStringArray = mStringArray;
-                    final int finalCount = count;
-                    layRec[count].setOnClickListener(new View.OnClickListener() {
+                    Button allfruit = findViewById(R.id.text3);
+                    allfruit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent next = new Intent(HomeActivity.this, MarListFruit.class);
-                            next.putExtra("MarFruit", finalMStringArray[fruitRec.get(finalCount)]);
+                            next.putExtra("MarFruit", "all");
                             startActivity(next);
                         }
                     });
                 }
-               for(int count=0 ; count<Fcount;count++){
-                   String[] mStringArray= new String[fruitDraw.size()];
-                   mStringArray = fruitDraw.toArray(mStringArray);
-                   final String[] finalMStringArray = mStringArray;
-                   final int finalCount = count;
-                   lay[count].setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent next = new Intent(HomeActivity.this, MarListFruit.class);
-                            next.putExtra("MarFruit", finalMStringArray[finalCount]);
-                            startActivity(next);
-                        }
-                    });
-               }
-               Button allfruit = findViewById(R.id.text3);
-                allfruit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent next = new Intent(HomeActivity.this, MarListFruit.class);
-                        next.putExtra("MarFruit", "all");
-                        startActivity(next);
-                    }
-                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
