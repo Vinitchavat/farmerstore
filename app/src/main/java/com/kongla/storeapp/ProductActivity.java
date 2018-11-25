@@ -162,7 +162,7 @@ public class ProductActivity extends AppCompatActivity {
 
                     textName.setText("" + fruitName + " " + productName);
                     textPrice.setText("" + price + "บาท ต่อ " + unitPro);
-                    textDetail1.setText("พันธ์ผลไม้ :" + productName);
+                    textDetail1.setText("พันธ์ุผลไม้ :" + productName);
                     textDetail2.setText("ปริมาณสินค้า : " + quantity + " " + unitPro);
 
                     callfarmname = database.getReference().child("farmer").child(farmID);
@@ -214,7 +214,7 @@ public class ProductActivity extends AppCompatActivity {
 
                     textName.setText("" + fruitName + " " + productName);
                     textPrice.setText("ราคา" + price + "บาท ต่อ " + unitPro);
-                    textDetail1.setText("พันธ์ผลไม้ :" + productName);
+                    textDetail1.setText("พันธุ์ผลไม้ :" + productName);
                     textDetail2.setText("ปริมาณสินค้า : " + quantity + " " + unitPro);
 
                     callfarmname = database.getReference().child("farmer").child(farmID);
