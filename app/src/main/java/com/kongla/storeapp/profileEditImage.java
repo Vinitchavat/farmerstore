@@ -2,6 +2,7 @@ package com.kongla.storeapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,6 +44,7 @@ public class profileEditImage extends AppCompatActivity {
     private static String photoURL;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+    ProgressDialog loadingbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,27 +82,28 @@ public class profileEditImage extends AppCompatActivity {
     private void uploadImage() {
         sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         final String userID = sp.getString("IDKey", "0");
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference()
+        final StorageReference storageRef = FirebaseStorage.getInstance().getReference()
                 .child("Image").child("users/" + userID);
+
+        loadingbar = new ProgressDialog(profileEditImage.this);
 
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference storageReference = firebaseStorage.getReference();
-        storageReference.child("Image").child("users/" + userID).getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getApplicationContext(),
+                        "Upload Success", Toast.LENGTH_SHORT).show();
+                storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         photoURL = uri.toString();
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                                 .child("Users").child(userID);
                         databaseReference.child("imgLink").setValue(photoURL);
+                        loadingbar.dismiss();
                     }
                 });
-        storageRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getApplicationContext(),
-                        "Upload Success", Toast.LENGTH_SHORT).show();
-
                 Intent i = new Intent(getApplicationContext(), profileMain.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
@@ -147,6 +150,9 @@ public class profileEditImage extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
             } else {
+                loadingbar = new ProgressDialog(profileEditImage.this);
+                loadingbar.setMessage("กรุณารอสักครู่");
+                loadingbar.show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(profileEditImage.this);
                 builder.setMessage("ยืนยันการแก้ไข");
                 builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {

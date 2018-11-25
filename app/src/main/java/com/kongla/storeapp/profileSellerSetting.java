@@ -80,8 +80,6 @@ public class profileSellerSetting extends AppCompatActivity {
         });
 
         /* ** Delete Product ** */
-        sp = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sp.edit();
 
         /*String status = sp.getString("Status", "None");
         String id = sp.getString("ID", "");
