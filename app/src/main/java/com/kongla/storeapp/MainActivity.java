@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (!IDKey.equals("0")) {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
 

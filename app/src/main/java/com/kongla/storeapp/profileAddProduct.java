@@ -490,7 +490,7 @@ public class profileAddProduct extends AppCompatActivity {
                     return false;
                 }
             }
-            else if (ID == null && addoredit.matches("add")) {
+            else if (uri == null && addoredit.matches("add")) {
                 Toast.makeText(getApplicationContext(), "กรุณาเพิ่มรูปภาพสินค้า", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -501,7 +501,7 @@ public class profileAddProduct extends AppCompatActivity {
                     progressDialog = new ProgressDialog(profileAddProduct.this);
                     progressDialog.setMessage("กรุณารอสักครู่");
                     progressDialog.show();
-                    if (ID == null && addoredit.matches("edit")) {
+                    if (uri == null) {
                         saveData(urlLink);
                     } else{
                         uploadImage(ID);
