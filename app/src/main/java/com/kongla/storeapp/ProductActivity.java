@@ -293,9 +293,9 @@ public class ProductActivity extends AppCompatActivity {
                             Map map = (Map) dataSnapshot.getValue();
                             final String memberID = String.valueOf(map.get("memberID"));
                             OrderModel orderModel = new OrderModel(IDKey, memberID, farmID, key, "none");
-                            sendMar = database.getReference().child("Order").child("marketProduct");
+                            sendMar = database.getReference().child("Order").child("marketProduct").push();
                             if (buyoradd.matches("add")) {
-                                sendMar.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                sendMar.setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
@@ -303,13 +303,14 @@ public class ProductActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                sendMar.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                sendMar.setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                                        String k = sendMar.getKey();
                                         Intent intent = new Intent(getApplicationContext(), chatNew.class);
-                                        intent.putExtra("statusPro", "none");
-                                        intent.putExtra("orderid", sendMar.getKey());
+                                        intent.putExtra("statusPro", "marketProduct");
+                                        intent.putExtra("orderid", k);
                                         intent.putExtra("farmID", farmID);
                                         startActivity(intent);
                                     }
@@ -348,9 +349,9 @@ public class ProductActivity extends AppCompatActivity {
                             Map map = (Map) dataSnapshot.getValue();
                             final String memberID = String.valueOf(map.get("memberID"));
                             OrderModel orderModel = new OrderModel(IDKey, memberID, farmID, key, "none", day);
-                            sendPre = database.getReference().child("Order").child("preorderProduct");
+                            sendPre = database.getReference().child("Order").child("preorderProduct").push();
                             if (buyoradd.matches("add")) {
-                                sendPre.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                sendPre.setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
@@ -358,12 +359,14 @@ public class ProductActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                sendPre.push().setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                sendPre.setValue(orderModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(getApplicationContext(), "การสั่งซื้อเสร็จสิ้น", Toast.LENGTH_SHORT).show();
+                                        final String k = sendPre.getKey();
                                         Intent intent = new Intent(getApplicationContext(), basketMain.class);
-                                        intent.putExtra("orderid", sendPre.getKey());
+                                        intent.putExtra("orderid", k);
+                                        intent.putExtra("statusPro", "preorderProduct");
                                         intent.putExtra("farmID", farmID);
                                         intent.putExtra("day", day);
                                         startActivity(intent);
