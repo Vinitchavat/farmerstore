@@ -276,7 +276,7 @@ public class chatNew extends AppCompatActivity {
 
         if (id == R.id.savechat ) {
             AlertDialog.Builder builder = new AlertDialog.Builder(chatNew.this);
-            builder.setMessage("ได้รับสินต้า/ตรวจสอบสินค้าเรียบร้อยและจบการสนทนา\n!!การยืนยันจะเป็นการลบการสนทนาและไม่สามารถกู้คืนได้!!");
+            builder.setMessage("ได้รับสินค้า/ตรวจสอบสินค้าเรียบร้อยและจบการสนทนา\n!!บทสนทนาทั้งหมดจะถูกลบ แต่จะเก็บประวัติการซื้อเอาไว้!!");
             builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -296,7 +296,7 @@ public class chatNew extends AppCompatActivity {
         }
         if (id == R.id.delchat ) {
             AlertDialog.Builder builder = new AlertDialog.Builder(chatNew.this);
-            builder.setMessage("ยกเลิกการซื้อสินค้าและจบการสนทนา\n!!การยกเลิกจะเป็นการลบการสนทนาและไม่สามารถกซื้อสินค้าชนิดนี้ได้อีก!!");
+            builder.setMessage("ยกเลิกการซื้อสินค้าและลบการสนทนา\n!!คุณจะไม่สามารถซื้อสินค้าได้อีก และไม่มีการเก็บประวัติการซื้อเอาไว้!!");
 
             builder.setPositiveButton("ยืนยัน", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {

@@ -72,7 +72,9 @@ public class ProductActivity extends AppCompatActivity {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     String p = d.child("productID").getValue(String.class);
                     String u = d.child("buyerID").getValue(String.class);
-                    if (u.matches(userID) && p.matches(key)) {
+                    String st = d.child("orderStatus").getValue(String.class);
+                    Log.d("17",st);
+                    if (u.matches(userID) && p.matches(key) && !st.equals("finished")) {
                         a++;
                     }
                 }
