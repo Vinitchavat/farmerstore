@@ -73,6 +73,27 @@ public class show extends AppCompatActivity {
                         unitPro.add(getData.getUnitPro());
                     }
                 }
+                for (int i=0; i<fruitName.size(); i++){
+                    for (int j=i+1; j<fruitName.size()-1; j++){
+                        if(fruitName.get(i).matches(fruitName.get(j))){
+                            fruitName.add(i+1,fruitName.get(j));
+                            allKey.add(i+1,allKey.get(j));
+                            farmID.add(i+1,farmID.get(j));
+                            price.add(i+1,price.get(j));
+                            productName.add(i+1,productName.get(j));
+                            quantity.add(i+1,quantity.get(j));
+                            unitPro.add(i+1,unitPro.get(j));
+                            fruitName.remove(j+1);
+                            allKey.remove(j+1);
+                            farmID.remove(j+1);
+                            price.remove(j+1);
+                            productName.remove(j+1);
+                            quantity.remove(j+1);
+                            unitPro.remove(j+1);
+                            break;
+                        }
+                    }
+                }
                 draw = 1;
 
                 ListView listView =findViewById(R.id.listShowPre);
