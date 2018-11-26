@@ -222,7 +222,7 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         });
                     }
-                    Button allfruit = findViewById(R.id.text3);
+                    Button allfruit = findViewById(R.id.btn3);
                     allfruit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
