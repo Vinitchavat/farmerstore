@@ -116,8 +116,8 @@ public class chatNew extends AppCompatActivity {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     Friendly m = d.getValue(Friendly.class);
                     Mes.add(m.getMessage());
-                    sender.add(m.getType());
-                    type.add(m.getSender());
+                    sender.add(m.getSender());
+                    type.add(m.getType());
                 }
                 ListView list = (ListView) findViewById(R.id.list);
                 adapter = new CustomAdapter(getApplicationContext(), Mes, sender, type, s);

@@ -1,7 +1,7 @@
 package com.kongla.storeapp;
 
 public class Friendly {
-    String name, sender, message, time,orderid,type;
+    String sender, message, time,type;
 
     public Friendly(){}
 
@@ -17,17 +17,12 @@ public class Friendly {
     public String getSender() {
         return sender;
     }
-    public String getName() {
-        return name;
-    }
     public String getTime(){
         return time;
     }
     public String getMessage(){
         return message;
     }
-    public String getOrderid(){
-        return orderid;
-    }
+
 
 }
