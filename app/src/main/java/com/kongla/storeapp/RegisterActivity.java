@@ -143,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "Register Success",
+                                Toast.makeText(RegisterActivity.this, "ลงทะเบียนเสร็จสิ้น",
                                         Toast.LENGTH_SHORT).show();
 
                                 String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
