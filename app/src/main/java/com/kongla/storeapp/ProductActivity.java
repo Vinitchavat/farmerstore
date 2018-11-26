@@ -34,6 +34,7 @@ public class ProductActivity extends AppCompatActivity {
     private Button AddtobagButton, BuyButton;
     String product, key, day, farmID, fruitName, productName, unitPro, img, price, quantity;
     public DatabaseReference callMarket, callfarmname, sendMar, sendPre;
+    FirebaseDatabase database;
 
     SharedPreferences sp;
 
@@ -278,7 +279,7 @@ public class ProductActivity extends AppCompatActivity {
         product = extras.getString("product");
         key = extras.getString("key");
         if (product.matches("marketProduct")) {
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+            database = FirebaseDatabase.getInstance();
             callMarket = database.getReference().child("product").child("marketProduct").child(key);
             callMarket.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -292,8 +293,7 @@ public class ProductActivity extends AppCompatActivity {
                     callfarmname.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Map map = (Map) dataSnapshot.getValue();
-                            final String memberID = String.valueOf(map.get("memberID"));
+                            final String memberID = dataSnapshot.child("memberID").getValue(String.class);
                             OrderModel orderModel = new OrderModel(IDKey, memberID, farmID, key, "none");
                             sendMar = database.getReference().child("Order").child("marketProduct").push();
                             if (buyoradd.matches("add")) {

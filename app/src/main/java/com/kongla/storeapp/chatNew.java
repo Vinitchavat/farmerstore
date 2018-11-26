@@ -62,6 +62,7 @@ public class chatNew extends AppCompatActivity {
     String UserID;
     ProgressBar progressBar;
     SharedPreferences sp;
+    FirebaseDatabase database;
 
 
     @Override
@@ -79,7 +80,7 @@ public class chatNew extends AppCompatActivity {
         final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
         text = (EditText) findViewById(R.id.editText);
         Bundle extras = getIntent().getExtras();
         order = extras.getString("orderid");
@@ -115,8 +116,8 @@ public class chatNew extends AppCompatActivity {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     Friendly m = d.getValue(Friendly.class);
                     Mes.add(m.getMessage());
-                    sender.add(m.Sender());
-                    type.add(m.type());
+                    sender.add(m.getType());
+                    type.add(m.getSender());
                 }
                 ListView list = (ListView) findViewById(R.id.list);
                 adapter = new CustomAdapter(getApplicationContext(), Mes, sender, type, s);

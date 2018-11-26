@@ -11,10 +11,10 @@ public class Friendly {
         this.time = time;
         this.type = type;
     }
-    public String type() {
+    public String getType() {
         return type;
     }
-    public String Sender() {
+    public String getSender() {
         return sender;
     }
     public String getName() {
