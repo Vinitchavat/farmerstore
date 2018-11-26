@@ -74,7 +74,8 @@ public class show extends AppCompatActivity {
                     }
                 }
                 for (int i=0; i<fruitName.size(); i++){
-                    for (int j=i+1; j<fruitName.size()-1; j++){
+                    for (int j=i+1; j<fruitName.size(); j++){
+                        Log.d("17",fruitName.get(j));
                         if(fruitName.get(i).matches(fruitName.get(j))){
                             fruitName.add(i+1,fruitName.get(j));
                             allKey.add(i+1,allKey.get(j));
